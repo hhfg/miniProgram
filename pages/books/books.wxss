@@ -1,0 +1,42 @@
+/* pages/books/books.wxss */
+page{
+  background-color: #F5F5F5;
+}
+.section{
+  background-color: white;
+  margin: 50rpx;
+  padding: 20rpx;
+  border-radius: 3%;
+}
+.top{
+  display: flex;
+  flex-direction: row;
+}
+.bookPic{
+  background-color: red;
+  width: 100rpx;
+  height: 120rpx;
+}
+.content{
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+.bookName{
+  font-size: 18px;
+}
+.wordNum{
+  margin-top: 10rpx;
+  font-size: 14px;
+  color: gray;
+}
+.hr{
+  margin-top: 10rpx;
+  height:1px;
+  border:none;
+  border-top:1px solid rgb(196, 191, 191);
+}
+.plan{
+  font-size: 14px;
+  text-align: center;
+}

@@ -1,0 +1,14 @@
+<!--pages/books/books.wxml-->
+<view class="section">
+  <view class="top">
+    <view class="bookPic"></view>
+    <view class="content">
+      <text class="bookName">四级英语词汇</text>
+      <text class="wordNum">共4666词</text>
+    </view>
+  </view>
+  <view class="hr"></view>
+  <view class="plan">
+    <text>修改/重置计划</text>
+  </view>
+</view>

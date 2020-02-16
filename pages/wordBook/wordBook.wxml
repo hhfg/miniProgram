@@ -1,0 +1,15 @@
+<view class="section">
+  <image class="img" src="../../icons/wordBook/img1.png" ></image>
+  <view class="hr">|</view>
+  <view class="text">全部单词</view>
+</view>
+<view class="section">
+  <image class="img" src="../../icons/wordBook/img2.png" ></image>
+  <view class="hr">|</view>
+  <view class="text">已学词</view>
+</view>
+<view class="section">
+  <image class="img" src="../../icons/wordBook/img3.png" ></image>
+  <view class="hr">|</view>
+  <view class="text">收藏夹</view>
+</view>

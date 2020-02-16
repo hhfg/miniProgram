@@ -1,0 +1,65 @@
+<view class="amountBg">
+  <open-data type="userAvatarUrl"  class="img"></open-data>
+  <view class="account">
+    <open-data type="userNickName" lang="zh_CN"></open-data>
+    <view>账号管理</view>
+  </view>
+  <view class="nav"></view>
+</view>
+<view class="content">
+  <view class="sign">
+    <view class="desc">
+      <view>连续签到</view>
+      <view>1</view>
+    </view>
+    <view class="desc">
+      <view>累计签到</view>
+      <view>1</view>
+    </view>
+    <view class="desc">
+      <view>最大连续签到</view>
+      <view>1</view>
+    </view>
+  </view>
+  <view class="clear"></view>
+  <view class="item" hover-class="click">
+    <view class="icon"><image src="../../icons/mine/schedule.png" style="width:25px;height:25px;"></image></view>
+    <view class="itemName">
+      <view><picker mode="date" bindchange="bindDateChange">更改学习计划</picker></view>
+    </view>
+    <view class="right"><text class="opr">></text></view>
+  </view>
+  <view class="hr"></view>
+  <view class="item" hover-class="click" bindtap="bindCalendar">
+    <view class="icon"><image src="../../icons/mine/calendar.png" style="width:25px;height:25px;"></image></view>
+    <view class="itemName">
+      <view>打卡日历</view>
+    </view>
+    <view class="right"><text class="opr">></text></view>
+  </view>
+  <view class="hr"></view>
+  <view class="item" hover-class="click">
+    <view class="icon"><image src="../../icons/mine/time.png" style="width:25px;height:25px;"></image></view>
+    <view class="itemName">
+      <view><picker mode="time" start="00:00" end="24:00" bindchange="bindTimeChange">每日学习打卡提醒时间</picker></view>
+    </view>
+    <view class="right"><text class="opr">></text></view>
+  </view>
+  <view class="hr"></view>
+  <view class="item" hover-class="click" bindtap="bindLearningRecord">
+    <view class="icon"><image src="../../icons/mine/chart.png" style="width:25px;height:25px;"></image></view>
+    <view class="itemName">
+      <view>学习记录</view>
+    </view>
+    <view class="right"><text class="opr">></text></view>
+  </view>
+  <view class="hr"></view>
+  <view class="item" hover-class="click" bindtap="bindLearningSet">
+    <view class="icon"><image src="../../icons/mine/setting.png" style="width:25px;height:25px;"></image></view>
+    <view class="itemName">
+      <view>学习设置</view>
+    </view>
+    <view class="right"><text class="opr">></text></view>
+  </view>
+  <view class="hr"></view>
+</view>

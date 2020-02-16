@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/learning/learning",
+    "pages/index/index",
+    "pages/test/test",
+    "pages/books/books",
+    "pages/wordBook/wordBook",
+    "pages/mine/mine",
+    "pages/learningSet/learningSet",
+    "pages/calendar/calendar",
+    "pages/record/record",  
+    "pages/search/search", 
+    
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F5F5F5",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "usingComponents":{
+    "calendar":"/components/calendar/index"
+  },
+  "sitemapLocation": "sitemap.json",
+    "tabBar": {
+      "color": "#000000",
+      "selectedColor": "#87CEEB",
+      "backgroundColor": "#F5F5F5",
+      "list": [
+        {
+          "pagePath": "pages/index/index",
+          "text": "首页",
+          "iconPath": "icons/navigation/index-0.png",
+          "selectedIconPath": "icons/navigation/index-1.png"
+        },
+        {
+          "pagePath": "pages/wordBook/wordBook",
+          "text": "单词本",
+          "iconPath": "icons/navigation/wordBook-0.png",
+          "selectedIconPath": "icons/navigation/wordBook-1.png"
+        },
+        {
+          "pagePath": "pages/mine/mine",
+          "text": "我的",
+          "iconPath": "icons/navigation/mine-0.png",
+          "selectedIconPath": "icons/navigation/mine-1.png"
+        }
+      ]
+    }
+}

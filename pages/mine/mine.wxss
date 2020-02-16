@@ -1,0 +1,83 @@
+/* pages/personal/personal.wxss */
+page{
+  background-color:#F5F5F5;
+}
+.amountBg{
+  height:250rpx;
+  background-color: #87CEEB;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.img{
+  margin-left: 10px;
+  width: 150rpx;
+  height:150rpx;
+  border-radius: 50%;
+  display: flex;
+  overflow: hidden;
+}
+.account{
+  width:70%;
+  color: #ffffff;
+  margin-left: 20px;
+}
+.nav{
+  width:15px;
+  color: #ffffff
+}
+.content{
+  height:1000rpx;
+}
+.sign{
+  width: 94%;
+  height:70px;
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+  align-items: center;
+  position: absolute;
+  top:210rpx;
+  margin-left: 3%;
+}
+.desc{
+  width: 33%;
+}
+.clear{
+  padding-top: 70px; 
+}
+.item{
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  height:110rpx;
+  align-items: center;
+}
+.icon{ 
+  width: 50px;
+  text-align: center;
+}
+.itemName{
+  width: 60%;
+  
+}
+.line{
+  height:10px;
+}
+.hr{
+  height:2px;
+}
+.right{
+  width: 40%;
+  text-align: right;
+}
+.opr{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px;
+}
+.click{
+  background-color:#87CEEB;
+}
