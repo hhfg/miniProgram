@@ -1,16 +1,33 @@
 // pages/learning/learning.js
+var result=''
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    
   },
-  pronouncePlay:function(){
+  pronouncePlayUS:function(event){
+    var url = event.currentTarget.dataset.url
+    url=url.substring(1,url.length-1)
     const innerAudioContext = wx.createInnerAudioContext()
     innerAudioContext.autoplay = true
-    innerAudioContext.src = 'http://res.iciba.com/resource/amp3/oxford/0/e1/42/e142d564aae5adeb3eab781855dc87b2.mp3'
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
+  pronouncePlayUK: function (event) {
+    var url = event.currentTarget.dataset.url
+    url = url.substring(1, url.length - 1)
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
     innerAudioContext.onPlay(() => {
       console.log('开始播放')
     })
@@ -24,8 +41,24 @@ Page({
    */
 
   onLoad: function (options) {
-
-  },
+    var that=this;
+    wx.request({
+      url: 'http://localhost:8080/MiniProgram/selWords.do',
+      method:'GET',
+      header:{
+        'content-type':'application/json'
+      },
+      success:function(res){
+        console.log(res.data)
+        that.setData({
+          result:res.data
+        })
+      },
+      fail:function(res){
+        console.log("faile")
+      }
+    })
+  }, 
 
   /**
    * 生命周期函数--监听页面初次渲染完成
