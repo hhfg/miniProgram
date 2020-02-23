@@ -1,12 +1,14 @@
 // pages/learning/learning.js
-var result=''
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
+    words:'',         //将返回的对象存到word中
+    ex_array:[],     //将释义分割字符串后存储在数组中
+    coll_array:[]    //将词汇搭配分割字符串后存储在数组中
   },
   pronouncePlayUS:function(event){
     var url = event.currentTarget.dataset.url
@@ -49,13 +51,19 @@ Page({
         'content-type':'application/json'
       },
       success:function(res){
-        console.log(res.data)
         that.setData({
-          result:res.data
+          words:res.data,    
         })
+        that.setData({
+          ex_array: that.data.words.explanation.split(";")
+        })
+        that.setData({
+          coll_array:that.data.words.collocation.split(";")
+        })
+
       },
       fail:function(res){
-        console.log("faile")
+        console.log("fail")
       }
     })
   }, 

@@ -2,35 +2,34 @@
 <view class='wraper'>
   <view class='header'>
     <view class="wordSection">
-      <view class="word">{{result.word}}</view>
+      <view class="word">{{words.word}}</view>
       <view  class="pron">
-        <text>{{result.us_pron}}</text>
+        <text>{{words.us_pron}}</text>
         <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="{{result.us_mp3}}"></image>
         <view class="space"></view>
-        <text>{{result.uk_pron}}</text>
+        <text>{{words.uk_pron}}</text>
         <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUK" data-url="{{result.uk_mp3}}"></image>
       </view>
     </view>
     <view class="hr"></view>
     <view class="explanation">
-      <view class="ex">{{result.explanation}}</view>
-
+      <view class="ex" wx:for="{{ex_array}}" wx:key="*this">{{item}}</view>
     </view>
   </view>
   <view class='main'>
     <scroll-view class='main-scroll' scroll-y style="height: 90%">
       <view class="text">例句</view>
       <view class="example">
-        <view class="english">{{result.val_ex1}}</view>
-        <view class="translation">{{result.bil_ex1}}</view>
-        <view class="english">{{result.val_ex2}}</view>
-        <view class="translation">{{result.bil_ex2}}</view>
-        <view class="english">{{result.val_ex3}}</view>
-        <view class="translation">{{result.bil_ex3}}</view>
+        <view class="english">{{words.val_ex1}}</view>
+        <view class="translation">{{words.bil_ex1}}</view>
+        <view class="english">{{words.val_ex2}}</view>
+        <view class="translation">{{words.bil_ex2}}</view>
+        <view class="english">{{words.val_ex3}}</view>
+        <view class="translation">{{words.bil_ex3}}</view>
       </view>
       <view class="text">词汇搭配</view>
       <view class="mnemonics">
-        <view>{{result.collocation}}</view>
+        <view class="coll" wx:for="{{coll_array}}" wx:key="*this">{{item}}</view>
       </view>
     </scroll-view>
   </view>

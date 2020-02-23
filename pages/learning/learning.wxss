@@ -62,7 +62,7 @@ page{
   font-size: 16px;
   padding: 10rpx;
 }
-.ex{
+.ex,.coll{
   margin: 10rpx;
 }
 .text{
