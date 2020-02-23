@@ -13,65 +13,13 @@ Page({
     ex_array:[],     //将释义分割字符串后存储在数组中
     coll_array:[]    //将词汇搭配分割字符串后存储在数组中
   },
-  pronouncePlayUS:function(event){
-    var url = event.currentTarget.dataset.url
-    url=url.substring(1,url.length-1)
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = url
-    innerAudioContext.onPlay(() => {
-      console.log('开始播放')
-    })
-    innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
-  },
-  pronouncePlayUK: function (event) {
-    var url = event.currentTarget.dataset.url
-    url = url.substring(1, url.length - 1)
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = url
-    innerAudioContext.onPlay(() => {
-      console.log('开始播放')
-    })
-    innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
-  },
-
-  previousWord: function () {
-    var that=this;
-    if(that.data.pos==0){
-      
-    }else{
-      that.setData({
-        pos:that.data.pos-1
-      })
-      that.onReady()
-    }
-
-  },
-  nextWord: function () {
-    var that=this;
-    // 如果已经到最后一个单词
-    if(that.data.pos===(that.data.len-1)){
-      
-    }else{
-      that.setData({
-        pos: that.data.pos + 1
-      })
-      that.onReady()
-    }
-  },
   /**
    * 生命周期函数--监听页面加载
    */
 
   onLoad: function (options) {
     var that=this;
+    var page = that.data.pos
     wx.request({
       //url: 'http://localhost:8080/MiniProgram/selWords.do',
       url:'http://192.168.1.108:8080/MiniProgram/selWords.do',
@@ -87,6 +35,16 @@ Page({
         that.setData({
           len:res.data.length
         })
+        that.setData({
+          word: that.data.words[page]
+        })
+        that.setData({
+          ex_array: that.data.word.explanation.split(";")
+        })
+        // 词汇搭配
+        that.setData({
+          coll_array: that.data.word.collocation.split(";")
+        })
       },
       fail:function(res){
         console.log("fail")
@@ -98,20 +56,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var that = this
-    // 设置当前页面的单词
-    that.setData({
-      word: that.data.words[that.data.pos]
-    })
-    console.log(that.data.word)
-    // 释义
-    that.setData({
-      ex_array: that.data.words[that.data.pos].explanation.split(";")
-    })
-    // 词汇搭配
-    that.setData({
-      coll_array: that.data.words[that.data.pos].collocation.split(";")
-    })
+
   },
 
   /**
@@ -154,5 +99,69 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  pronouncePlayUS: function (event) {
+    var url = event.currentTarget.dataset.url
+    url = url.substring(1, url.length - 1)
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
+  pronouncePlayUK: function (event) {
+    var url = event.currentTarget.dataset.url
+    url = url.substring(1, url.length - 1)
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
+  // 点击上一个
+  previousWord: function () {
+    var that=this;
+    if (that.data.pos == 0) {
+    } else {
+      that.changeField();
+    }
+  },
+  // 点击下一个
+  nextWord: function () {
+    // 如果已经到最后一个单词
+    var that=this;
+    if (that.data.pos === (that.data.len - 1)) {
+      console.log('11')
+    } else {
+      that.changeField()
+    }
+  },
+  // 修改单词字段
+  changeField:function(){
+    var that=this;
+    that.setData({
+      pos: that.data.pos + 1
+    })
+    that.setData({
+      word: that.data.words[that.data.pos]
+    })
+    // 释义
+    that.setData({
+      ex_array: that.data.word.explanation.split(";")
+    })
+    // 词汇搭配
+    that.setData({
+      coll_array: that.data.word.collocation.split(";")
+    })
   }
 })
