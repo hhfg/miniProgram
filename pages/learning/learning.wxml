@@ -2,13 +2,13 @@
 <view class='wraper'>
   <view class='header'>
     <view class="wordSection">
-      <view class="word">{{words.word}}</view>
+      <view class="word">{{word.word}}</view>
       <view  class="pron">
-        <text>{{words.us_pron}}</text>
-        <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="{{result.us_mp3}}"></image>
+        <text>{{word.us_pron}}</text>
+        <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="{{word.us_mp3}}"></image>
         <view class="space"></view>
-        <text>{{words.uk_pron}}</text>
-        <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUK" data-url="{{result.uk_mp3}}"></image>
+        <text>{{word.uk_pron}}</text>
+        <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUK" data-url="{{word.uk_mp3}}"></image>
       </view>
     </view>
     <view class="hr"></view>
@@ -20,12 +20,12 @@
     <scroll-view class='main-scroll' scroll-y style="height: 90%">
       <view class="text">例句</view>
       <view class="example">
-        <view class="english">{{words.val_ex1}}</view>
-        <view class="translation">{{words.bil_ex1}}</view>
-        <view class="english">{{words.val_ex2}}</view>
-        <view class="translation">{{words.bil_ex2}}</view>
-        <view class="english">{{words.val_ex3}}</view>
-        <view class="translation">{{words.bil_ex3}}</view>
+        <view class="english">{{word.val_ex1}}</view>
+        <view class="translation">{{word.bil_ex1}}</view>
+        <view class="english">{{word.val_ex2}}</view>
+        <view class="translation">{{word.bil_ex2}}</view>
+        <view class="english">{{word.val_ex3}}</view>
+        <view class="translation">{{word.bil_ex3}}</view>
       </view>
       <view class="text">词汇搭配</view>
       <view class="mnemonics">
@@ -34,7 +34,7 @@
     </scroll-view>
   </view>
   <view class='footer'>
-    <button>上一个</button>
-    <button>下一个</button>
+    <button bindtap="previousWord">上一个</button>
+    <button bindtap="nextWord">下一个</button>
   </view>
 </view>

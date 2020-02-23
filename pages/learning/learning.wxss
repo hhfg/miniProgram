@@ -62,7 +62,7 @@ page{
   font-size: 16px;
   padding: 10rpx;
 }
-.ex,.coll{
+.ex{
   margin: 10rpx;
 }
 .text{
@@ -72,11 +72,15 @@ page{
 .example,.mnemonics{
   background-color: white; 
   padding: 20rpx;
-  font-size: 14px; 
+  font-size: 16px; 
 }
 .english{
   padding-top: 10px; 
 }
 .translation{
   margin-top: 15rpx;
+}
+.coll{
+  margin-left:10px;
+  margin-top: 12px;
 }
