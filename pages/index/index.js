@@ -6,7 +6,8 @@ Page({
   data: {
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isHide: false
+    isHide: false,
+    day:228
   },
   //换书
   bindChangeBook: function () {
@@ -23,11 +24,8 @@ Page({
       }
     })
   },
-  //复习
-  bindReview:function(){
-    console.log("复习");
-  },
-  bindRecite:function(){
+
+  bindLearning:function(){
     wx.navigateTo({
       url: '../learning/learning',
       success:function(res){

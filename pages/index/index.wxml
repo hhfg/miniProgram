@@ -14,28 +14,34 @@
  
 <view wx:else>
   <view class="head">
-    <view class="section_book">
-      <view class="bookName">2019恋恋有词考研词汇</view>
-      <view class="changeBook" bindtap="bindChangeBook">换书</view>
+    <view class="clock_in">
+      <view class="left"><text class="day">{{day}}</text>天</view>
+      <view class="right"><image src="../../icons/index/calendar.png" style="width:15px;height:15px;"/>打卡日历></view>
     </view>
-    <view class="haveToLearn">
-      <view>今日待学</view>
-      <view>0/50</view>
+    <view class="book" style="background-color:#87CEEB" >
+      <view class="bookName">大学英语四级乱序版<image src="../../icons/index/change.png" style="width:20px;height:20px"></image></view>
+      <view class="tip">
+        <text>已完成20%</text>
+        <text class="fraction">100/2650</text>
+        <progress percent="20"></progress>
+      </view >
+
     </view>
-    <view class="section_learn">
-      <view class="part">
-        <view>累计学词</view>
-        <view>111/1234</view>
+    <view class="taskSection">
+      <text>今日任务</text>
+      <view class="task">
+        <view class="desc">
+          <view class="num">30</view>
+          <view class="text1">待学</view> 
+        </view>
+        <view class="desc">
+          <view class="num">20</view>
+          <view class="text1">待复习</view> 
+        </view>
       </view>
-      <view class="part">
-        <view>剩余天数</view>
-        <view>12/60</view>
-      </view>
     </view>
-    <view class="start">
-      <button class="btn" plain bindtap="bindReview">复习</button>
-      <view class="hr"></view>
-      <button class="btn" plain bindtap="bindRecite">开始背诵</button>
+    <view class="startBtn">
+      <button class="btn" bindtap="bindLearning">开始学习</button>
     </view>
   </view>
   <view class="other">
@@ -57,7 +63,7 @@
         <view>查词</view>
       </view>
     </view>
-  </view>
+  </view> 
 </view>
 
 
