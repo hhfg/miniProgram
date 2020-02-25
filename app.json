@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/books/books",
     "pages/index/index",
     "pages/learning/learning",
     "pages/test/test",
-    "pages/books/books",
     "pages/wordBook/wordBook",
     "pages/mine/mine",
     "pages/learningSet/learningSet",

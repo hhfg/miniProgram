@@ -5,9 +5,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    showView:false,
+    book:[{
+      name: '四级英语绿宝书乱序版',
+      num: 2650
+    },{
+      name:'四级英语乱序版',
+      num:2550
+    }]    
   },
-
+  bindClick:function(){
+    var that=this;
+    that.setData({
+      showView:!that.data.showView
+    })
+  },
+  bindChangeIt:function(e){
+    console.log(e.currentTarget.dataset.text)
+  },
   /**
    * 生命周期函数--监听页面加载
    */

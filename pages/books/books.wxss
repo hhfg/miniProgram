@@ -2,41 +2,43 @@
 page{
   background-color: #F5F5F5;
 }
-.section{
-  background-color: white;
-  margin: 50rpx;
-  padding: 20rpx;
-  border-radius: 3%;
-}
-.top{
+.item{
+  background-color: #ffffff;
   display: flex;
   flex-direction: row;
+  height:110rpx;
+  align-items: center;
 }
-.bookPic{
-  background-color: red;
-  width: 100rpx;
-  height: 120rpx;
-}
-.content{
-  margin-left: 20rpx;
-  display: flex;
-  flex-direction: column;
-}
-.bookName{
-  font-size: 18px;
-}
-.wordNum{
-  margin-top: 10rpx;
-  font-size: 14px;
-  color: gray;
-}
-.hr{
-  margin-top: 10rpx;
-  height:1px;
-  border:none;
-  border-top:1px solid rgb(196, 191, 191);
-}
-.plan{
-  font-size: 14px;
+.icon{ 
+  width: 50px;
   text-align: center;
 }
+.itemName{
+  width: 60%;
+}
+.hr{
+  height:2px;
+}
+.detailed{
+  display: flex;
+  flex-direction: row;
+  padding: 5px 15px 5px 15px;
+  font-size: 14px;
+}
+.bookName{
+  width: 60%;
+}
+.wordsNum{
+  width: 40%;
+  text-align: right;
+}
+.click{
+  background-color:#87CEEB;
+}
+.hide{
+ display: none;
+}
+.show{ 
+ display: flex;
+}
+

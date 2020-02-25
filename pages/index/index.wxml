@@ -16,10 +16,10 @@
   <view class="head">
     <view class="clock_in">
       <view class="left"><text class="day">{{day}}</text>天</view>
-      <view class="right"><image src="../../icons/index/calendar.png" style="width:15px;height:15px;"/>打卡日历></view>
+      <view class="right" ><image src="../../icons/index/calendar.png" style="width:15px;height:15px;" />打卡日历></view>
     </view>
     <view class="book" style="background-color:#87CEEB" >
-      <view class="bookName">大学英语四级乱序版<image src="../../icons/index/change.png" style="width:20px;height:20px"></image></view>
+      <view class="bookName">大学英语四级乱序版<image src="../../icons/index/change.png" style="width:20px;height:20px" bindtap="bindChangeBook"></image></view>
       <view class="tip">
         <text>已完成20%</text>
         <text class="fraction">100/2650</text>
