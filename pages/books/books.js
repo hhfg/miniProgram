@@ -5,19 +5,36 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showView:false,
-    book:[{
-      name: '四级英语绿宝书乱序版',
-      num: 2650
-    },{
-      name:'四级英语乱序版',
-      num:2550
-    }]    
+    type:[],
+    book:[]  
   },
-  bindClick:function(){
+  bindClick:function(e,id){
     var that=this;
+    var typeName='';
+    var index = e.currentTarget.dataset.id-1;
+    var flag='type['+index+'].isShow'
     that.setData({
-      showView:!that.data.showView
+      [flag]:!that.data.type[index].isShow
+    })
+    typeName=e.currentTarget.dataset.text;
+    wx.request({
+      url: 'http://192.168.1.108:8080/MiniProgram/selByType.do',
+      method:'GET',
+      data:{
+        type:typeName
+      },
+      header:{
+        'content-type':'application/json'
+      },
+      success:function(res){
+        that.setData({
+          book:res.data
+        })
+        console.log(that.data.book)
+      },
+      fail:function(res){
+        console.log(fail);
+      }
     })
   },
   bindChangeIt:function(e){
@@ -27,7 +44,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that=this;
+    wx.request({
+      url: 'http://192.168.1.108:8080/MiniProgram/selAllType.do',
+      method:'GET',
+      header:{
+        'content-type':'application/json'
+      },
+      success:function(res){
+        that.setData({
+          type:res.data
+        })
+        that.data.type.forEach((r)=>{
+          r.isShow=false;
+        })
+        that.setData({
+          type:that.data.type,
+        })
+        
+      },
+      fail:function(res){
+        console.log("fail")
+      }
+    })
   },
 
   /**
