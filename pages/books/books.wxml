@@ -1,48 +1,16 @@
 <!--pages/books/books.wxml-->
 <view wx:for="{{type}}" wx:key="typename">
-  <view class="item" bindtap="bindClick" data-text="{{item.typecode}}" data-id="{{item.id}}">
+  <view class="item" bindtap="bindClick" data-text="{{item.typecode}}" data-index="{{index}}">
     <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
     <view class="itemName">
       <view>{{item.typename}}</view>
     </view>
   </view>
-  <view class="detailed {{item.isShow?'show':'hide'}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{book}}" wx:for-item="itemName" wx:key="name" data-text="{{itemName.bookName}}">
-  <view class="bookName">{{itemName.bookName}}</view>
-  <view class="wordsNum">{{itemName.wordNum}}</view>
-</view>
+  <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.book}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-text="{{itemName.bookName}}">
+    <view class="bookName">{{itemName.bookName}}</view>
+    <view class="wordsNum">{{itemName.wordNum}}</view>
+  </view>
   <view class="hr"></view>
 </view>
 
 
-<!-- <view class="item">
-  <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
-  <view class="itemName">
-    <view>高中英语(3)</view>
-  </view>
-</view>
-<view class="hr"></view>
-<view class="item" bindtap="bindClick" data-text="cet4">
-  <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
-  <view class="itemName">
-    <view>四级英语(3)</view>
-  </view>
-</view>
-<view class="detailed {{showView?'show':'hide'}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{book}}" wx:key="name" data-text="{{item.bookName}}">
-  <view class="bookName">{{item.bookName}}</view>
-  <view class="wordsNum">{{item.wordNum}}</view>
-</view>
-<view class="hr"></view>
-<view class="item">
-  <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
-  <view class="itemName">
-    <view>六级英语(3)</view>
-  </view>
-</view>
-<view class="hr"></view>
-<view class="item">
-  <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
-  <view class="itemName">
-    <view>考研英语(0)</view>
-  </view>
-</view>
-<view class="hr"></view>  -->

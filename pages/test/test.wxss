@@ -1,11 +1,31 @@
-/* slide.wxss */
-page {
-  background-color: #fbf9fe;
-  height: 100%;
-}
-.container {
+
+/* 列表详情 */
+
+.li {
+  background-color: #fff;
   display: flex;
-  flex-direction: column;
-  min-height: 100%;
   justify-content: space-between;
+  font-size: 34rpx;
+  width: 92%;
+  padding: 0 4%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #f1f1f1;
+}
+.bg-gray{
+    background-color: #ccc!important;
+    border-bottom: 1rpx solid  #fff!important;
+}
+
+.li .icon-xiala ,.icon-shangjiantou {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.gray {
+  color: #8e8e8e;
+}
+
+.red {
+  color: #fe2e2e;
 }

@@ -1,18 +1,4 @@
-<!-- 
-searchArray		循环遍历的对象
-wx:for-item="item" 	别名item
-bindtap='showList'     绑定点击事件
-data-id='{{item.id}}'  将对象id添加到点击列表上
- -->
-<view class="search_city_li" wx:for="{{searchArray}}" wx:for-item="item" wx:key="">
-   <view class="search_city_list" bindtap='showList' data-id='{{item.id}}'>
-          {{item.name}}
-    </view>
-	<!--根据{{item.isShow?'show':'hide'}} 判断显示和隐藏,
-show和hide的css一个是diaplay:block,一个是 diaplay:none-->
-    <view class=" {{item.isShow?'show':'hide'}}">
-      <view class="search_city_list_child" wx:for="{{item.child}}" wx:for-item="child" wx:key="">
-        <view class="list_child_cyty">{{child.name}}</view>
-       </view>
-    </view>
-</view>
+<block wx:for="{{list}}" wx:key="title">
+  <view style="border:1px solid red" bindtap="changeFn" data-index="{{index}}">{{item.title}}</view>
+  <view style="color: green" wx:if="{{current==index}}">{{item.text}}</view>
+</block>

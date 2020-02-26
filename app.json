@@ -1,16 +1,15 @@
 {
-  "pages": [
+  "pages": [ 
     "pages/books/books",
-    "pages/index/index",
-    "pages/learning/learning",
     "pages/test/test",
+    "pages/index/index",
+    "pages/learning/learning", 
     "pages/wordBook/wordBook",
     "pages/mine/mine",
     "pages/learningSet/learningSet",
     "pages/calendar/calendar",
     "pages/record/record",  
     "pages/search/search", 
-    
     "pages/logs/logs"
   ],
   "window": {

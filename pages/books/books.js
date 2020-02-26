@@ -6,74 +6,86 @@ Page({
    */
   data: {
     type:[],
-    book:[]  
+    book:[],
+    current:-1
   },
-  bindClick:function(e,id){
+  bindClick:function(e){
     var that=this;
-    var typeName='';
-    var index = e.currentTarget.dataset.id-1;
-    var flag='type['+index+'].isShow'
-    that.setData({
-      [flag]:!that.data.type[index].isShow
-    })
-    typeName=e.currentTarget.dataset.text;
-    wx.request({
-      url: 'http://192.168.1.108:8080/MiniProgram/selByType.do',
-      method:'GET',
-      data:{
-        type:typeName
-      },
-      header:{
-        'content-type':'application/json'
-      },
-      success:function(res){
-        that.setData({
-          book:res.data
-        })
-        console.log(that.data.book)
-      },
-      fail:function(res){
-        console.log(fail);
-      }
+    let typeName = e.currentTarget.dataset.text;;
+    let index = e.currentTarget.dataset.index;
+    let current = -1
+    console.log(index)
+    that.getBookMess(typeName,index)
+    if (this.data.current != index) {
+      current = index
+    }
+    this.setData({
+      current: current
     })
   },
   bindChangeIt:function(e){
     console.log(e.currentTarget.dataset.text)
   },
+  getTypeMess: function () {
+    var that = this;
+    wx.request({
+      url: 'http://192.168.1.108:8080/MiniProgram/selAllType.do',
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          type: res.data
+        })
+        that.data.type.forEach((r) => {
+          r.book = [];
+        })
+        that.setData({
+          type: that.data.type,
+        })
+      },
+      fail: function (res) {
+        console.log("fail")
+      }
+    })
+  },
+  getBookMess: function (typeName,index) {
+    var that = this;
+    var books='type['+index+'].book'
+    console.log(typeName,index)
+    wx.request({
+      url: 'http://192.168.1.108:8080/MiniProgram/selByType.do',
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      data:{
+        type:typeName
+      },
+      success: function (res) {
+        that.setData({
+          [books]:res.data
+        })
+        console.log(res.data)
+      },
+      fail: function (res) {
+        console.log("fail")
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this;
-    wx.request({
-      url: 'http://192.168.1.108:8080/MiniProgram/selAllType.do',
-      method:'GET',
-      header:{
-        'content-type':'application/json'
-      },
-      success:function(res){
-        that.setData({
-          type:res.data
-        })
-        that.data.type.forEach((r)=>{
-          r.isShow=false;
-        })
-        that.setData({
-          type:that.data.type,
-        })
-        
-      },
-      fail:function(res){
-        console.log("fail")
-      }
-    })
+    this.getTypeMess()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
