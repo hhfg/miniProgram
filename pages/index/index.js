@@ -1,3 +1,4 @@
+var app=getApp();
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isHide: false,
-    day:228
+    day:228,
+    mybook:app.globalData.mybook
   },
   //换书
   bindChangeBook: function () {
@@ -96,6 +98,8 @@ Page({
       var avatarUrl = e.detail.userInfo.avatarUrl;
       console.log(nickName);
       console.log(avatarUrl);
+      app.globalData.username = nickName;
+      console.log(app.globalData.username)
       //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
       wx.request({
         url: 'http://localhost:8080/MiniProgram/login.do',

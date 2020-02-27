@@ -2,6 +2,11 @@
 page{
   background-color: #F5F5F5;
 }
+.my{
+  background-color: #ffffff;
+  align-items: center;
+  padding: 5px 15px 5px 15px;
+}
 .item{
   background-color: #ffffff;
   display: flex;

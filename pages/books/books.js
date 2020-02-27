@@ -1,21 +1,26 @@
 // pages/books/books.js
+var app=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    mybook:app.globalData.mybook,
     type:[],
     book:[],
     current:-1
   },
   bindClick:function(e){
     var that=this;
+    // 当前点击的类型
     let typeName = e.currentTarget.dataset.text;;
+    // 当前点击的index
     let index = e.currentTarget.dataset.index;
     let current = -1
-    console.log(index)
+    // 获取当前点击的类型的所有书名
     that.getBookMess(typeName,index)
+    // 设置current==index，显示view
     if (this.data.current != index) {
       current = index
     }
@@ -23,13 +28,65 @@ Page({
       current: current
     })
   },
+
   bindChangeIt:function(e){
-    console.log(e.currentTarget.dataset.text)
+    let flag=0;
+    wx.showModal({
+      title: '提示',
+      content: '确定选择此书吗',
+      success(res){
+        if(res.confirm){
+          wx.request({
+            url: app.globalData.url+'/setMyBook.do',
+            method:'GET',
+            header:{
+              'content-type':'application/json'
+            },
+            data:{
+              username:app.globalData.username,
+              bookid: e.currentTarget.dataset.id
+            },
+            success:function(res){
+              // 更新成功
+              if(res.data==1){
+                // 设置全局变量mybook的值
+                app.globalData.mybook = e.currentTarget.dataset.text
+                flag=1
+                wx.showToast({
+                  title: '成功',
+                  icon:'success',
+                  duration:1000
+                })
+              }
+              // 更新不成功
+              else if(res.data==0){
+                wx.showToast({
+                  title: '设置失败，请重新选择',
+                  icon:'none',
+                  duration: 1000
+                })
+              }
+            },
+            fail:function(res){
+              wx.showToast({
+                title:'请求失败',
+                duration: 1000
+              })
+            }
+          })
+        }else{
+          console.log("用户选择了取消")
+        }
+      }
+    })
+    this.onReady()
+    
   },
+  //请求所有类型
   getTypeMess: function () {
     var that = this;
     wx.request({
-      url: 'http://192.168.1.108:8080/MiniProgram/selAllType.do',
+      url: app.globalData.url+'/selAllType.do',
       method: 'GET',
       header: {
         'content-type': 'application/json'
@@ -50,12 +107,13 @@ Page({
       }
     })
   },
+  //请求当前点击的类型的所有书名
   getBookMess: function (typeName,index) {
     var that = this;
     var books='type['+index+'].book'
     console.log(typeName,index)
     wx.request({
-      url: 'http://192.168.1.108:8080/MiniProgram/selByType.do',
+      url: app.globalData.url +'/selByType.do',
       method: 'GET',
       header: {
         'content-type': 'application/json'
@@ -67,7 +125,6 @@ Page({
         that.setData({
           [books]:res.data
         })
-        console.log(res.data)
       },
       fail: function (res) {
         console.log("fail")
