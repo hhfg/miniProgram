@@ -39,7 +39,6 @@ Page({
       complete:function(){
         //complete
       }
-
     })
   },
   //查词
@@ -72,11 +71,7 @@ Page({
               // 用户已经授权过,不需要显示授权页面,所以不需要改变 isHide 的值
               // 根据自己的需求有其他操作再补充
               // 我这里实现的是在用户授权成功后，调用微信的 wx.login 接口，从而获取code
-              wx.login({
-                success: res => {
-
-                }
-              });
+              that.getBookMess();
             }
           });
         } else {
@@ -102,7 +97,7 @@ Page({
       console.log(app.globalData.username)
       //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
       wx.request({
-        url: 'http://localhost:8080/MiniProgram/login.do',
+        url: app.globalData.url+'/login.do',
         data: {
           username: nickName,
           profileUrl: avatarUrl
@@ -137,6 +132,28 @@ Page({
       });
     }
   },
+  getBookMess:function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/selBookByUser.do',
+      method: 'GET',
+      data: {
+        username: app.globalData.username
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          mybook: res.data
+        })
+        app.globalData.mybook = that.data.mybook
+      },
+      fail: function (res) {
+        console.log("fail")
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -148,7 +165,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getBookMess()
   },
 
   /**

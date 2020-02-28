@@ -9,11 +9,14 @@ Page({
   },
   //更改学习计划
   bindDateChange: function (e) {
-    console.log(e.detail.value)
-    wx.showToast({
-      title: '更改成功',
-      icon: 'success',
-      duration: 2000
+    wx.navigateTo({
+      url: '../learningPlan/learningPlan',
+      success:function(res){
+        console.log(res)
+      },
+      fail:function(res){
+        console.log("fail")
+      }
     })
   },
   //打卡日历

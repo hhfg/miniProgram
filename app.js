@@ -34,7 +34,7 @@ App({
     })
   },
   globalData: {
-    url:'http://localhost:8080/MiniProgram',
+    url:'http://192.168.1.108:8080/MiniProgram',
     userInfo: null,
     username:'',
     mybook:''

@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    mybook:app.globalData.mybook,
+    mybook:'',
     type:[],
     book:[],
     current:-1
@@ -30,57 +30,63 @@ Page({
   },
 
   bindChangeIt:function(e){
-    let flag=0;
+    var that=this;
+    let flag=0;   
     wx.showModal({
       title: '提示',
       content: '确定选择此书吗',
       success(res){
         if(res.confirm){
-          wx.request({
-            url: app.globalData.url+'/setMyBook.do',
-            method:'GET',
-            header:{
-              'content-type':'application/json'
-            },
-            data:{
-              username:app.globalData.username,
-              bookid: e.currentTarget.dataset.id
-            },
-            success:function(res){
-              // 更新成功
-              if(res.data==1){
-                // 设置全局变量mybook的值
-                app.globalData.mybook = e.currentTarget.dataset.text
-                flag=1
-                wx.showToast({
-                  title: '成功',
-                  icon:'success',
-                  duration:1000
-                })
-              }
-              // 更新不成功
-              else if(res.data==0){
-                wx.showToast({
-                  title: '设置失败，请重新选择',
-                  icon:'none',
-                  duration: 1000
-                })
-              }
-            },
-            fail:function(res){
-              wx.showToast({
-                title:'请求失败',
-                duration: 1000
-              })
-            }
-          })
+          that.setMyBook(e.currentTarget.dataset.text,e.currentTarget.dataset.id);
         }else{
           console.log("用户选择了取消")
         }
       }
     })
-    this.onReady()
-    
+    this.onShow();
+  },
+  setMyBook:function(bookname,id){
+    var that=this;
+    wx.request({
+      url: app.globalData.url + '/setMyBook.do',
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        username: app.globalData.username,
+        bookid: id
+      },
+      success: function (res) {
+        // 更新成功
+        if (res.data == 1) {
+          // 设置全局变量mybook的值
+          app.globalData.mybook = bookname
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 1000
+          })
+          that.setData({
+            mybook:bookname
+          })
+        }
+        // 更新不成功
+        else if (res.data == 0) {
+          wx.showToast({
+            title: '设置失败，请重新选择',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '请求失败',
+          duration: 1000
+        })
+      }
+    })
   },
   //请求所有类型
   getTypeMess: function () {
@@ -136,6 +142,9 @@ Page({
    */
   onLoad: function (options) {
     this.getTypeMess()
+    this.setData({
+      mybook:app.globalData.mybook
+    })
   },
 
   /**
@@ -149,7 +158,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      mybook:app.globalData.mybook
+    })
   },
 
   /**

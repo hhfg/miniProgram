@@ -25,7 +25,7 @@
   <view class="item" hover-class="click">
     <view class="icon"><image src="../../icons/mine/schedule.png" style="width:25px;height:25px;"></image></view>
     <view class="itemName">
-      <view><picker mode="date" bindchange="bindDateChange">更改学习计划</picker></view>
+      <view bindtap="bindDateChange">更改学习计划</view>
     </view>
     <view class="right"><text class="opr">></text></view>
   </view>

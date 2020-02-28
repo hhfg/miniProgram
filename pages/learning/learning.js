@@ -51,8 +51,11 @@ Page({
     var page = that.data.pos
     wx.request({
       //url: 'http://localhost:8080/MiniProgram/selWords.do',
-      url:'http://192.168.1.108:8080/MiniProgram/selWords.do',
+      url:app.globalData.url+'/selWords.do',
       method:'GET',
+      data:{
+        bookName:app.globalData.mybook
+      },
       header:{
         'content-type':'application/json'
       },

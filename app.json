@@ -1,13 +1,12 @@
 {
   "pages": [
+    "pages/mine/mine",
+    "pages/learningPlan/learningPlan",
     "pages/index/index", 
     "pages/books/books",
-    
     "pages/test/test",
-    
     "pages/learning/learning", 
     "pages/wordBook/wordBook",
-    "pages/mine/mine",
     "pages/learningSet/learningSet",
     "pages/calendar/calendar",
     "pages/record/record",  
