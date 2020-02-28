@@ -65,7 +65,14 @@ Page({
           wx.showToast({
             title: '成功',
             icon: 'success',
-            duration: 1000
+            duration: 1000,
+            success:function(){
+              setTimeout(function(){
+                wx.navigateTo({
+                  url: '../learningPlan/learningPlan',
+                },1000);
+              })
+            }
           })
           that.setData({
             mybook:bookname
