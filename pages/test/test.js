@@ -2,6 +2,7 @@ const date=new Date()
 const years=[]
 const months=[]
 const days=[]
+const bigMonth=[1,3,5,7,8,10,12]
 for(let i=1990;i<=date.getFullYear();i++){
   years.push(i)
 }
@@ -26,12 +27,61 @@ Page({
     year:date.getFullYear(),
     value:[9999,1,1]
   },
-  bindChange:function(e){
-    const val=e.detail.value
+  showToask:function(){
+    wx.showToast({
+      title: '成功',
+      icon:'success',
+      duration:2000
+    })
+  },
+  contains:function(arr,obj){
+    var i=arr.length;
+    while(i--){
+      if(arr[i]==obj){
+        return true;
+      }
+    }
+  },
+  setDays:function(day){
+    const temp=[];
+    for(let i=1;i<=day;i++){
+      temp.push(i)
+    }
     this.setData({
-      year:this.data.years[val[0]],
-      month:this.data.months[val[1]],
-      day:this.data.days[val[2]]
+      days:temp,
+    })
+  },
+  showLoading:function(){
+    wx.showLoading({
+      title: '加载中...',
+    }),setTimeout(function(){
+      wx.hideLoading()
+    },2000)
+  },
+  bindChange:function(e){
+    const val=e.detail.value;
+    const setYear=this.data.years[val[0]];
+    const setMonth = this.data.months[val[1]];
+    const setDay = this.data.days[val[2]];
+    // 闰年
+    if(setMonth==2){
+      if ((setYear % 4 == 0 && setYear % 100 != 0)||setYear%400==0){
+        //闰年
+        this.setDays(29);
+      }else{
+        this.setDays(28);
+      }
+    } else {
+      if (this.contains(bigMonth, setMonth)) {
+        this.setDays(31)
+      } else {
+        this.setDays(30)
+      }
+    }
+    this.setData({
+      year:setYear,
+      month:setMonth,
+      day:setDay
     })
   },
 

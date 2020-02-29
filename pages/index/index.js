@@ -26,7 +26,7 @@ Page({
       }
     })
   },
-
+  // 开始学习
   bindLearning:function(){
     wx.navigateTo({
       url: '../learning/learning',
@@ -132,6 +132,7 @@ Page({
       });
     }
   },
+  // 获取用户选择的单词书名
   getBookMess:function(){
     var that = this;
     wx.request({
