@@ -54,7 +54,7 @@ Page({
       url:app.globalData.url+'/selWords.do',
       method:'GET',
       data:{
-        bookName:app.globalData.mybook
+        bookName:app.globalData.mybook.bookName
       },
       header:{
         'content-type':'application/json'

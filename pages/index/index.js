@@ -9,7 +9,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isHide: false,
     day:228,
-    mybook:app.globalData.mybook
+    mybook:app.globalData.mybook,
+    learningNum:app.globalData.mybook.wordNum
   },
   //换书
   bindChangeBook: function () {
@@ -146,9 +147,12 @@ Page({
       },
       success: function (res) {
         that.setData({
-          mybook: res.data
+          mybook:{
+            bookName: res.data.bookName,
+            wordNum: res.data.wordNum
+          }
         })
-        app.globalData.mybook = that.data.mybook
+        app.globalData.mybook=that.data.mybook
       },
       fail: function (res) {
         console.log("fail")
@@ -166,7 +170,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getBookMess()
+    this.getBookMess();
+
   },
 
   /**

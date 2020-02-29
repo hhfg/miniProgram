@@ -37,6 +37,9 @@ App({
     url:'http://192.168.1.108:8080/MiniProgram',
     userInfo: null,
     username:'',
-    mybook:''
+    mybook:{
+      bookName:'',
+      wordNum:0
+    }
   }
 })

@@ -6,11 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    mybook:'',
+    bookname:'', //之前已选中的书
+    mybook:app.globalData.mybook,
     type:[],
     book:[],
-    current:-1
+    current:-1,
+    num:0
   },
+  //点击了某种类型
   bindClick:function(e){
     var that=this;
     // 当前点击的类型
@@ -28,16 +31,18 @@ Page({
       current: current
     })
   },
-
+  //点击更换书
   bindChangeIt:function(e){
     var that=this;
-    let flag=0;   
+    app.globalData.mybook.wordNum=e.currentTarget.dataset.num
+    
     wx.showModal({
       title: '提示',
       content: '确定选择此书吗',
       success(res){
         if(res.confirm){
-          that.setMyBook(e.currentTarget.dataset.text,e.currentTarget.dataset.id);
+          
+          that.setMyBook(e.currentTarget.dataset.text, e.currentTarget.dataset.id, e.currentTarget.dataset.num);
         }else{
           console.log("用户选择了取消")
         }
@@ -45,7 +50,7 @@ Page({
     })
     this.onShow();
   },
-  setMyBook:function(bookname,id){
+  setMyBook:function(bookname,id,num){
     var that=this;
     wx.request({
       url: app.globalData.url + '/setMyBook.do',
@@ -61,7 +66,14 @@ Page({
         // 更新成功
         if (res.data == 1) {
           // 设置全局变量mybook的值
-          app.globalData.mybook = bookname
+          that.setData({
+            mybook:{
+              bookName:bookname,
+              wordNum:num
+            }
+          })
+          app.globalData.mybook = that.data.mybook
+          console.log(app.globalData.mybook.wordNum)
           wx.showToast({
             title: '成功',
             icon: 'success',
@@ -75,7 +87,7 @@ Page({
             }
           })
           that.setData({
-            mybook:bookname
+            bookname:bookname
           })
         }
         // 更新不成功
@@ -135,8 +147,9 @@ Page({
         type:typeName
       },
       success: function (res) {
+        console.log(res.data)
         that.setData({
-          [books]:res.data
+          [books]:res.data,
         })
       },
       fail: function (res) {

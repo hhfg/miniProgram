@@ -1,5 +1,5 @@
 <!--pages/books/books.wxml-->
-<view class="my">当前选择词书：{{mybook}}</view>
+<view class="my">当前选择词书：{{mybook.bookName}}</view>
 <view class="hr"></view>
 <view wx:for="{{type}}" wx:key="typename">
   <view class="item" bindtap="bindClick" data-text="{{item.typecode}}" data-index="{{index}}">
@@ -8,7 +8,7 @@
       <view>{{item.typename}}</view>
     </view>
   </view>
-  <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.book}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-id="{{itemName.id}}" data-text="{{itemName.bookName}}">
+  <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.book}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-id="{{itemName.id}}" data-text="{{itemName.bookName}}" data-num="{{itemName.wordNum}}">
     <view class="bookName">{{itemName.bookName}}</view>
     <view class="wordsNum">{{itemName.wordNum}}</view>
   </view>

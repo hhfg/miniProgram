@@ -19,10 +19,10 @@
       <view class="right" ><image src="../../icons/index/calendar.png" style="width:15px;height:15px;" />打卡日历></view>
     </view>
     <view class="book" style="background-color:#87CEEB" >
-      <view class="bookName">{{mybook}}<image src="../../icons/index/change.png" style="width:20px;height:20px" bindtap="bindChangeBook"></image></view>
+      <view class="bookName">{{mybook.bookName}}<image src="../../icons/index/change.png" style="width:20px;height:20px" bindtap="bindChangeBook"></image></view>
       <view class="tip">
         <text>已完成20%</text>
-        <text class="fraction">100/2650</text>
+        <text class="fraction">100/{{mybook.wordNum}}</text>
         <progress percent="20"></progress>
       </view >
 
@@ -31,7 +31,7 @@
       <text>今日任务</text>
       <view class="task">
         <view class="desc">
-          <view class="num">30</view>
+          <view class="num">{{learningNum}}</view>
           <view class="text1">待学</view> 
         </view>
         <view class="desc">

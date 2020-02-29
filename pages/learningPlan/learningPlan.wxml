@@ -27,7 +27,7 @@
     <view style="text-align:center;font-size:12px;">每天目标</view>
     <view class="task">
       <view class="desc">
-        <view class="num">30</view>
+        <view class="num">{{learningNum}}</view>
         <view class="text1">待学</view> 
       </view>
       <view class="desc">

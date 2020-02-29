@@ -1,4 +1,5 @@
 // pages/learningPlan/learningPlan.js
+var app=getApp();
 var util=require("../../utils/util.js")
 const date = new Date()
 const years = []
@@ -27,7 +28,8 @@ Page({
     day:0,
     year: date.getFullYear(),
     value: [9999, 0, 0],
-    learningDay:0  
+    learningDay:0,
+    learningNum:0,
   },
   contains: function (arr, obj) {
     var i = arr.length;
@@ -68,19 +70,22 @@ Page({
     }
     const time = util.formatDate(new Date()); //当天日期
     const endTime = this.data.years[val[0]] + "-" + this.data.months[val[1]] + "-" + this.data.days[val[2]]; //选择的
-    let temp = new Date(time.replace(/-/g, "/"));
+    let temp = new Date(time.replace(/-/g, "/"));//解析字符串
     let etemp = new Date(endTime.replace(/-/g, "/"));
-    let learningDay = parseInt((etemp.getTime() - temp.getTime()) / (1000 * 60 * 60 * 24))
+    let learningDay = parseInt((etemp.getTime() - temp.getTime()) / (1000 * 60 * 60 * 24));
+    let num = parseInt(app.globalData.mybook.wordNum / learningDay) 
     this.setData({
       learningDay:learningDay,
       year: setYear,
       month:setMonth,
-      day: setDay
-    })
-    
+      day: setDay,
+      learningNum:num
+    })    
   },
+  // 点击确定后
   bindConfirm:function(){
     console.log(this.data.year + "-" + this.data.month + "-" + this.data.day)
+    // 跳出提示框设置成功
     wx.showToast({
       title: '设置成功',
       icon:'success',
