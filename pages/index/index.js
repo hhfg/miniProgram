@@ -5,9 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    //判断小程序的API，回调，参数，组件等是否在当前版本可用。
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isHide: false,
     day:228,
     mybook:app.globalData.mybook,
     learningNum:app.globalData.mybook.wordNum
@@ -58,83 +55,8 @@ Page({
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var that = this;
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              // 用户已经授权过,不需要显示授权页面,所以不需要改变 isHide 的值
-              // 根据自己的需求有其他操作再补充
-              // 我这里实现的是在用户授权成功后，调用微信的 wx.login 接口，从而获取code
-              that.getBookMess();
-            }
-          });
-        } else {
-          // 用户没有授权
-          // 改变 isHide 的值，显示授权页面
-          that.setData({
-            isHide: true
-          });
-        }
-      }
-    });
-  },
-  bindGetUserInfo: function (e) {
-    if (e.detail.userInfo) {
-      //用户按了允许授权按钮
-      var that = this;
-      // 获取到用户的信息了，打印到控制台上看下
-      var nickName = e.detail.userInfo.nickName;
-      var avatarUrl = e.detail.userInfo.avatarUrl;
-      console.log(nickName);
-      console.log(avatarUrl);
-      app.globalData.username = nickName;
-      console.log(app.globalData.username)
-      //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
-      wx.request({
-        url: app.globalData.url+'/login.do',
-        data: {
-          username: nickName,
-          profileUrl: avatarUrl
-        },
-        method: 'GET',
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          console.log(res.data);
-        },
-        fail: function (res) {
-          console.log("fail...")
-        }
-      })
-      that.setData({
-        isHide: false
-      });
-    } else {
-      //用户按了拒绝按钮
-      wx.showModal({
-        title: '警告',
-        content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
-        showCancel: false,
-        confirmText: '返回授权',
-        success: function (res) {
-          // 用户没有授权成功，不需要改变 isHide 的值
-          if (res.confirm) {
-            console.log('用户点击了“返回授权”');
-          }
-        }
-      });
-    }
-  },
-  // 获取用户选择的单词书名
-  getBookMess:function(){
+    // 获取用户选择的单词书名
+  getBookMess: function () {
     var that = this;
     wx.request({
       url: app.globalData.url + '/selBookByUser.do',
@@ -147,18 +69,48 @@ Page({
       },
       success: function (res) {
         that.setData({
-          mybook:{
+          mybook: {
             bookName: res.data.bookName,
             wordNum: res.data.wordNum
           }
         })
-        app.globalData.mybook=that.data.mybook
+        app.globalData.mybook = that.data.mybook
       },
       fail: function (res) {
         console.log("fail")
       }
     })
   },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // 获取用户信息
+    wx.checkSession({
+      success:function(){
+        console.log("登录状态未过期");
+      },
+      fail:function(){
+        wx.navigateTo({
+          url: '../login/login',
+        })
+      }
+    })
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          console.log("已授权")
+
+        } else {
+          console.log("未授权")
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        }
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -170,7 +122,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getBookMess();
 
   },
 
