@@ -21,6 +21,7 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
+      app.globalData.userInfo=e.detail.userInfo;
       wx.login({
         success:function(res){
           var code=res.code
@@ -43,7 +44,7 @@ Page({
                     city:e.detail.userInfo.city
                   },
                   success:function(res){
-                    console.log(res.result);
+                    console.log("用户的id:"+res.data);
                   },
                   fail:function(){
                     console.log("用户存入数据库失败");

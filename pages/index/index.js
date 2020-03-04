@@ -81,14 +81,30 @@ Page({
       }
     })
   },
+  queryUserInfo:function(){
+    console.log("query")
+    wx.request({
+      url: app.globalData.url + '/selPersonalData.do',
+      data: {
+        nickName: app.globalData.userInfo.nickName
+      },
+      success: function (res) {
+        console.log(res.data);
+      },
+      fail: function (res) {
+        console.log("请求用户信息失败");
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取用户信息
+    var that = this;
+    // 检查登录状态
     wx.checkSession({
       success:function(){
-        console.log("登录状态未过期");
+
       },
       fail:function(){
         wx.navigateTo({
@@ -100,6 +116,12 @@ Page({
       success: function (res) {
         if (res.authSetting['scope.userInfo']) {
           console.log("已授权")
+          wx.getUserInfo({
+            success:res=>{
+              app.globalData.userInfo=res.userInfo
+              that.queryUserInfo();
+            }
+          })
 
         } else {
           console.log("未授权")
