@@ -15,11 +15,13 @@ App({
         callback(false)
       }
     })
-
   },
+
     globalData: {
-    url:'http://192.168.1.108:8080/MiniProgram',
+      url:'http://192.168.1.104:8080/MiniProgram',
+    //url:'http://localhost:8080/MiniProgram',
     userInfo: null,
+    userData:null,
     openid:'',
     username:'',
     mybook:{

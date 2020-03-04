@@ -1,5 +1,6 @@
 // pages/login/login.js
 var app=getApp();
+var util = require("../../utils/util.js")
 Page({
 
   /**
@@ -26,44 +27,25 @@ Page({
         success:function(res){
           var code=res.code
           if(code){
-            wx.request({
-              url: app.globalData.url + '/decodeUsers.do',
-              data: {
-                code: code
-              },
-              success:function(res){
-                let openid=res.data.openid;
-                wx.request({
-                  url: app.globalData.url+'/login.do',
-                  data:{
-                    openid:openid,
-                    nickName:e.detail.userInfo.nickName,
-                    avatarUrl:e.detail.userInfo.avatarUrl,
-                    gender:e.detail.userInfo.gender,
-                    province:e.detail.userInfo.province,
-                    city:e.detail.userInfo.city
-                  },
-                  success:function(res){
-                    console.log("用户的id:"+res.data);
-                  },
-                  fail:function(){
-                    console.log("用户存入数据库失败");
-                  }
-                })
-              },
-              fail:function(res){
-                console.log("获取用户openid失败")
-              }
-            })
+            util.requestData("login.do", {
+                code: code,
+                nickName: app.globalData.userInfo.nickName,
+                avatarUrl: app.globalData.userInfo.avatarUrl,
+                gender: app.globalData.userInfo.gender,
+                province: app.globalData.userInfo.province,
+                city: app.globalData.userInfo.city
+              }).then(res=>{
+                console.log(res);
+              })
           }else{
             console.log("获取用户登录凭证失败");
           }
         }
       })
-      //授权成功后，跳转进入小程序首页
-      wx.switchTab({
-        url: '../index/index'
+      wx.reLaunch({
+        url: '../index/index',
       })
+
     } else {
       //用户按了拒绝按钮
       wx.showModal({

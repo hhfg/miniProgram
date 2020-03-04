@@ -1,13 +1,13 @@
 var app=getApp();
+var util = require("../../utils/util.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    day:228,
-    mybook:app.globalData.mybook,
-    learningNum:app.globalData.mybook.wordNum
+    day:0,
+    personalData:["q"]
   },
   //换书
   bindChangeBook: function () {
@@ -82,47 +82,34 @@ Page({
     })
   },
   queryUserInfo:function(){
-    console.log("query")
-    wx.request({
-      url: app.globalData.url + '/selPersonalData.do',
-      data: {
-        nickName: app.globalData.userInfo.nickName
-      },
-      success: function (res) {
-        console.log(res.data);
-      },
-      fail: function (res) {
-        console.log("请求用户信息失败");
-      }
+    var that=this;
+    util.requestData("selPersonalData.do", { 
+      nickName: app.globalData.userInfo.nickName
+      }).then(res=>{
+        console.log(res)
+        that.setData({
+          personalData:res
+        })
     })
+    
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    // 检查登录状态
-    wx.checkSession({
-      success:function(){
-
-      },
-      fail:function(){
-        wx.navigateTo({
-          url: '../login/login',
-        })
-      }
-    })
-    wx.getSetting({
+    //查看是否授权
+    wx.getSetting({   
       success: function (res) {
         if (res.authSetting['scope.userInfo']) {
           console.log("已授权")
           wx.getUserInfo({
-            success:res=>{
-              app.globalData.userInfo=res.userInfo
+            success: (res) => {
+              app.globalData.userInfo = res.userInfo
               that.queryUserInfo();
+              console.log(that.data.personalData)
             }
           })
-
         } else {
           console.log("未授权")
           wx.navigateTo({
@@ -137,14 +124,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+   
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

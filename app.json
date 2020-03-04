@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",   
-    "pages/login/login", 
+     "pages/login/login",  
     "pages/learningPlan/learningPlan",
     "pages/test/test",
     "pages/mine/mine",
@@ -11,7 +11,7 @@
     "pages/learningSet/learningSet",
     "pages/calendar/calendar",
     "pages/record/record",  
-    "pages/search/search", 
+    "pages/search/search",
     "pages/logs/logs"
   ],
   "window": {
