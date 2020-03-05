@@ -1,5 +1,5 @@
-var app=getApp();
-var util = require("../../utils/util.js")
+const app=getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -7,7 +7,7 @@ Page({
    */
   data: {
     day:0,
-    personalData:["q"]
+    userData:app.globalData.userData
   },
   //换书
   bindChangeBook: function () {
@@ -81,57 +81,50 @@ Page({
       }
     })
   },
-  queryUserInfo:function(){
-    var that=this;
-    util.requestData("selPersonalData.do", { 
-      nickName: app.globalData.userInfo.nickName
-      }).then(res=>{
-        console.log(res)
-        that.setData({
-          personalData:res
-        })
-    })
-    
-  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
     //查看是否授权
-    wx.getSetting({   
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          console.log("已授权")
-          wx.getUserInfo({
-            success: (res) => {
-              app.globalData.userInfo = res.userInfo
-              that.queryUserInfo();
-              console.log(that.data.personalData)
-            }
+    common.getSetting().then((res)=>{
+      if(res==="已授权"){
+        common.sendRequest("selPersonalData.do",{
+          nickName:app.globalData.userInfo.nickName}
+          ).then((res)=>{
+          console.log(res)
+          app.globalData.userData=res
+          that.setData({
+            userData:res
           })
-        } else {
-          console.log("未授权")
-          wx.navigateTo({
-            url: '../login/login',
-          })
-        }
+        }).catch((res)=>{
+          console.log(res)
+        })
+      }else if(res=="未授权"){
+        wx.navigateTo({
+          url: '../login/login',
+        })
       }
+    }).catch((res)=>{
+      console.log(res)
     })
+      
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-   
+    console.log("onReady")
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    console.log("onShow")
   },
 
   /**

@@ -1,13 +1,13 @@
 <view class="head">
   <view class="clock_in">
-    <view class="left"><text class="day">{{day}}</text>天</view>
+    <view class="left"><text class="day">{{userData.learningDays}}</text>天</view>
     <view class="right" ><image src="../../icons/index/calendar.png" style="width:15px;height:15px;" />打卡日历></view>
   </view>
   <view class="book" style="background-color:#87CEEB" >
     <view class="bookName">{{mybook.bookName}}<image src="../../icons/index/change.png" style="width:20px;height:20px" bindtap="bindChangeBook"></image></view>
     <view class="tip">
       <text>已完成20%</text>
-      <text class="fraction">100/{{mybook.wordNum}}</text>
+      <text class="fraction">{{userData.completedNums}}/{{mybook.wordNum}}</text>
       <progress percent="20"></progress>
     </view >
   </view>
@@ -15,11 +15,11 @@
     <text>今日任务</text>
     <view class="task">
       <view class="desc">
-        <view class="num">{{learningNum}}</view>
+        <view class="num">{{userData.haveToLearn}}</view>
         <view class="text1">待学</view> 
       </view>
       <view class="desc">
-        <view class="num">20</view>
+        <view class="num">{{userData.haveToReview}}</view>
         <view class="text1">待复习</view> 
       </view>
     </view>

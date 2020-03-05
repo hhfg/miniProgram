@@ -2,6 +2,7 @@
 var app=getApp();
 App({
   onLaunch: function () {
+    var that=this;
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -14,6 +15,11 @@ App({
       fail:function(){
         callback(false)
       }
+    }),
+    wx.getUserInfo({   
+      success:function(res){
+        that.globalData.userInfo=res.userInfo
+      }
     })
   },
 
@@ -22,7 +28,6 @@ App({
     //url:'http://localhost:8080/MiniProgram',
     userInfo: null,
     userData:null,
-    openid:'',
     username:'',
     mybook:{
       bookName:'',
