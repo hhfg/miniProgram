@@ -8,10 +8,10 @@
       <view>{{item.typename}}</view>
     </view>
   </view>
-  <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.book}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-id="{{itemName.id}}" data-text="{{itemName.bookName}}" data-num="{{itemName.wordNum}}">
+  <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.wordBooks}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-id="{{itemName.id}}"  data-num="{{itemName.wordNum}}" data-bookname="{{itemName.bookName}}">
     <view class="bookName">{{itemName.bookName}}</view>
     <view class="wordsNum">{{itemName.wordNum}}</view>
-  </view>
+  </view> 
   <view class="hr"></view>
 </view>
 

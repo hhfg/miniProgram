@@ -17,8 +17,8 @@ function sendRequest(url, data) {
           resolve(res.data)
         } else {
           wx.showModal({
-            title: '加载数据失败',
-            content: '请检查网络连接',
+            title: '服务器出错',
+            content: '请重新试试',
             showCancel: false,
           })
         }

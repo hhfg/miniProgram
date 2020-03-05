@@ -28,7 +28,7 @@ App({
     //url:'http://localhost:8080/MiniProgram',
     userInfo: null,
     userData:null,
-    username:'',
+    //选择的词书的信息（书名，单词数）
     mybook:{
       bookName:'',
       wordNum:0

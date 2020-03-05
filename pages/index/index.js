@@ -7,7 +7,8 @@ Page({
    */
   data: {
     day:0,
-    userData:app.globalData.userData
+    userData:app.globalData.userData,
+    mybook:app.globalData.mybook
   },
   //换书
   bindChangeBook: function () {
@@ -90,10 +91,11 @@ Page({
     //查看是否授权
     common.getSetting().then((res)=>{
       if(res==="已授权"){
+        //请求后台数据
         common.sendRequest("selPersonalData.do",{
           nickName:app.globalData.userInfo.nickName}
           ).then((res)=>{
-          console.log(res)
+          //将数据存储在userData中 
           app.globalData.userData=res
           that.setData({
             userData:res
@@ -102,6 +104,7 @@ Page({
           console.log(res)
         })
       }else if(res=="未授权"){
+        //跳转到登录页
         wx.navigateTo({
           url: '../login/login',
         })
@@ -116,7 +119,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("onReady")
     
   },
 
@@ -124,7 +126,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("onShow")
+
   },
 
   /**

@@ -1,5 +1,6 @@
 // pages/books/books.js
-var app=getApp();
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -9,20 +10,15 @@ Page({
     bookname:'', //之前已选中的书
     mybook:app.globalData.mybook,
     type:[],
-    book:[],
     current:-1,
     num:0
   },
   //点击了某种类型
   bindClick:function(e){
     var that=this;
-    // 当前点击的类型
-    let typeName = e.currentTarget.dataset.text;;
     // 当前点击的index
     let index = e.currentTarget.dataset.index;
     let current = -1
-    // 获取当前点击的类型的所有书名
-    that.getBookMess(typeName,index)
     // 设置current==index，显示view
     if (this.data.current != index) {
       current = index
@@ -33,16 +29,16 @@ Page({
   },
   //点击更换书
   bindChangeIt:function(e){
+    console.log(e.currentTarget.dataset.id)
     var that=this;
-    app.globalData.mybook.wordNum=e.currentTarget.dataset.num
-    
     wx.showModal({
       title: '提示',
       content: '确定选择此书吗',
       success(res){
-        if(res.confirm){
-          
-          that.setMyBook(e.currentTarget.dataset.text, e.currentTarget.dataset.id, e.currentTarget.dataset.num);
+        //用户点击了确定
+        if(res.confirm){    
+          //调用函数将用户名和点击的书名的id传过去      
+          that.setMyBook(e.currentTarget.dataset.bookname, e.currentTarget.dataset.id,e.currentTarget.dataset.num);
         }else{
           console.log("用户选择了取消")
         }
@@ -50,30 +46,24 @@ Page({
     })
     this.onShow();
   },
+  //设置我选择的词书
   setMyBook:function(bookname,id,num){
     var that=this;
-    wx.request({
-      url: app.globalData.url + '/setMyBook.do',
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      data: {
-        username: app.globalData.username,
-        bookid: id
-      },
-      success: function (res) {
-        // 更新成功
-        if (res.data == 1) {
-          // 设置全局变量mybook的值
+    console.log(bookname,id,num)
+    //向后台发送请求
+    common.sendRequest("setMyBook.do",{
+      nickName: app.globalData.userInfo.nickName,
+      bookid:id
+      }).then((res)=>{
+        //返回1表示更新数据成功
+        if(res==1){
+          //更新mybook
           that.setData({
-            mybook:{
-              bookName:bookname,
-              wordNum:num
-            }
+            'mybook.bookName':bookname,
+            'mybook.wordNum':num
           })
-          app.globalData.mybook = that.data.mybook
-          console.log(app.globalData.mybook.wordNum)
+          console.log(that.data.mybook)
+          app.globalData.mybook=that.data.mybook
           wx.showToast({
             title: '成功',
             icon: 'success',
@@ -86,85 +76,103 @@ Page({
               })
             }
           })
-          that.setData({
-            bookname:bookname
-          })
         }
-        // 更新不成功
-        else if (res.data == 0) {
+        //否则设置失败
+        else{
           wx.showToast({
             title: '设置失败，请重新选择',
             icon: 'none',
             duration: 1000
           })
         }
-      },
-      fail: function (res) {
-        wx.showToast({
-          title: '请求失败',
-          duration: 1000
+      }).catch((res)=>{
+        console.log(res)
+        wx.showModal({
+          title: '加载数据失败',
+          content: '请检查网络连接',
+          showCancel: false,
         })
-      }
-    })
+      })
+    // wx.request({
+    //   url: app.globalData.url + '/setMyBook.do',
+    //   method: 'GET',
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   data: {
+    //     username: app.globalData.username,
+    //     bookid: id
+    //   },
+    //   success: function (res) {
+    //     // 更新成功
+    //     if (res.data == 1) {
+    //       // 设置全局变量mybook的值
+    //       that.setData({
+    //         mybook:{
+    //           bookName:bookname,
+    //           wordNum:num
+    //         }
+    //       })
+    //       app.globalData.mybook = that.data.mybook
+    //       console.log(app.globalData.mybook.wordNum)
+    //       wx.showToast({
+    //         title: '成功',
+    //         icon: 'success',
+    //         duration: 1000,
+    //         success:function(){
+    //           setTimeout(function(){
+    //             wx.navigateTo({
+    //               url: '../learningPlan/learningPlan',
+    //             },1000);
+    //           })
+    //         }
+    //       })
+    //       that.setData({
+    //         bookname:bookname
+    //       })
+    //     }
+    //     // 更新不成功
+    //     else if (res.data == 0) {
+    //       wx.showToast({
+    //         title: '设置失败，请重新选择',
+    //         icon: 'none',
+    //         duration: 1000
+    //       })
+    //     }
+    //   },
+    //   fail: function (res) {
+    //     wx.showToast({
+    //       title: '请求失败',
+    //       duration: 1000
+    //     })
+    //   }
+    // })
   },
-  //请求所有类型
-  getTypeMess: function () {
+  //加载页面数据
+  loadingData: function () {
     var that = this;
-    wx.request({
-      url: app.globalData.url+'/selAllType.do',
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
+    return new Promise(function(resolve,reject){
+      common.sendRequest("selAllType.do", {}).then((res) => {
         that.setData({
-          type: res.data
+          type: res
         })
-        that.data.type.forEach((r) => {
-          r.book = [];
-        })
-        that.setData({
-          type: that.data.type,
-        })
-      },
-      fail: function (res) {
-        console.log("fail")
-      }
+        wx.setStorageSync("wordBooksData", that.data.type)
+        resolve(true)
+      }).catch((res) => {
+        reject(false)
+        console.log(res)
+      })
     })
   },
-  //请求当前点击的类型的所有书名
-  getBookMess: function (typeName,index) {
-    var that = this;
-    var books='type['+index+'].book'
-    console.log(typeName,index)
-    wx.request({
-      url: app.globalData.url +'/selByType.do',
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      data:{
-        type:typeName
-      },
-      success: function (res) {
-        console.log(res.data)
-        that.setData({
-          [books]:res.data,
-        })
-      },
-      fail: function (res) {
-        console.log("fail")
-      }
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTypeMess()
-    this.setData({
-      mybook:app.globalData.mybook
-    })
+    //this.loadingData()
+    var that=this;
+    that.loadingData();
+
   },
 
   /**

@@ -1,6 +1,7 @@
 // pages/learningPlan/learningPlan.js
-var app=getApp();
-var util=require("../../utils/util.js")
+const app = getApp();
+const common = require("../../utils/common.js")
+const util = require("../../utils/util.js")
 const date = new Date()
 const years = []
 const months = []
@@ -85,19 +86,31 @@ Page({
   // 点击确定后
   bindConfirm:function(){
     console.log(this.data.year + "-" + this.data.month + "-" + this.data.day)
-    // 跳出提示框设置成功
-    wx.showToast({
-      title: '设置成功',
-      icon:'success',
-      duration:1000,
-      success: function () {
-        setTimeout(function () {
-          wx.navigateBack({
-            delta:2
+    let time = this.data.year + "-" + this.data.month + "-" + this.data.day
+    let haveToLearn=this.data.learningNum
+    common.sendRequest("updPersonalData.do",{haveToLearn:haveToLearn,endTime:time}).then((res)=>{
+      console.log(res)
+      // 跳出提示框设置成功
+      wx.showToast({
+        title: '设置成功',
+        icon: 'success',
+        duration: 1000,
+        success: function () {
+          setTimeout(function () {
+            wx.reLaunch({
+              url: '../index/index',
+            })
           })
-        })
-      }
+        }
+      })
+    }).catch((res)=>{
+      wx.showModal({
+        title: '设置失败',
+        content: '请重新设置',
+        showCancel: false,
+      })
     })
+
   },
   /**
    * 生命周期函数--监听页面加载
