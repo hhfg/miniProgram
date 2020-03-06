@@ -56,7 +56,7 @@ Page({
       }
     })
   },
-    // 获取用户选择的单词书名
+  // 获取用户选择的单词书名
   getBookMess: function () {
     var that = this;
     wx.request({
@@ -88,6 +88,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    console.log("onload")
     //查看是否授权
     common.getSetting().then((res)=>{
       if(res==="已授权"){
@@ -99,6 +100,15 @@ Page({
           app.globalData.userData=res
           that.setData({
             userData:res
+          })        
+          common.sendRequest("selBookById.do",{id:that.data.userData.bookid}).then((res)=>{
+            that.setData({
+              'mybook.bookName':res.bookName,
+              'mybook.wordNum':res.wordNum
+            })
+            app.globalData.mybook=that.data.mybook
+          }).catch((res)=>{
+            console.log(res)
           })
         }).catch((res)=>{
           console.log(res)
@@ -111,8 +121,7 @@ Page({
       }
     }).catch((res)=>{
       console.log(res)
-    })
-      
+    })     
   },
 
   /**

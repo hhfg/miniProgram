@@ -29,7 +29,7 @@ Page({
   },
   //点击更换书
   bindChangeIt:function(e){
-    console.log(e.currentTarget.dataset.id)
+    console.log(e.currentTarget.dataset.typeid)
     var that=this;
     wx.showModal({
       title: '提示',
@@ -49,7 +49,6 @@ Page({
   //设置我选择的词书
   setMyBook:function(bookname,id,num){
     var that=this;
-    console.log(bookname,id,num)
     //向后台发送请求
     common.sendRequest("setMyBook.do",{
       nickName: app.globalData.userInfo.nickName,
@@ -93,60 +92,6 @@ Page({
           showCancel: false,
         })
       })
-    // wx.request({
-    //   url: app.globalData.url + '/setMyBook.do',
-    //   method: 'GET',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   data: {
-    //     username: app.globalData.username,
-    //     bookid: id
-    //   },
-    //   success: function (res) {
-    //     // 更新成功
-    //     if (res.data == 1) {
-    //       // 设置全局变量mybook的值
-    //       that.setData({
-    //         mybook:{
-    //           bookName:bookname,
-    //           wordNum:num
-    //         }
-    //       })
-    //       app.globalData.mybook = that.data.mybook
-    //       console.log(app.globalData.mybook.wordNum)
-    //       wx.showToast({
-    //         title: '成功',
-    //         icon: 'success',
-    //         duration: 1000,
-    //         success:function(){
-    //           setTimeout(function(){
-    //             wx.navigateTo({
-    //               url: '../learningPlan/learningPlan',
-    //             },1000);
-    //           })
-    //         }
-    //       })
-    //       that.setData({
-    //         bookname:bookname
-    //       })
-    //     }
-    //     // 更新不成功
-    //     else if (res.data == 0) {
-    //       wx.showToast({
-    //         title: '设置失败，请重新选择',
-    //         icon: 'none',
-    //         duration: 1000
-    //       })
-    //     }
-    //   },
-    //   fail: function (res) {
-    //     wx.showToast({
-    //       title: '请求失败',
-    //       duration: 1000
-    //     })
-    //   }
-    // })
   },
   //加载页面数据
   loadingData: function () {
@@ -156,7 +101,6 @@ Page({
         that.setData({
           type: res
         })
-        wx.setStorageSync("wordBooksData", that.data.type)
         resolve(true)
       }).catch((res) => {
         reject(false)
