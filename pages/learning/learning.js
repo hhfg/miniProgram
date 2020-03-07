@@ -1,5 +1,6 @@
 // pages/learning/learning.js
 const app = getApp();
+const common = require("../../utils/common.js")
 var startX, endX;
 var moveFlag = true;// 判断执行滑动事件
 Page({
@@ -40,48 +41,73 @@ Page({
   touchEnd: function (e) {
     moveFlag = true; // 回复滑动事件
   },
-
-
+  loadingData:function(){
+    var that=this;
+    var page = that.data.pos
+    common.sendRequest("selWords.do",{
+      bookName:app.globalData.mybook.bookName
+    }).then((res)=>{
+      that.setData({
+        words: res
+      })
+      that.setData({
+        len: res.length
+      })
+      that.setData({
+        word: that.data.words[page]
+      })
+      that.setData({
+        ex_array: that.data.word.explanation.split(";")
+      })
+      // 词汇搭配
+      that.setData({
+        coll_array: that.data.word.collocation.split(";")
+      })
+    }).catch((res)=>{
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
 
   onLoad: function (options) {
-    var that=this;
-    var page = that.data.pos
-    wx.request({
-      //url: 'http://localhost:8080/MiniProgram/selWords.do',
-      url:app.globalData.url+'/selWords.do',
-      method:'GET',
-      data:{
-        bookName:app.globalData.mybook.bookName
-      },
-      header:{
-        'content-type':'application/json'
-      },
-      // 返回数据成功，并将对象存到words中
-      success:function(res){
-        that.setData({
-          words:res.data     
-        })
-        that.setData({
-          len:res.data.length
-        })
-        that.setData({
-          word: that.data.words[page]
-        })
-        that.setData({
-          ex_array: that.data.word.explanation.split(";")
-        })
-        // 词汇搭配
-        that.setData({
-          coll_array: that.data.word.collocation.split(";")
-        })
-      },
-      fail:function(res){
-        console.log("fail")
-      }
-    })
+    this.loadingData()
+    // var that=this;
+    // var page = that.data.pos
+    // wx.request({
+    //   //url: 'http://localhost:8080/MiniProgram/selWords.do',
+    //   url:app.globalData.url+'/selWords.do',
+    //   method:'GET',
+    //   data:{
+    //     bookName:app.globalData.mybook.bookName
+    //   },
+    //   header:{
+    //     'content-type':'application/json'
+    //   },
+    //   // 返回数据成功，并将对象存到words中
+    //   success:function(res){
+    //     that.setData({
+    //       words:res.data     
+    //     })
+    //     that.setData({
+    //       len:res.data.length
+    //     })
+    //     that.setData({
+    //       word: that.data.words[page]
+    //     })
+    //     that.setData({
+    //       ex_array: that.data.word.explanation.split(";")
+    //     })
+    //     // 词汇搭配
+    //     that.setData({
+    //       coll_array: that.data.word.collocation.split(";")
+    //     })
+    //   },
+    //   fail:function(res){
+    //     console.log("fail")
+    //   }
+    // })
   }, 
 
   /**
