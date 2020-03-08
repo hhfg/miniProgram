@@ -27,18 +27,32 @@ Page({
   },
   // 开始学习
   bindLearning:function(){
-    wx.navigateTo({
-      url: '../learning/learning',
-      success:function(res){
-        console.log(res);
-      },
-      fail:function(){
-        //fail
-      },
-      complete:function(){
-        //complete
-      }
-    })
+    console.log(this.data.mybook.wordNum)
+    if(this.data.mybook.wordNum==0){
+      wx.navigateTo({
+        url: '../books/books',
+        success: function (res) {
+          console.log(res);
+        },
+        fail: function () {
+          //fail
+        },
+      })
+    }
+    else{
+      wx.navigateTo({
+        url: '../learning/learning',
+        success: function (res) {
+          console.log(res);
+        },
+        fail: function () {
+          //fail
+        },
+        complete: function () {
+          //complete
+        }
+      })
+    }
   },
   //查词
   bindSearch:function(){
@@ -100,8 +114,7 @@ Page({
           app.globalData.userData=res
           that.setData({
             userData:res
-          })        
-          console.log(that.data.userData.bookid)
+          })       
           if(that.data.userData.bookid!=0){
             common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
               that.setData({
