@@ -1,12 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/learningPlan/learningPlan",
     "pages/books/books",
     "pages/login/login",  
-    "pages/learningPlan/learningPlan",
     "pages/test/test",
-    "pages/mine/mine",
-    
+    "pages/mine/mine", 
     "pages/learning/learning", 
     "pages/wordBook/wordBook",
     "pages/learningSet/learningSet",
@@ -17,8 +16,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F5F5F5",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarBackgroundColor": "#87CEEB",
+    "navigationBarTitleText": "易起背单词",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

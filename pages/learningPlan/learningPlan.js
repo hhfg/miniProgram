@@ -88,7 +88,8 @@ Page({
     console.log(this.data.year + "-" + this.data.month + "-" + this.data.day)
     let time = this.data.year + "-" + this.data.month + "-" + this.data.day
     let haveToLearn=this.data.learningNum
-    common.sendRequest("updPersonalData.do",{haveToLearn:haveToLearn,endTime:time}).then((res)=>{
+    let learningDay=this.data.learningDay
+    common.sendRequest("updPersonalData.do",{haveToLearn:haveToLearn,endTime:time,learningDay:learningDay}).then((res)=>{
       console.log(res)
       // 跳出提示框设置成功
       wx.showToast({

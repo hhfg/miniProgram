@@ -1,6 +1,6 @@
 // pages/login/login.js
 var app=getApp();
-var util = require("../../utils/util.js")
+var common = require("../../utils/common.js")
 Page({
 
   /**
@@ -27,7 +27,7 @@ Page({
         success:function(res){
           var code=res.code
           if(code){
-            util.requestData("login.do", {
+            common.sendRequest("login.do", {
                 code: code,
                 nickName: app.globalData.userInfo.nickName,
                 avatarUrl: app.globalData.userInfo.avatarUrl,
@@ -36,15 +36,16 @@ Page({
                 city: app.globalData.userInfo.city
               }).then(res=>{
                 console.log(res);
+                wx.reLaunch({
+                  url: '../index/index',
+                })
               })
           }else{
             console.log("获取用户登录凭证失败");
           }
         }
       })
-      wx.reLaunch({
-        url: '../index/index',
-      })
+
 
     } else {
       //用户按了拒绝按钮

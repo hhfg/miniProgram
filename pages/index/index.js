@@ -88,7 +88,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log("onload")
+    console.log(app.globalData.userInfo)
     //查看是否授权
     common.getSetting().then((res)=>{
       if(res==="已授权"){
@@ -101,15 +101,18 @@ Page({
           that.setData({
             userData:res
           })        
-          common.sendRequest("selBookById.do",{id:that.data.userData.bookid}).then((res)=>{
-            that.setData({
-              'mybook.bookName':res.bookName,
-              'mybook.wordNum':res.wordNum
+          console.log(that.data.userData.bookid)
+          if(that.data.userData.bookid!=0){
+            common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
+              that.setData({
+                'mybook.bookName': res.bookName,
+                'mybook.wordNum': res.wordNum
+              })
+              app.globalData.mybook = that.data.mybook
+            }).catch((res) => {
+              console.log(res)
             })
-            app.globalData.mybook=that.data.mybook
-          }).catch((res)=>{
-            console.log(res)
-          })
+          }
         }).catch((res)=>{
           console.log(res)
         })

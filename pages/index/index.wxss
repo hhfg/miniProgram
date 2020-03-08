@@ -106,7 +106,7 @@ page{
   font-size: 12px;
 }
 .desc{
-  width: 50%;
+  width: 33%;
 }
 .startBtn{
   margin-top: 30rpx; 

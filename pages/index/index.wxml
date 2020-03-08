@@ -1,6 +1,6 @@
 <view class="head">
   <view class="clock_in">
-    <view class="left"><text class="day">{{userData.learningDays}}</text>天</view>
+    <view class="left"><text class="day">{{userData.clockInDay}}</text>天</view>
     <view class="right" ><image src="../../icons/index/calendar.png" style="width:15px;height:15px;" />打卡日历></view>
   </view>
   <view class="book" style="background-color:#87CEEB" >
@@ -15,12 +15,16 @@
     <text>今日任务</text>
     <view class="task">
       <view class="desc">
+        <view class="num">{{userData.haveToReview}}</view>
+        <view class="text1">待复习</view> 
+      </view>
+      <view class="desc">
         <view class="num">{{userData.haveToLearn}}</view>
         <view class="text1">待学</view> 
       </view>
       <view class="desc">
-        <view class="num">{{userData.haveToReview}}</view>
-        <view class="text1">待复习</view> 
+        <view class="num">{{userData.learningDay}}</view>
+        <view class="text1">剩余天数</view> 
       </view>
     </view>
   </view>

@@ -23,7 +23,8 @@
 <view class="learningPlan">
   <view class="learningDay">共计学习<text style="color:#87CEEB">{{learningDay}}</text>天</view>
   <view class="line"></view>
-  <view class="learningGoal">
+  <view class="learningNum">每天需学习单词数<text style="color:#87CEEB">{{learningNum}}</text>个</view>
+  <!-- <view class="learningGoal">
     <view style="text-align:center;font-size:12px;">每天目标</view>
     <view class="task">
       <view class="desc">
@@ -35,7 +36,7 @@
         <view class="text1">待复习</view> 
       </view>
     </view>
-  </view>
+  </view> -->
 </view>
 <view class="hr"></view>
 <view class="startBtn">

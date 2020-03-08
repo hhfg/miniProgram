@@ -19,6 +19,7 @@ App({
     wx.getUserInfo({   
       success:function(res){
         that.globalData.userInfo=res.userInfo
+        console.log(that.globalData.userInfo)
       }
     })
   },
