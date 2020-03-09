@@ -37,7 +37,7 @@
     <button bindtap="nextWord">下一个</button>
   </view>
 </view> -->
-<view class="review">
+<!-- <view class="review">
   <view class="wordPart">
     <view style="font-weight:bold;font-size:25px;">sincere</view>
     <view  class="pron">
@@ -54,4 +54,12 @@
     <view class="space"></view>
     <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">n.情绪,心情,气氛,氛围;</button>
   </view> 
+</view> -->
+<view class="spell">
+  <view class="chinese">adj.真诚的,诚挚的,诚恳的,诚实的;</view>
+  <view class="input">
+    <input placeholder="输入英文单词"></input>
+    <button class="confirm" style="width:60px">确定</button>
+  </view>
 </view>
+

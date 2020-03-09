@@ -84,6 +84,7 @@ page{
   margin-left:10px;
   margin-top: 12px;
 }
+/* 复习界面 */
 .wordPart{
   height: 50vh;
   display: flex;
@@ -106,16 +107,38 @@ page{
 .click{
   background-color:#87CEEB;
 }
-.enabled{
-    border: none;
-    padding: 2px 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    outline: none;
+/* 拼写 */
+.spell{
+  height: 40vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
 }
-input[type="text"]:focus, 
-input[type="password"]:focus { 
-  border-bottom: 1px solid #5cb85c;
+
+.input{
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: center; 
+  margin-top: 70rpx;
+  border-radius: 20px;
+  background-color: white;
+  width: 70%;
+  height: 90rpx;
 }
+.confirm {
+  background-color: #87CEEB;  
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  border-radius: 25px;
+  padding:2px 2px;
+  line-height: 30px;
+}
+
+
+
