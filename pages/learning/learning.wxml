@@ -1,4 +1,4 @@
-<view class='wraper' bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+<!-- <view class='wraper' bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
   <view class='header'>
     <view class="wordSection">
       <view class="word">{{word.word}}</view>
@@ -36,4 +36,22 @@
     <button bindtap="previousWord">上一个</button>
     <button bindtap="nextWord">下一个</button>
   </view>
+</view> -->
+<view class="review">
+  <view class="wordPart">
+    <view style="font-weight:bold;font-size:25px;">sincere</view>
+    <view  class="pron">
+      <text>[sɪn'sɪr] </text>
+      <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="'https://dictionary.blob.core.chinacloudapi.cn/media/audio/tom/ab/49/AB491F2C07DB964981AC02A17E9CD880.mp3'"></image>
+    </view>
+  </view> 
+  <view class="options">
+    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.真诚的,诚挚的,诚恳的,诚实的</button>
+    <view class="space"></view>
+    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.静止的,不变的</button>
+    <view class="space"></view>
+    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">v.扣紧,盯住,盖好</button>
+    <view class="space"></view>
+    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">n.情绪,心情,气氛,氛围;</button>
+  </view> 
 </view>

@@ -43,9 +43,11 @@ Page({
   },
   loadingData:function(){
     var that=this;
-    var page = that.data.pos
+    var page = that.data.pos;
     common.sendRequest("selWords.do",{
-      bookName:app.globalData.mybook.bookName
+      bookName:app.globalData.mybook.bookName,
+      num:app.globalData.userData.haveToLearn,
+      start:app.globalData.userData.lastWordId
     }).then((res)=>{
       that.setData({
         words: res
@@ -72,42 +74,8 @@ Page({
    */
 
   onLoad: function (options) {
-    this.loadingData()
-    // var that=this;
-    // var page = that.data.pos
-    // wx.request({
-    //   //url: 'http://localhost:8080/MiniProgram/selWords.do',
-    //   url:app.globalData.url+'/selWords.do',
-    //   method:'GET',
-    //   data:{
-    //     bookName:app.globalData.mybook.bookName
-    //   },
-    //   header:{
-    //     'content-type':'application/json'
-    //   },
-    //   // 返回数据成功，并将对象存到words中
-    //   success:function(res){
-    //     that.setData({
-    //       words:res.data     
-    //     })
-    //     that.setData({
-    //       len:res.data.length
-    //     })
-    //     that.setData({
-    //       word: that.data.words[page]
-    //     })
-    //     that.setData({
-    //       ex_array: that.data.word.explanation.split(";")
-    //     })
-    //     // 词汇搭配
-    //     that.setData({
-    //       coll_array: that.data.word.collocation.split(";")
-    //     })
-    //   },
-    //   fail:function(res){
-    //     console.log("fail")
-    //   }
-    // })
+    //this.loadingData()
+
   }, 
 
   /**
@@ -188,7 +156,6 @@ Page({
       that.setData({
         pos: that.data.pos - 1
       })
-      console.log(that.data.pos)
       that.changeField();
     }
   },
@@ -202,7 +169,6 @@ Page({
       that.setData({
         pos: that.data.pos + 1
       })
-      console.log(that.data.pos)
       that.changeField()
     }
   },
