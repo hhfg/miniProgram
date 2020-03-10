@@ -89,7 +89,12 @@ Page({
     let time = this.data.year + "-" + this.data.month + "-" + this.data.day
     let haveToLearn=this.data.learningNum
     let learningDay=this.data.learningDay
-    common.sendRequest("updPersonalData.do",{haveToLearn:haveToLearn,endTime:time,learningDay:learningDay}).then((res)=>{
+    common.sendRequest("updPersonalData.do",{
+      nickName: app.globalData.userInfo.nickName,
+      haveToLearn:haveToLearn,
+      endTime:time,
+      learningDay:learningDay
+      }).then((res)=>{
       console.log(res)
       // 跳出提示框设置成功
       wx.showToast({
@@ -119,6 +124,7 @@ Page({
   onLoad: function (options) {
     // 设置日期选择器默认选中的是当天日期
     let time = util.formatDate(new Date())
+    console.log(time)
     let month=time.split('-')[1]
     let day=time.split('-')[2]
     if(month<10){

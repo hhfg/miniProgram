@@ -9,13 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pos:0,
+    pos:0,            //当天单词是第几个
     len: 0,
     word:'',
     words:[],         //将返回的对象存到word中
     ex_array:[],      //将释义分割字符串后存储在数组中
     coll_array:[],    //将词汇搭配分割字符串后存储在数组中
-
+    learningFlag:true,
+    reviewFlag:false,
+    chooseFlag:true,
+    spellFlag:false,
+    reviewWords:[],  //需要复习的单词
   },
 
   touchStart: function (e) {
@@ -49,9 +53,11 @@ Page({
       num:app.globalData.userData.haveToLearn,
       start:app.globalData.userData.lastWordId
     }).then((res)=>{
+      //返回的单词存到words中
       that.setData({
         words: res
       })
+      console.log(that.data.words)
       that.setData({
         len: res.length
       })
@@ -74,7 +80,7 @@ Page({
    */
 
   onLoad: function (options) {
-    //this.loadingData()
+    this.loadingData()
 
   }, 
 
@@ -126,11 +132,13 @@ Page({
   onShareAppMessage: function () {
 
   },
+  //点击播放美式发音
   pronouncePlayUS: function (event) {
     var url = event.currentTarget.dataset.url
     url = url.substring(1, url.length - 1)
     this.play(url)
   },
+  //点击播放英式发音
   pronouncePlayUK: function (event) {
     var url = event.currentTarget.dataset.url
     url = url.substring(1, url.length - 1)
@@ -161,14 +169,21 @@ Page({
   },
   // 点击下一个
   nextWord: function () {
-    // 如果已经到最后一个单词
     var that=this;
-    if (that.data.pos === (that.data.len - 1)) {
-      
-    } else {
+    // 如果已经到最后一个单词
+    if (that.data.pos === (that.data.len - 1)) { 
+      that.setData({
+        learningFlag:false,
+        reviewFlag:true
+      })
+      that.setReviewData();
+    } 
+    //将pos+1
+    else {
       that.setData({
         pos: that.data.pos + 1
       })
+      //修改单词字段
       that.changeField()
     }
   },
@@ -183,8 +198,16 @@ Page({
       ex_array: that.data.word.explanation.split(";")
     })
     // 词汇搭配
-    that.setData({
-      coll_array: that.data.word.collocation.split(";")
+    if(that.data.word.collocation!=null){
+      that.setData({
+        coll_array: that.data.word.collocation.split(";")
+      })
+    }
+  },
+  setReviewData:function(){
+    var that=this;
+    that.data.words.forEach(function(item,index){
+      console.log(item.word)
     })
   }
 })

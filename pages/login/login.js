@@ -1,6 +1,6 @@
 // pages/login/login.js
 var app=getApp();
-var common = require("../../utils/common.js")
+var common = require("../../utils/common.js");
 Page({
 
   /**

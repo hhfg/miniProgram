@@ -7,7 +7,7 @@
     <view class="bookName">{{mybook.bookName}}<image src="../../icons/index/change.png" style="width:20px;height:20px" bindtap="bindChangeBook"></image></view>
     <view class="tip">
       <text>已完成20%</text>
-      <text class="fraction">{{userData.completedNums}}/{{mybook.wordNum}}</text>
+      <text class="fraction">{{userData.completedNum}}/{{mybook.wordNum}}</text>
       <progress percent="20"></progress>
     </view >
   </view>

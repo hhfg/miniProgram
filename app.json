@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/learning/learning",
     "pages/index/index",
+    "pages/learning/learning",
     "pages/learningPlan/learningPlan",
     "pages/books/books",
     "pages/login/login",  

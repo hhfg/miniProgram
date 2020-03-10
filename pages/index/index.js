@@ -27,7 +27,6 @@ Page({
   },
   // 开始学习
   bindLearning:function(){
-    console.log(this.data.mybook.wordNum)
     if(this.data.mybook.wordNum==0){
       wx.navigateTo({
         url: '../books/books',
@@ -139,7 +138,6 @@ Page({
       console.log(res)
     })     
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

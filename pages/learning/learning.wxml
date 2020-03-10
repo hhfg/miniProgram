@@ -1,4 +1,4 @@
-<!-- <view class='wraper' bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+<view class='wraper' wx:if="{{learningFlag}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
   <view class='header'>
     <view class="wordSection">
       <view class="word">{{word.word}}</view>
@@ -19,12 +19,12 @@
     <scroll-view class='main-scroll' scroll-y style="height: 90%">
       <view class="text">例句</view>
       <view class="example">
-        <view class="english">{{word.val_ex1}}</view>
-        <view class="translation">{{word.bil_ex1}}</view>
-        <view class="english">{{word.val_ex2}}</view>
-        <view class="translation">{{word.bil_ex2}}</view>
-        <view class="english">{{word.val_ex3}}</view>
-        <view class="translation">{{word.bil_ex3}}</view>
+        <view wx:if="{{word.val_ex1!=null}}" class="english">{{word.val_ex1}}</view>
+        <view wx:if="{{word.bil_ex1!=null}}" class="translation">{{word.bil_ex1}}</view>
+        <view wx:if="{{word.val_ex2!=null}}" class="english">{{word.val_ex2}}</view>
+        <view wx:if="{{word.bil_ex2!=null}}" class="translation">{{word.bil_ex2}}</view>
+        <view wx:if="{{word.val_ex3!=null}}" class="english">{{word.val_ex3}}</view>
+        <view wx:if="{{word.bil_ex3!=null}}" class="translation">{{word.bil_ex3}}</view>
       </view>
       <view class="text">词汇搭配</view>
       <view class="mnemonics">
@@ -36,30 +36,33 @@
     <button bindtap="previousWord">上一个</button>
     <button bindtap="nextWord">下一个</button>
   </view>
-</view> -->
-<!-- <view class="review">
-  <view class="wordPart">
-    <view style="font-weight:bold;font-size:25px;">sincere</view>
-    <view  class="pron">
+</view>
+<view class="review" wx:if="{{reviewFlag}}">
+  <view class="choose" wx:if="{{chooseFlag}}">
+    <view class="wordPart">
+      <view style="font-weight:bold;font-size:25px;">sincere</view>
+      <view  class="pron">
       <text>[sɪn'sɪr] </text>
       <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="'https://dictionary.blob.core.chinacloudapi.cn/media/audio/tom/ab/49/AB491F2C07DB964981AC02A17E9CD880.mp3'"></image>
+      </view>
+    </view> 
+    <view class="options">
+      <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.真诚的,诚挚的,诚恳的,诚实的</button>
+      <view class="space"></view>
+      <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.静止的,不变的</button>
+      <view class="space"></view>
+      <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">v.扣紧,盯住,盖好</button>
+      <view class="space"></view>
+      <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">n.情绪,心情,气氛,氛围;</button>
+    </view> 
+  </view>
+  <view class="spell" wx:if="{{spellFlag}}">
+    <view class="chinese">adj.真诚的,诚挚的,诚恳的,诚实的;</view>
+    <view class="input">
+      <input placeholder="输入英文单词"></input>
+      <button class="confirm" style="width:60px">确定</button>
     </view>
   </view> 
-  <view class="options">
-    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.真诚的,诚挚的,诚恳的,诚实的</button>
-    <view class="space"></view>
-    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">adj.静止的,不变的</button>
-    <view class="space"></view>
-    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">v.扣紧,盯住,盖好</button>
-    <view class="space"></view>
-    <button class="option" hover-class="click" style="width: 600rpx;height:120rpx">n.情绪,心情,气氛,氛围;</button>
-  </view> 
-</view> -->
-<view class="spell">
-  <view class="chinese">adj.真诚的,诚挚的,诚恳的,诚实的;</view>
-  <view class="input">
-    <input placeholder="输入英文单词"></input>
-    <button class="confirm" style="width:60px">确定</button>
-  </view>
 </view>
+
 
