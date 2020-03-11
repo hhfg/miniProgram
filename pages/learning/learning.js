@@ -20,6 +20,8 @@ Page({
     chooseFlag:true,
     spellFlag:false,
     reviewWords:[],  //需要复习的单词
+    reviewWord:[],
+    index:0
   },
 
   touchStart: function (e) {
@@ -55,6 +57,7 @@ Page({
       start:app.globalData.userData.lastWordId
     }).then((res)=>{
       //返回的单词存到words中
+      // console.log(res)
       that.setData({
         words: res
       })
@@ -72,6 +75,18 @@ Page({
       that.setData({
         coll_array: that.data.word.collocation.split(";")
       })
+      common.sendRequest('selReviewWords.do', {
+        nickName: app.globalData.userInfo.nickName
+      }).then((res) => {
+        that.setData({
+          reviewWords: res
+        }),
+          console.log(that.data.reviewWords)
+        that.setData({
+          reviewWord: that.data.reviewWords[0]
+        })
+        console.log("2" + that.data.reviewWord)
+      })
     }).catch((res)=>{
       console.log(res)
     })
@@ -82,7 +97,6 @@ Page({
 
   onLoad: function (options) {
     this.loadingData()
-
   }, 
 
   /**
@@ -171,25 +185,15 @@ Page({
   // 点击下一个
   nextWord: function () {
     var that=this;
-    // 如果已经到最后一个单词
     console.log(that.data.words[that.data.pos].id)
-    wx.request({
-      url: 'http://192.168.1.105:8080/MiniProgram/updStatus.do',
-      method: 'GET',
-      data:{
-        nickName:app.globalData.userInfo.nickName,
-        id: that.data.words[that.data.pos].id
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success:function(res){
-
-      },
-      fail:function(){
-
-      }
+    //设置单词的status为1
+    common.setStatus("updStatus.do", {
+      nickName: app.globalData.userInfo.nickName,
+      id: that.data.words[that.data.pos].id
+    }).then((res)=>{
+     
     })
+    // 如果已经到最后一个单词
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({
         learningFlag:false,
@@ -225,8 +229,42 @@ Page({
   },
   setReviewData:function(){
     var that=this;
-    that.data.words.forEach(function(item,index){
-      console.log(item.word)
+    that.setData({
+      learningFlag: false,
+      reviewFlag: true,
+      reviewWord: that.data.reviewWords[0]
     })
+    // common.sendRequest('selReviewWords.do',{
+    //   // nickName:app.globalData.userInfo.nickName
+    //   // }).then((res)=>{
+    //   //   that.setData({
+    //   //     reviewWords: res
+    //   //   }),
+    //   //   that.setData({
+    //   //     reviewWord: that.data.reviewWords[0]
+    //   //   })
+    //   // })
+    // that.setData({
+    //   learningFlag: false,
+    //   reviewFlag: true,
+    //   reviewWord: reviewWords[0]
+    // })
+  },
+  //点击选项
+  bindChooseWord:function(e){
+    var that=this;
+    var pos=that.data.index;
+    var reviewWords=that.data.reviewWords
+    console.log(e.currentTarget.dataset.ex);
+    console.log(reviewWords[pos].correctEx);
+    if (e.currentTarget.dataset.ex==reviewWords[pos].correctEx){
+      pos=pos+1
+      that.setData({
+        index:pos
+      })
+      that.setData({
+        reviewWord:reviewWords[pos]
+      })
+    }
   }
 })

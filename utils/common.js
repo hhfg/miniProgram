@@ -44,7 +44,27 @@ function getSetting(){
     })
   })
 }
+function setStatus(url,data){
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: 'http://192.168.1.105:8080/MiniProgram/' + url,
+      data: data,
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        resolve(res)
+      },
+      fail: function (res) {
+
+      }
+    })
+  })
+}
 module.exports={
   sendRequest:sendRequest,
-  getSetting:getSetting
+  getSetting:getSetting,
+  setStatus:setStatus
 }
