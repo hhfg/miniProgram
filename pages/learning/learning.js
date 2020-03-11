@@ -49,6 +49,7 @@ Page({
     var that=this;
     var page = that.data.pos;
     common.sendRequest("selWords.do",{
+      nickName:app.globalData.userInfo.nickName,
       bookName:app.globalData.mybook.bookName,
       num:app.globalData.userData.haveToLearn,
       start:app.globalData.userData.lastWordId
@@ -171,6 +172,24 @@ Page({
   nextWord: function () {
     var that=this;
     // 如果已经到最后一个单词
+    console.log(that.data.words[that.data.pos].id)
+    wx.request({
+      url: 'http://192.168.1.105:8080/MiniProgram/updStatus.do',
+      method: 'GET',
+      data:{
+        nickName:app.globalData.userInfo.nickName,
+        id: that.data.words[that.data.pos].id
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success:function(res){
+
+      },
+      fail:function(){
+
+      }
+    })
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({
         learningFlag:false,
