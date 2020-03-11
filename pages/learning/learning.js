@@ -61,7 +61,6 @@ Page({
       that.setData({
         words: res
       })
-      console.log(that.data.words)
       that.setData({
         len: res.length
       })
@@ -81,7 +80,6 @@ Page({
         that.setData({
           reviewWords: res
         }),
-          console.log(that.data.reviewWords)
         that.setData({
           reviewWord: that.data.reviewWords[0]
         })
@@ -185,7 +183,6 @@ Page({
   // 点击下一个
   nextWord: function () {
     var that=this;
-    console.log(that.data.words[that.data.pos].id)
     //设置单词的status为1
     common.setStatus("updStatus.do", {
       nickName: app.globalData.userInfo.nickName,
@@ -255,16 +252,26 @@ Page({
     var that=this;
     var pos=that.data.index;
     var reviewWords=that.data.reviewWords
-    console.log(e.currentTarget.dataset.ex);
-    console.log(reviewWords[pos].correctEx);
+    //如果选择正确
     if (e.currentTarget.dataset.ex==reviewWords[pos].correctEx){
-      pos=pos+1
-      that.setData({
-        index:pos
-      })
-      that.setData({
-        reviewWord:reviewWords[pos]
-      })
+      if((pos+1)==reviewWords.length){
+        //跳转到已完成学习页面，让用户进行打卡
+        wx.redirectTo({
+          url: '',
+        })
+      }else{
+        pos = pos + 1
+        that.setData({
+          index: pos
+        })
+        that.setData({
+          reviewWord: reviewWords[pos]
+        })
+      }
+    }
+    //如果选错，底部弹出正确的意思
+    else{
+
     }
   }
 })

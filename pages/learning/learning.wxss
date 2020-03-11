@@ -96,10 +96,14 @@ page{
   background-color: white;  
   font-weight: 500;
   font-size: 15px;
-  display:flex; 
+  line-height: 100rpx;
   justify-content:center; 
   align-items:center;
   border-radius: 5px;
+ white-space: nowrap; 
+ overflow: hidden; 
+ text-overflow: ellipsis; 
+ -webkit-box-orient: vertical;
 }
 .space{
   height: 15px;
