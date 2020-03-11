@@ -7,7 +7,7 @@ const years = []
 const months = []
 const days = []
 const bigMonth = [1, 3, 5, 7, 8, 10, 12]
-for (let i = 1990; i <= date.getFullYear(); i++) {
+for (let i = 1990; i <= 2030; i++) {
   years.push(i)
 }
 for (let i = 1; i <= 12; i++) {
@@ -28,7 +28,7 @@ Page({
     days: days,
     day:0,
     year: date.getFullYear(),
-    value: [9999, 0, 0],
+    value: [0, 0, 0],
     learningDay:0,
     learningNum:0,
   },
@@ -125,6 +125,7 @@ Page({
     // 设置日期选择器默认选中的是当天日期
     let time = util.formatDate(new Date())
     console.log(time)
+    let year=time.split('-')[0]-1990
     let month=time.split('-')[1]
     let day=time.split('-')[2]
     if(month<10){
@@ -137,9 +138,11 @@ Page({
     }else{
       day=day-1;
     }
+    var y='value[0]'
     var m='value[1]'
     var d='value[2]'
     this.setData({
+      [y]:year,
       [m]:month,
       [d]:day
     })
