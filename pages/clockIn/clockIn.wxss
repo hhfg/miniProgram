@@ -1,0 +1,10 @@
+/* pages/clockIn/clockIn.wxss */
+.center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}
+.btn{
+  background-color: #87CEEB;
+}

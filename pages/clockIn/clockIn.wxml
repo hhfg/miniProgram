@@ -1,0 +1,5 @@
+<!--pages/clockIn/clockIn.wxml-->
+<view class="center">
+  <text>恭喜学习完成!</text>
+  <button bindtap="bindClockIn" class="btn">点击打卡 </button>
+</view>

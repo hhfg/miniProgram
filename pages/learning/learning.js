@@ -261,7 +261,7 @@ Page({
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
         wx.redirectTo({
-          url: '',
+          url: '../clockIn/clockIn',
         })
       }else{
         ind = ind + 1
