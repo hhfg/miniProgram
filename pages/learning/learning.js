@@ -9,21 +9,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pos:0,             //当前学习单词是第几个
-    len: 0,            //学习的单词的个数
-    word:'',           //显示在页面上的单词对象
-    words:[],          //将返回的对象存到word中
-    ex_array:[],       //将释义分割字符串后存储在数组中
-    coll_array:[],     //将词汇搭配分割字符串后存储在数组中
-    reviewWords:[],    //返回的需要复习的单词存到reviewWords中
-    reviewWord:[],     //当前复习的单词
-    index:0,           //当前复习的单词是第几个
+    pos:0,              //当前学习单词是第几个
+    len: 0,             //学习的单词的个数
+    word:'',            //显示在页面上的单词对象
+    words:[],           //将返回的对象存到word中
+    ex_array:[],        //将释义分割字符串后存储在数组中
+    coll_array:[],      //将词汇搭配分割字符串后存储在数组中
+    reviewWords:[],     //返回的需要复习的单词存到reviewWords中
+    reviewWord:[],      //当前复习的单词
+    index:0,            //当前复习的单词是第几个
     learningFlag: true,
     reviewFlag: false,
-    chooseFlag: true,
-    spellFlag: false,
+    chooseFlag: false,
+    spellFlag: true,
     footerFlag:true,
     goAheadFlag:false,
+    englishWord:'',      //练习填写英语单词的变量
   },
 
   touchStart: function (e) {
@@ -165,7 +166,6 @@ Page({
     innerAudioContext.autoplay = true
     innerAudioContext.src = url
     innerAudioContext.onPlay(() => {
-      console.log('开始播放')
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -199,6 +199,7 @@ Page({
         learningFlag:false,
         reviewFlag:true
       })
+      //开始复习
       that.setReviewData();
     } 
     //将pos+1
@@ -238,9 +239,12 @@ Page({
       reviewFlag: true,
       reviewWord: that.data.reviewWords[0]
     })
-    var url = that.data.reviewWord.pron_mp3;
-    url = url.substring(1, url.length - 1)
-    this.play(url);
+    //如果时选项练习，则自动播放单词发音
+    if(that.data.chooseFlag==true){
+      var url = that.data.reviewWord.pron_mp3;
+      url = url.substring(1, url.length - 1)
+      this.play(url);
+    }
   },
   //点击选项
   bindChooseWord:function(e){
@@ -253,9 +257,19 @@ Page({
     if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
-        wx.redirectTo({
-          url: '../clockIn/clockIn',
+        // wx.redirectTo({
+        //   url: '../clockIn/clockIn',
+        // })
+        //第一轮练习已完成,进入拼写练习
+        that.setData({
+          chooseFlag:false,
+          spellFlag:true,
+          index:0
         })
+        that.setData({
+          reviewWord:that.data.reviewWords[that.data.index]
+        })
+
       }else{
         ind = ind + 1
         that.setData({
@@ -292,5 +306,40 @@ Page({
       reviewFlag: true,
       reviewWord:that.data.reviewWords[ind]
     })
+  },
+  //获取得到输入的单词
+  getEnglishWord:function(e){
+    var that=this
+    that.setData({
+      englishWord:e.detail.value,
+    })
+  },
+  bindConfirm:function(e){
+    var that=this;
+    console.log(that.data.englishWord)
+    //如果拼写正确
+    if(that.data.englishWord==e.currentTarget.dataset.word){
+      console.log("选择正确");
+      that.setData({
+        englishWord:'',
+        index: that.data.index + 1,
+      })
+      that.setData({
+        reviewWord: that.data.reviewWords[that.data.index]
+      })
+    }
+    else{
+      that.setData({
+        learningFlag:true,
+        reviewFlag:false,
+        footerFlag: false,
+        goAheadFlag: true,
+        //当前复习的单词的位置加1
+        index: that.data.index + 1
+      })
+      //复习的单词的id对应的是所对应的words中的下表
+      this.changeField(that.data.reviewWord.id);
+    }
+
   }
 })
