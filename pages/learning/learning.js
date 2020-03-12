@@ -89,7 +89,6 @@ Page({
 
   onLoad: function (options) {
     this.loadingData();
-
   }, 
 
   /**

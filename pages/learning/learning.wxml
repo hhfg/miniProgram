@@ -40,7 +40,7 @@
     <button bindtap="bindGoAhead">继续做题</button>
   </view>
 </view>
-<view class="review" wx:if="{{reviewFlag}}">
+<view class="review" style="width:100%;height:100%" wx:if="{{reviewFlag}}">
   <view class="choose" wx:if="{{chooseFlag}}">
     <view class="wordPart">
       <view style="font-weight:bold;font-size:25px;">{{reviewWord.word}}</view>
@@ -54,7 +54,7 @@
       <view class="space"></view>
     </view> 
   </view>
-  <view class="spell" wx:if="{{spellFlag}}">
+  <view class="spell" style="width:100%;height:100%" wx:if="{{spellFlag}}">
     <view class="chinese">{{reviewWord.correctEx}}</view>
     <view class="input">
       <input placeholder="输入英文单词" bindinput="getEnglishWord" value="{{englishWord}}"></input>
@@ -62,5 +62,11 @@
     </view>
   </view> 
 </view>
-
+<!-- <view class="spell">
+  <view class="chinese">n.奢侈品,奢华,奢侈的享受,不常有的乐趣（或享受、优势）;adj.奢华的;</view>
+  <view class="input">
+    <input placeholder="输入英文单词" bindinput="getEnglishWord" value="{{englishWord}}"></input>
+    <button class="confirm" style="width:60px" bindtap="bindConfirm" data-word="{{reviewWord.word}}">确定</button>
+  </view>
+</view>  -->
 
