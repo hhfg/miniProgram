@@ -254,9 +254,7 @@ Page({
   bindChooseWord:function(e){
     var that=this;
     var ind=that.data.index;
-    console.log(ind);
     var reviewWords=that.data.reviewWords
-    console.log(that.data.reviewWord)
     //如果选择正确
     if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
       if ((ind+1)==reviewWords.length){
@@ -290,13 +288,20 @@ Page({
   //点击继续做题
   bindGoAhead:function(){
     var that=this;
-    var ind=that.data.index;
-    that.setData({
-      learningFlag: false,
-      reviewFlag: true,
-      reviewWord:that.data.reviewWords[ind],
-      englishWord:''
-    })
+    var index=that.data.index;
+    //如果已练习到最后一个单词
+    if(index==that.data.reviewWords.length){
+      wx.redirectTo({
+        url: '../clockIn/clockIn',
+      })
+    }else{
+      that.setData({
+        learningFlag: false,
+        reviewFlag: true,
+        reviewWord: that.data.reviewWords[index],
+        englishWord: ''
+      })
+    }
   },
   //获取得到输入的单词
   getEnglishWord:function(e){
@@ -307,9 +312,7 @@ Page({
   },
   bindConfirm:function(e){
     var that=this;
-    console.log(that.data.englishWord)
     //如果拼写正确
-    console.log(that.data.index + 1)
     if(that.data.englishWord==e.currentTarget.dataset.word){
       if(that.data.index+1==that.data.reviewWords.length){
         wx.redirectTo({
