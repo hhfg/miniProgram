@@ -279,7 +279,8 @@ Page({
         //当前复习的单词的位置加1
         index:that.data.index+1
       })
-      this.changeField(ind)
+      //复习的单词的id对应的是所对应的words中的下表
+      this.changeField(that.data.reviewWord.id);
     }
   },
   //点击继续做题
