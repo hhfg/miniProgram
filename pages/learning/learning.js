@@ -66,16 +66,17 @@ Page({
       that.setData({
         len: res.length
       })
-      that.setData({
-        word: that.data.words[page]
-      })
-      that.setData({
-        ex_array: that.data.word.explanation.split(";")
-      })
-      // 词汇搭配
-      that.setData({
-        coll_array: that.data.word.collocation.split(";")
-      })
+      this.changeField(that.data.pos);
+      // that.setData({
+      //   word: that.data.words[page]
+      // })
+      // that.setData({
+      //   ex_array: that.data.word.explanation.split(";")
+      // })
+      // // 词汇搭配
+      // that.setData({
+      //   coll_array: that.data.word.collocation.split(";")
+      // })
       common.sendRequest('selReviewWords.do', {
         nickName: app.globalData.userInfo.nickName
       }).then((res) => {
@@ -110,7 +111,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -215,6 +216,10 @@ Page({
     that.setData({
       word: that.data.words[pos]
     })
+    //自动播放读音
+    var url = that.data.word.us_mp3;
+    url = url.substring(1, url.length - 1)
+    this.play(url);
     // 释义
     that.setData({
       ex_array: that.data.word.explanation.split(";")
@@ -233,21 +238,9 @@ Page({
       reviewFlag: true,
       reviewWord: that.data.reviewWords[0]
     })
-    // common.sendRequest('selReviewWords.do',{
-    //   // nickName:app.globalData.userInfo.nickName
-    //   // }).then((res)=>{
-    //   //   that.setData({
-    //   //     reviewWords: res
-    //   //   }),
-    //   //   that.setData({
-    //   //     reviewWord: that.data.reviewWords[0]
-    //   //   })
-    //   // })
-    // that.setData({
-    //   learningFlag: false,
-    //   reviewFlag: true,
-    //   reviewWord: reviewWords[0]
-    // })
+    var url = that.data.reviewWord.pron_mp3;
+    url = url.substring(1, url.length - 1)
+    this.play(url);
   },
   //点击选项
   bindChooseWord:function(e){
@@ -271,6 +264,9 @@ Page({
         that.setData({
           reviewWord: reviewWords[ind]
         })
+        var url = that.data.reviewWord.pron_mp3;
+        url = url.substring(1, url.length - 1)
+        this.play(url);
       }
     }
     //如果选错，跳出单词卡界面
