@@ -23,8 +23,8 @@
         <view wx:if="{{word.bil_ex1!='null'}}" class="translation">{{word.bil_ex1}}</view>
         <view wx:if="{{word.val_ex2!='null'}}" class="english">{{word.val_ex2}}</view>
         <view wx:if="{{word.bil_ex2!='null'}}" class="translation">{{word.bil_ex2}}</view>
-        <view wx:if="{{word.val_ex3!='null'}}" class="english">{{word.val_ex3}}</view>
-        <view wx:if="{{word.bil_ex3!='null'}}" class="translation">{{word.bil_ex3}}</view>
+        <view wx:if="{{word.val_ex3!=null}}" class="english">{{word.val_ex3}}</view>
+        <view wx:if="{{word.bil_ex3!=null}}" class="translation">{{word.bil_ex3}}</view>
       </view>
       <view class="text">词汇搭配</view>
       <view class="mnemonics">
@@ -32,9 +32,12 @@
       </view>
     </scroll-view>
   </view>
-  <view class='footer'>
+  <view class='footer' wx:if="{{footerFlag}}">
     <button bindtap="previousWord">上一个</button>
     <button bindtap="nextWord">下一个</button>
+  </view>
+  <view class="goAhead" wx:if="{{goAheadFlag}}">
+    <button bindtap="bindGoAhead">继续做题</button>
   </view>
 </view>
 <view class="review" wx:if="{{reviewFlag}}">

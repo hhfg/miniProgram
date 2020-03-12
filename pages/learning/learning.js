@@ -9,19 +9,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pos:0,            //当天单词是第几个
-    len: 0,
-    word:'',
-    words:[],         //将返回的对象存到word中
-    ex_array:[],      //将释义分割字符串后存储在数组中
-    coll_array:[],    //将词汇搭配分割字符串后存储在数组中
-    learningFlag:true,
-    reviewFlag:false,
-    chooseFlag:true,
-    spellFlag:false,
-    reviewWords:[],  //需要复习的单词
-    reviewWord:[],
-    index:0
+    pos:0,             //当前学习单词是第几个
+    len: 0,            //学习的单词的个数
+    word:'',           //显示在页面上的单词对象
+    words:[],          //将返回的对象存到word中
+    ex_array:[],       //将释义分割字符串后存储在数组中
+    coll_array:[],     //将词汇搭配分割字符串后存储在数组中
+    reviewWords:[],    //返回的需要复习的单词存到reviewWords中
+    reviewWord:[],     //当前复习的单词
+    index:0,           //当前复习的单词是第几个
+    learningFlag: true,
+    reviewFlag: false,
+    chooseFlag: true,
+    spellFlag: false,
+    footerFlag:true,
+    goAheadFlag:false,
   },
 
   touchStart: function (e) {
@@ -57,7 +59,7 @@ Page({
       start:app.globalData.userData.lastWordId
     }).then((res)=>{
       //返回的单词存到words中
-      // console.log(res)
+      console.log(res)
       that.setData({
         words: res
       })
@@ -204,14 +206,14 @@ Page({
         pos: that.data.pos + 1
       })
       //修改单词字段
-      that.changeField()
+      that.changeField(that.data.pos)
     }
   },
   // 修改单词字段
-  changeField:function(){
+  changeField:function(pos){
     var that=this;
     that.setData({
-      word: that.data.words[that.data.pos]
+      word: that.data.words[pos]
     })
     // 释义
     that.setData({
@@ -250,28 +252,48 @@ Page({
   //点击选项
   bindChooseWord:function(e){
     var that=this;
-    var pos=that.data.index;
+    var ind=that.data.index;
+    console.log(ind);
     var reviewWords=that.data.reviewWords
+    console.log(that.data.reviewWord)
     //如果选择正确
-    if (e.currentTarget.dataset.ex==reviewWords[pos].correctEx){
-      if((pos+1)==reviewWords.length){
+    if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
+      if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
         wx.redirectTo({
           url: '',
         })
       }else{
-        pos = pos + 1
+        ind = ind + 1
         that.setData({
-          index: pos
+          index: ind
         })
         that.setData({
-          reviewWord: reviewWords[pos]
+          reviewWord: reviewWords[ind]
         })
       }
     }
-    //如果选错，底部弹出正确的意思
+    //如果选错，跳出单词卡界面
     else{
-
+      that.setData({
+        learningFlag:true,
+        reviewFlag:false,
+        footerFlag:false,
+        goAheadFlag:true,
+        //当前复习的单词的位置加1
+        index:that.data.index+1
+      })
+      this.changeField(ind)
     }
+  },
+  //点击继续做题
+  bindGoAhead:function(){
+    var that=this;
+    var ind=that.data.index;
+    that.setData({
+      learningFlag: false,
+      reviewFlag: true,
+      reviewWord:that.data.reviewWords[ind]
+    })
   }
 })

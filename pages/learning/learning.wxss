@@ -20,11 +20,15 @@ page{
   top: 0;
   bottom: 0;
 }
-.footer{
+.footer,goAhead{
   display: flex;
   flex-direction: row;
   position:fixed; 
   bottom:0;
+  width: 100%;
+}
+.goAhead button{
+  background-color: #87CEEB;
   width: 100%;
 }
 .footer button{
