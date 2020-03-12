@@ -21,7 +21,7 @@ Page({
     learningFlag: true,
     reviewFlag: false,
     chooseFlag: false,
-    spellFlag: true,
+    spellFlag: false,
     footerFlag:true,
     goAheadFlag:false,
     englishWord:'',      //练习填写英语单词的变量
@@ -68,16 +68,6 @@ Page({
         len: res.length
       })
       this.changeField(that.data.pos);
-      // that.setData({
-      //   word: that.data.words[page]
-      // })
-      // that.setData({
-      //   ex_array: that.data.word.explanation.split(";")
-      // })
-      // // 词汇搭配
-      // that.setData({
-      //   coll_array: that.data.word.collocation.split(";")
-      // })
       common.sendRequest('selReviewWords.do', {
         nickName: app.globalData.userInfo.nickName
       }).then((res) => {
@@ -98,7 +88,8 @@ Page({
    */
 
   onLoad: function (options) {
-    this.loadingData()
+    this.loadingData();
+
   }, 
 
   /**
@@ -161,6 +152,7 @@ Page({
     url = url.substring(1, url.length - 1)
     this.play(url)
   },
+  //播放音频
   play:function(url){
     const innerAudioContext = wx.createInnerAudioContext()
     innerAudioContext.autoplay = true
@@ -180,7 +172,7 @@ Page({
       that.setData({
         pos: that.data.pos - 1
       })
-      that.changeField();
+      that.changeField(that.data.pos);
     }
   },
   // 点击下一个
@@ -200,7 +192,7 @@ Page({
         reviewFlag:true
       })
       //开始复习
-      that.setReviewData();
+      that.setReviewData(that.data.index);
     } 
     //将pos+1
     else {
@@ -211,7 +203,7 @@ Page({
       that.changeField(that.data.pos)
     }
   },
-  // 修改单词字段
+  // 修改单词字段,pos从0开始
   changeField:function(pos){
     var that=this;
     that.setData({
@@ -232,18 +224,30 @@ Page({
       })
     }
   },
-  setReviewData:function(){
+  setReviewData:function(index){
     var that=this;
+    var ran=this.getRandom();
+    console.log(ran);
     that.setData({
       learningFlag: false,
       reviewFlag: true,
-      reviewWord: that.data.reviewWords[0]
+      reviewWord: that.data.reviewWords[index]
     })
-    //如果时选项练习，则自动播放单词发音
-    if(that.data.chooseFlag==true){
+    //0表示选择练习，1表示拼写练习
+    if(ran==0){
+      that.setData({
+        chooseFlag:true,
+        spellFlag:false
+      })
       var url = that.data.reviewWord.pron_mp3;
       url = url.substring(1, url.length - 1)
       this.play(url);
+    }else{
+      that.setData({
+        chooseFlag:false,
+        spellFlag:true,
+        englishWord: ''
+      })
     }
   },
   //点击选项
@@ -257,17 +261,8 @@ Page({
     if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
-        // wx.redirectTo({
-        //   url: '../clockIn/clockIn',
-        // })
-        //第一轮练习已完成,进入拼写练习
-        that.setData({
-          chooseFlag:false,
-          spellFlag:true,
-          index:0
-        })
-        that.setData({
-          reviewWord:that.data.reviewWords[that.data.index]
+        wx.redirectTo({
+          url: '../clockIn/clockIn',
         })
 
       }else{
@@ -275,12 +270,7 @@ Page({
         that.setData({
           index: ind
         })
-        that.setData({
-          reviewWord: reviewWords[ind]
-        })
-        var url = that.data.reviewWord.pron_mp3;
-        url = url.substring(1, url.length - 1)
-        this.play(url);
+        this.setReviewData(that.data.index)
       }
     }
     //如果选错，跳出单词卡界面
@@ -304,7 +294,8 @@ Page({
     that.setData({
       learningFlag: false,
       reviewFlag: true,
-      reviewWord:that.data.reviewWords[ind]
+      reviewWord:that.data.reviewWords[ind],
+      englishWord:''
     })
   },
   //获取得到输入的单词
@@ -318,15 +309,20 @@ Page({
     var that=this;
     console.log(that.data.englishWord)
     //如果拼写正确
+    console.log(that.data.index + 1)
     if(that.data.englishWord==e.currentTarget.dataset.word){
-      console.log("选择正确");
-      that.setData({
-        englishWord:'',
-        index: that.data.index + 1,
-      })
-      that.setData({
-        reviewWord: that.data.reviewWords[that.data.index]
-      })
+      if(that.data.index+1==that.data.reviewWords.length){
+        wx.redirectTo({
+          url: '../clockIn/clockIn',
+        })
+      }else{
+        console.log("选择正确");      
+        that.setData({
+          englishWord: '',
+          index: that.data.index + 1,
+        })
+        this.setReviewData(that.data.index);
+      }
     }
     else{
       that.setData({
@@ -340,6 +336,10 @@ Page({
       //复习的单词的id对应的是所对应的words中的下表
       this.changeField(that.data.reviewWord.id);
     }
-
+  },
+  //随机获取一个数字
+  getRandom:function(){
+    var random = Math.floor(Math.random() * 2);
+    return random
   }
 })
