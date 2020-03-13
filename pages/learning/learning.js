@@ -18,13 +18,14 @@ Page({
     reviewWords:[],     //返回的需要复习的单词存到reviewWords中
     reviewWord:[],      //当前复习的单词
     index:0,            //当前复习的单词是第几个
-    learningFlag: true,
+    learningFlag: false,
     reviewFlag: false,
     chooseFlag: false,
     spellFlag: false,
     footerFlag:true,
     goAheadFlag:false,
     englishWord:'',      //练习填写英语单词的变量
+    practise:false,
   },
 
   touchStart: function (e) {
@@ -53,11 +54,18 @@ Page({
   loadingData:function(){
     var that=this;
     var page = that.data.pos;
+    that.setData({
+      learningFlag: true,
+      reviewFlag: false,
+      index:0,
+      practise:true
+    })
     common.sendRequest("selWords.do",{
       nickName:app.globalData.userInfo.nickName,
       bookName:app.globalData.mybook.bookName,
       num:app.globalData.userData.haveToLearn,
-      start:app.globalData.userData.lastWordId
+      start:app.globalData.userData.lastWordId,
+      bookid: app.globalData.userData.bookid
     }).then((res)=>{
       //返回的单词存到words中
       console.log(res)
@@ -69,18 +77,47 @@ Page({
       })
       this.changeField(that.data.pos);
       common.sendRequest('selReviewWords.do', {
-        nickName: app.globalData.userInfo.nickName
+        nickName: app.globalData.userInfo.nickName,
+        review:1
       }).then((res) => {
         that.setData({
           reviewWords: res
-        }),
-        that.setData({
-          reviewWord: that.data.reviewWords[0]
         })
-        console.log("2" + that.data.reviewWord)
+        // this.setReviewData(that.data.index)
+        // // that.setData({
+        // //   reviewWord: that.data.reviewWords[0]
+        // // })
+        // // console.log("2" + that.data.reviewWord)
       })
     }).catch((res)=>{
       console.log(res)
+    })
+  },
+  //获取需要复习的单词
+  selReview:function(){
+    var that=this;
+    common.sendRequest("selReview.do",{
+      nickName:app.globalData.userInfo.nickName,
+      bookid:app.globalData.userData.bookid
+    }).then((res)=>{
+      //如果要复习的单词为0，则加载要学习的单词
+      if(res.length==0){
+        that.loadingData();
+      }else{
+        that.setData({
+          words:res
+        })
+        common.sendRequest("selReviewWords.do",{
+          nickName:app.globalData.userInfo.nickName,
+          review:0
+        }).then((res)=>{
+          that.setData({
+            reviewWords:res
+          })
+          console.log(that.data.reviewWords)
+          that.setReviewData(that.data.index);
+        })
+      }
     })
   },
   /**
@@ -88,7 +125,8 @@ Page({
    */
 
   onLoad: function (options) {
-    this.loadingData();
+    this.selReview();
+    //this.loadingData();
   }, 
 
   /**
@@ -226,12 +264,12 @@ Page({
   setReviewData:function(index){
     var that=this;
     var ran=this.getRandom();
-    console.log(ran);
     that.setData({
       learningFlag: false,
       reviewFlag: true,
       reviewWord: that.data.reviewWords[index]
     })
+
     //0表示选择练习，1表示拼写练习
     if(ran==0){
       that.setData({
@@ -258,10 +296,15 @@ Page({
     if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
-        wx.redirectTo({
-          url: '../clockIn/clockIn',
-        })
-
+        //如果是练习已结束
+        if (that.data.practise==true){
+          wx.redirectTo({
+            url: '../clockIn/clockIn',
+          })
+        } 
+        else if (that.data.practise == false) { //如果是复习
+          this.loadingData();
+        }
       }else{
         ind = ind + 1
         that.setData({
@@ -290,9 +333,13 @@ Page({
     var index=that.data.index;
     //如果已练习到最后一个单词
     if(index==that.data.reviewWords.length){
-      wx.redirectTo({
-        url: '../clockIn/clockIn',
-      })
+      if (that.data.practise == true) {
+        wx.redirectTo({
+          url: '../clockIn/clockIn',
+        })
+      } else if(that.data.practise==false){ //如果是复习
+        this.loadingData();
+      }
     }else{
       that.setData({
         learningFlag: false,
@@ -314,9 +361,13 @@ Page({
     //如果拼写正确
     if(that.data.englishWord==e.currentTarget.dataset.word){
       if(that.data.index+1==that.data.reviewWords.length){
-        wx.redirectTo({
-          url: '../clockIn/clockIn',
-        })
+        if (that.data.practise == true) {
+          wx.redirectTo({
+            url: '../clockIn/clockIn',
+          })
+        } else if (that.data.practise == false) { //如果是复习
+          this.loadingData();
+        }
       }else{
         console.log("选择正确");      
         that.setData({
