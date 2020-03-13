@@ -212,12 +212,12 @@ Page({
   nextWord: function () {
     var that=this;
     //设置单词的status为1
-    common.setStatus("updStatus.do", {
-      nickName: app.globalData.userInfo.nickName,
-      id: that.data.words[that.data.pos].id
-    }).then((res)=>{
+    // common.setStatus("updStatus.do", {
+    //   nickName: app.globalData.userInfo.nickName,
+    //   id: that.data.words[that.data.pos].id
+    // }).then((res)=>{
      
-    })
+    // })
     // 如果已经到最后一个单词
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({
@@ -265,14 +265,13 @@ Page({
       reviewFlag: true,
       reviewWord: that.data.reviewWords[index]
     })
-
     //0表示选择练习，1表示拼写练习
     if(ran==0){
       that.setData({
         chooseFlag:true,
         spellFlag:false
       })
-      var url = that.data.reviewWord.pron_mp3;
+      var url = that.data.reviewWord.uk_mp3;
       url = url.substring(1, url.length - 1)
       this.play(url);
     }else{
@@ -287,9 +286,10 @@ Page({
   bindChooseWord:function(e){
     var that=this;
     var ind=that.data.index;
+    console.log(that.data.index);
     var reviewWords=that.data.reviewWords
     //如果选择正确
-    if (e.currentTarget.dataset.ex == reviewWords[ind].correctEx){
+    if (e.currentTarget.dataset.ex == reviewWords[ind].explanation){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
         //如果是练习已结束
@@ -306,7 +306,7 @@ Page({
         that.setData({
           index: ind
         })
-        this.setReviewData(that.data.index)
+        this.setReviewData(that.data.index)       
       }
     }
     //如果选错，跳出单词卡界面
@@ -316,17 +316,17 @@ Page({
         reviewFlag:false,
         footerFlag:false,
         goAheadFlag:true,
-        //当前复习的单词的位置加1
-        index:that.data.index+1
       })
-      //复习的单词的id对应的是所对应的words中的下表
-      this.changeField(that.data.reviewWord.id);
+      this.setCorrectWord(that.data.index);
     }
   },
   //点击继续做题
   bindGoAhead:function(){
     var that=this;
-    var index=that.data.index;
+    var index=that.data.index+1;
+    that.setData({
+      index: that.data.index + 1
+    })
     //如果已练习到最后一个单词
     if(index==that.data.reviewWords.length){
       if (that.data.practise == true) {
@@ -339,9 +339,9 @@ Page({
     }else{
       that.setData({
         learningFlag: false,
-        reviewFlag: true,
+        reviewFlag: true,    
         reviewWord: that.data.reviewWords[index],
-        englishWord: ''
+        englishWord: '',        
       })
     }
   },
@@ -354,6 +354,7 @@ Page({
   },
   bindConfirm:function(e){
     var that=this;
+    console.log(that.data.index);
     //如果拼写正确
     if(that.data.englishWord==e.currentTarget.dataset.word){
       if(that.data.index+1==that.data.reviewWords.length){
@@ -365,7 +366,7 @@ Page({
           this.loadingData();
         }
       }else{
-        console.log("选择正确");      
+        console.log("拼写正确");      
         that.setData({
           englishWord: '',
           index: that.data.index + 1,
@@ -380,15 +381,33 @@ Page({
         footerFlag: false,
         goAheadFlag: true,
         //当前复习的单词的位置加1
-        index: that.data.index + 1
       })
-      //复习的单词的id对应的是所对应的words中的下表
-      this.changeField(that.data.reviewWord.id);
+      this.setCorrectWord(that.data.index);
     }
   },
   //随机获取一个数字
   getRandom:function(){
     var random = Math.floor(Math.random() * 2);
     return random
+  },
+  setCorrectWord:function(index){
+    var that = this;
+    that.setData({
+      word: that.data.reviewWords[index]
+    })
+    //自动播放读音
+    var url = that.data.word.us_mp3;
+    url = url.substring(1, url.length - 1)
+    this.play(url);
+    // 释义
+    that.setData({
+      ex_array: that.data.word.explanation.split(";")
+    })
+    // 词汇搭配
+    if (that.data.word.collocation != null) {
+      that.setData({
+        coll_array: that.data.word.collocation.split(";")
+      })
+    }
   }
 })
