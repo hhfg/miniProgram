@@ -8,6 +8,11 @@ Page({
 
   },
   bindClockIn:function(){
+    common.sendRequest("",{
+
+    }).then((res)=>{
+      
+    })
     wx.reLaunch({
       url: '../index/index',
     })

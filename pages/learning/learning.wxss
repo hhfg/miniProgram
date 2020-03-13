@@ -126,6 +126,7 @@ page{
 }
 .chinese{
   width: 70%;
+  align-items: center;
 }
 .input{
   display: flex;

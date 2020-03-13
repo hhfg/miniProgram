@@ -80,14 +80,10 @@ Page({
         nickName: app.globalData.userInfo.nickName,
         review:1
       }).then((res) => {
+        console.log(res)
         that.setData({
           reviewWords: res
         })
-        // this.setReviewData(that.data.index)
-        // // that.setData({
-        // //   reviewWord: that.data.reviewWords[0]
-        // // })
-        // // console.log("2" + that.data.reviewWord)
       })
     }).catch((res)=>{
       console.log(res)
