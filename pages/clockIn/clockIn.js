@@ -1,4 +1,6 @@
 // pages/clockIn/clockIn.js
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -8,10 +10,10 @@ Page({
 
   },
   bindClockIn:function(){
-    common.sendRequest("",{
-
+    common.sendRequest("updLastWordId.do",{
+      nickName:app.globalData.userInfo.nickName
     }).then((res)=>{
-      
+      console.log(res)
     })
     wx.reLaunch({
       url: '../index/index',

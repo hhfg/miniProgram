@@ -212,12 +212,12 @@ Page({
   nextWord: function () {
     var that=this;
     //设置单词的status为1
-    // common.setStatus("updStatus.do", {
-    //   nickName: app.globalData.userInfo.nickName,
-    //   id: that.data.words[that.data.pos].id
-    // }).then((res)=>{
+    common.setStatus("updStatus.do", {
+      nickName: app.globalData.userInfo.nickName,
+      id: that.data.words[that.data.pos].id
+    }).then((res)=>{
      
-    // })
+    })
     // 如果已经到最后一个单词
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({
