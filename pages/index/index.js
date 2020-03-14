@@ -119,6 +119,7 @@ Page({
         common.sendRequest("selPersonalData.do",{
           nickName:app.globalData.userInfo.nickName}
           ).then((res)=>{
+            console.log(res);
           //将数据存储在userData中 
           app.globalData.userData=res
           that.setData({

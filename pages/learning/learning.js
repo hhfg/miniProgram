@@ -51,7 +51,7 @@ Page({
   touchEnd: function (e) {
     moveFlag = true; // 回复滑动事件
   },
-  loadingData:function(){
+  loadingLearningData:function(){
     var that=this;
     var page = that.data.pos;
     that.setData({
@@ -60,10 +60,9 @@ Page({
       index:0,
       practise:true
     })
-    common.sendRequest("selWords.do",{
+    common.sendRequest("selLearningWords.do",{
       nickName:app.globalData.userInfo.nickName,
-      bookName:app.globalData.mybook.bookName,
-      num:app.globalData.userData.haveToLearn,
+      num:app.globalData.userData.dayNum,
       start:app.globalData.userData.lastWordId,
       bookid: app.globalData.userData.bookid
     }).then((res)=>{
@@ -122,8 +121,15 @@ Page({
    */
 
   onLoad: function (options) {
-    this.selReview();
+    //this.selReview();
     //this.loadingData();
+    if(app.globalData.userData.haveToReview==0){
+      console.log("不需要复习");
+      this.loadingLearningData();
+    }else{
+      console.log("需要复习");
+      this.selReview();
+    }
   }, 
 
   /**
@@ -243,7 +249,7 @@ Page({
     that.setData({
       word: that.data.words[pos]
     })
-    console.log(word)
+    console.log(that.data.word)
     //自动播放读音
     var url = that.data.word.us_mp3;
     url = url.substring(1, url.length - 1)

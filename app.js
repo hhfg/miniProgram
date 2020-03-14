@@ -31,7 +31,8 @@ App({
     //选择的词书的信息（书名，单词数）
     mybook:{
       bookName:'',
-      wordNum:0
+      wordNum:0,
+      bookid:0
     }
   }
 })

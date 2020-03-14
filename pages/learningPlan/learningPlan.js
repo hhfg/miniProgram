@@ -85,6 +85,7 @@ Page({
   },
   // 点击确定后
   bindConfirm:function(){
+    console.log(app.globalData.mybook.bookid)
     console.log(this.data.year + "-" + this.data.month + "-" + this.data.day)
     let time = this.data.year + "-" + this.data.month + "-" + this.data.day
     let dayNum=this.data.learningNum
@@ -93,7 +94,9 @@ Page({
       nickName: app.globalData.userInfo.nickName,
       dayNum:dayNum,
       endTime:time,
-      learningDay:learningDay
+      learningDay:learningDay,
+      bookid:app.globalData.mybook.bookid,
+      lastWordId:app.globalData.userData.lastWordId
       }).then((res)=>{
       console.log(res)
       // 跳出提示框设置成功

@@ -59,7 +59,8 @@ Page({
           //更新mybook
           that.setData({
             'mybook.bookName':bookname,
-            'mybook.wordNum':num
+            'mybook.wordNum':num,
+            'mybook.bookid':id
           })
           console.log(that.data.mybook)
           app.globalData.mybook=that.data.mybook
