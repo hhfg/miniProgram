@@ -103,6 +103,7 @@ Page({
         that.setData({
           words:res
         })
+        console.log(that.data.words)
         common.sendRequest("selReviewWords.do",{
           nickName:app.globalData.userInfo.nickName,
           review:0
@@ -242,6 +243,7 @@ Page({
     that.setData({
       word: that.data.words[pos]
     })
+    console.log(word)
     //自动播放读音
     var url = that.data.word.us_mp3;
     url = url.substring(1, url.length - 1)

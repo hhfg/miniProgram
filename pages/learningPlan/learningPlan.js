@@ -87,11 +87,11 @@ Page({
   bindConfirm:function(){
     console.log(this.data.year + "-" + this.data.month + "-" + this.data.day)
     let time = this.data.year + "-" + this.data.month + "-" + this.data.day
-    let haveToLearn=this.data.learningNum
+    let dayNum=this.data.learningNum
     let learningDay=this.data.learningDay
-    common.sendRequest("updPersonalData.do",{
+    common.sendRequest("updLearningPlan.do",{
       nickName: app.globalData.userInfo.nickName,
-      haveToLearn:haveToLearn,
+      dayNum:dayNum,
       endTime:time,
       learningDay:learningDay
       }).then((res)=>{

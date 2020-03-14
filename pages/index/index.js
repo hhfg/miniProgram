@@ -10,6 +10,7 @@ Page({
     userData:app.globalData.userData,
     mybook:app.globalData.mybook
   },
+
   //换书
   bindChangeBook: function () {
     wx.navigateTo({
@@ -39,18 +40,27 @@ Page({
       })
     }
     else{
-      wx.navigateTo({
-        url: '../learning/learning',
-        success: function (res) {
-          console.log(res);
-        },
-        fail: function () {
-          //fail
-        },
-        complete: function () {
-          //complete
-        }
-      })
+      if(app.globalData.userData.dayNum==0){
+        wx.navigateTo({
+          url: '../learningPlan/learningPlan',
+          success:function(res){
+            console.log(res);
+          }
+        })
+      }else{
+        wx.navigateTo({
+          url: '../learning/learning',
+          success: function (res) {
+            console.log(res);
+          },
+          fail: function () {
+            //fail
+          },
+          complete: function () {
+            //complete
+          }
+        })
+      }
     }
   },
   //查词
