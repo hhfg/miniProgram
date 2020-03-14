@@ -129,9 +129,11 @@ Page({
             common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
               that.setData({
                 'mybook.bookName': res.bookName,
-                'mybook.wordNum': res.wordNum
+                'mybook.wordNum': res.wordNum,
+                'mybook.bookid':that.data.userData.bookid
               })
               app.globalData.mybook = that.data.mybook
+              console.log(app.globalData.mybook)
             }).catch((res) => {
               console.log(res)
             })
