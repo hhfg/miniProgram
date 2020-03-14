@@ -91,29 +91,16 @@ Page({
   //获取需要复习的单词
   selReview:function(){
     var that=this;
-    common.sendRequest("selReview.do",{
+    common.sendRequest("selReviewWords.do",{
       nickName:app.globalData.userInfo.nickName,
-      bookid:app.globalData.userData.bookid
+      review:0
     }).then((res)=>{
-      //如果要复习的单词为0，则加载要学习的单词
-      if(res.length==0){
-        that.loadingData();
-      }else{
-        that.setData({
-          words:res
-        })
-        console.log(that.data.words)
-        common.sendRequest("selReviewWords.do",{
-          nickName:app.globalData.userInfo.nickName,
-          review:0
-        }).then((res)=>{
-          that.setData({
-            reviewWords:res
-          })
-          console.log(that.data.reviewWords)
-          that.setReviewData(that.data.index);
-        })
-      }
+      console.log(res);
+      that.setData({
+        reviewWords:res
+      })
+      console.log(that.data.reviewWords)
+      that.setReviewData(that.data.index);
     })
   },
   /**
@@ -219,12 +206,14 @@ Page({
   nextWord: function () {
     var that=this;
     //设置单词的status为1
-    common.setStatus("updStatus.do", {
-      nickName: app.globalData.userInfo.nickName,
-      id: that.data.words[that.data.pos].id
-    }).then((res)=>{
+    this.updateStatus(app.globalData.userInfo.nickName, 1, that.data.words[that.data.pos].id)
+    // common.setStatus("updStatus.do", {
+    //   nickName: app.globalData.userInfo.nickName,
+    //   status:1,
+    //   id: that.data.words[that.data.pos].id
+    // }).then((res)=>{
      
-    })
+    // })
     // 如果已经到最后一个单词
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({
@@ -294,7 +283,9 @@ Page({
   bindChooseWord:function(e){
     var that=this;
     var ind=that.data.index;
-    console.log(that.data.index);
+    if (that.data.practise == false) {
+      this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
+    }
     var reviewWords=that.data.reviewWords
     //如果选择正确
     if (e.currentTarget.dataset.ex == reviewWords[ind].explanation){
@@ -307,7 +298,7 @@ Page({
           })
         } 
         else if (that.data.practise == false) { //如果是复习
-          this.loadingData();
+          this.loadingLearningData();
         }
       }else{
         ind = ind + 1
@@ -327,6 +318,7 @@ Page({
       })
       this.setCorrectWord(that.data.index);
     }
+
   },
   //点击继续做题
   bindGoAhead:function(){
@@ -342,7 +334,7 @@ Page({
           url: '../clockIn/clockIn',
         })
       } else if(that.data.practise==false){ //如果是复习
-        this.loadingData();
+        this.loadingLearningData();
       }
     }else{
       that.setData({
@@ -362,7 +354,9 @@ Page({
   },
   bindConfirm:function(e){
     var that=this;
-    console.log(that.data.index);
+    if (that.data.practise == false) {
+      this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
+    }
     //如果拼写正确
     if(that.data.englishWord==e.currentTarget.dataset.word){
       if(that.data.index+1==that.data.reviewWords.length){
@@ -371,7 +365,7 @@ Page({
             url: '../clockIn/clockIn',
           })
         } else if (that.data.practise == false) { //如果是复习
-          this.loadingData();
+          this.loadingLearningData();
         }
       }else{
         console.log("拼写正确");      
@@ -391,6 +385,7 @@ Page({
         //当前复习的单词的位置加1
       })
       this.setCorrectWord(that.data.index);
+
     }
   },
   //随机获取一个数字
@@ -417,5 +412,15 @@ Page({
         coll_array: that.data.word.collocation.split(";")
       })
     }
+  },
+  updateStatus:function(nickName,status,id){
+    console.log(nickName,status,id)
+    common.setStatus("updStatus.do",{
+      nickName:nickName,
+      status:status,
+      id:id
+    }).then((res)=>{
+      console.log(res)
+    })
   }
 })
