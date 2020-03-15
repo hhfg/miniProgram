@@ -28,7 +28,8 @@ Page({
   },
   // 开始学习
   bindLearning:function(){
-    if(this.data.mybook.wordNum==0){
+    //如果bookid=0说明还未选择单词书
+    if(app.globalData.userData.bookid==0){
       wx.navigateTo({
         url: '../books/books',
         success: function (res) {
@@ -38,8 +39,8 @@ Page({
           //fail
         },
       })
-    }
-    else{
+    }else{
+       //如果已设置单词书但为制定学习计划，跳转到制定学习计划页面 
       if(app.globalData.userData.dayNum==0){
         wx.navigateTo({
           url: '../learningPlan/learningPlan',
@@ -48,18 +49,17 @@ Page({
           }
         })
       }else{
-        wx.navigateTo({
-          url: '../learning/learning',
-          success: function (res) {
-            console.log(res);
-          },
-          fail: function () {
-            //fail
-          },
-          complete: function () {
-            //complete
-          }
-        })
+        //如果haveToLearn和haveToReview都为0说明今日已学习完成
+        if(app.globalData.userData.haveToLearn==0&&app.globalData.userData.haveToReview==0){
+          wx.showModal({
+            title: '提醒',
+            content: '今日已学习完成',
+          })
+        }else{//否则跳转到学习页面
+          wx.navigateTo({
+            url: '../learning/learning',
+          })
+        }
       }
     }
   },
