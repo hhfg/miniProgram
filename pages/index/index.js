@@ -144,7 +144,7 @@ Page({
     common.getSetting().then((res)=>{
       if(res==="已授权"){
         //请求后台数据
-       // this.loading();
+        this.loading();
       }else if(res=="未授权"){
         //跳转到登录页
         wx.navigateTo({
@@ -166,7 +166,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.loading()
+    //this.loading()
   },
 
   /**
