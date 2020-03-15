@@ -105,7 +105,35 @@ Page({
       }
     })
   },
-  
+  loading:function(){
+    var that=this;
+    common.sendRequest("selPersonalData.do", {
+      nickName: app.globalData.userInfo.nickName
+    }
+    ).then((res) => {
+      console.log(res);
+      //将数据存储在userData中 
+      app.globalData.userData = res
+      that.setData({
+        userData: res
+      })
+      if (that.data.userData.bookid != 0) {
+        common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
+          that.setData({
+            'mybook.bookName': res.bookName,
+            'mybook.wordNum': res.wordNum,
+            'mybook.bookid': that.data.userData.bookid
+          })
+          app.globalData.mybook = that.data.mybook
+          console.log(app.globalData.mybook)
+        }).catch((res) => {
+          console.log(res)
+        })
+      }
+    }).catch((res) => {
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -116,31 +144,7 @@ Page({
     common.getSetting().then((res)=>{
       if(res==="已授权"){
         //请求后台数据
-        common.sendRequest("selPersonalData.do",{
-          nickName:app.globalData.userInfo.nickName}
-          ).then((res)=>{
-            console.log(res);
-          //将数据存储在userData中 
-          app.globalData.userData=res
-          that.setData({
-            userData:res
-          })       
-          if(that.data.userData.bookid!=0){
-            common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
-              that.setData({
-                'mybook.bookName': res.bookName,
-                'mybook.wordNum': res.wordNum,
-                'mybook.bookid':that.data.userData.bookid
-              })
-              app.globalData.mybook = that.data.mybook
-              console.log(app.globalData.mybook)
-            }).catch((res) => {
-              console.log(res)
-            })
-          }
-        }).catch((res)=>{
-          console.log(res)
-        })
+       // this.loading();
       }else if(res=="未授权"){
         //跳转到登录页
         wx.navigateTo({
@@ -162,7 +166,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.loading()
   },
 
   /**
