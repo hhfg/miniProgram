@@ -1,4 +1,3 @@
-<!--components/test/test.wxml-->
 <view class="calendar">
   <view class='tit'>
     <view class='pre' bindtap='gotoPreMonth'>{{'< '}}</view>

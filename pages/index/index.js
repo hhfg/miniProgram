@@ -10,7 +10,11 @@ Page({
     userData:app.globalData.userData,
     mybook:app.globalData.mybook
   },
-
+  clockIn:function(){
+    wx.navigateTo({
+      url: '../clockIn/clockIn',
+    })
+  },
   //换书
   bindChangeBook: function () {
     wx.navigateTo({
