@@ -293,9 +293,10 @@ Page({
         //跳转到已完成学习页面，让用户进行打卡
         //如果是练习已结束
         if (that.data.practise==true){
-          wx.redirectTo({
-            url: '../clockIn/clockIn',
-          })
+          that.clockIn();
+          // wx.redirectTo({
+          //   url: '../clockIn/clockIn',
+          // })
         } 
         else if (that.data.practise == false) { //如果是复习
           this.loadingLearningData();
@@ -330,9 +331,10 @@ Page({
     //如果已练习到最后一个单词
     if(index==that.data.reviewWords.length){
       if (that.data.practise == true) {
-        wx.redirectTo({
-          url: '../clockIn/clockIn',
-        })
+        that.clockIn();
+        // wx.redirectTo({
+        //   url: '../clockIn/clockIn',
+        // })
       } else if(that.data.practise==false){ //如果是复习
         this.loadingLearningData();
       }
@@ -361,9 +363,10 @@ Page({
     if(that.data.englishWord==e.currentTarget.dataset.word){
       if(that.data.index+1==that.data.reviewWords.length){
         if (that.data.practise == true) {
-          wx.redirectTo({
-            url: '../clockIn/clockIn',
-          })
+          that.clockIn();
+          // wx.redirectTo({
+          //   url: '../clockIn/clockIn',
+          // })
         } else if (that.data.practise == false) { //如果是复习
           this.loadingLearningData();
         }
@@ -413,6 +416,7 @@ Page({
       })
     }
   },
+  //更新status
   updateStatus:function(nickName,status,id){
     console.log(nickName,status,id)
     common.setStatus("updStatus.do",{
@@ -422,5 +426,26 @@ Page({
     }).then((res)=>{
       console.log(res)
     })
+  },
+  //打卡
+  clockIn:function(){
+    var date = new Date();
+    var sign_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    wx.request({
+      url: 'http://localhost:8080/MiniProgram/insSignRecord.do',
+      data: {
+        nickName: app.globalData.userInfo.nickName,
+        date: sign_date,
+        learned_num: app.globalData.userData.dayNum
+      },
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+      }
+    })
+
   }
 })

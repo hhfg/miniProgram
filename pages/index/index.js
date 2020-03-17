@@ -63,6 +63,9 @@ Page({
       }
     }
   },
+  bindTest:function(){
+
+  },
   //查词
   bindSearch:function(){
     console.log("search");

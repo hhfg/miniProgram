@@ -38,7 +38,7 @@
       <view><image class="icon" src="../../icons/index/pk.png"></image></view>
       <view>PK</view>
     </view>
-    <view class="item">
+    <view class="item" bindtap="bindTest">
       <view><image class="icon" src="../../icons/index/test.png"></image></view>
       <view>测试</view>
     </view>
