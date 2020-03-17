@@ -1,17 +1,18 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/clockIn/clockIn",
+    "pages/calendar/calendar",
+    "pages/test/test",
     
+    "pages/clockIn/clockIn",
     "pages/learning/learning",
     "pages/learningPlan/learningPlan",
     "pages/books/books",
-    "pages/login/login",  
-    "pages/test/test",
+    "pages/login/login",    
     "pages/mine/mine",  
     "pages/wordBook/wordBook",
     "pages/learningSet/learningSet",
-    "pages/calendar/calendar",
+    
     "pages/record/record",  
     "pages/search/search",
     "pages/logs/logs"
@@ -25,6 +26,12 @@
   "style": "v2",
   "usingComponents":{
     "calendar":"/components/calendar/index"
+  },
+  "plugins":{
+    "calendar":{
+      "version":"1.1.3",
+      "provider":"wx92c68dae5a8bb046"
+    }
   },
   "sitemapLocation": "sitemap.json",
     "tabBar": {

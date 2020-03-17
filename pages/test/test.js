@@ -1,102 +1,232 @@
-const date=new Date()
-const years=[]
-const months=[]
-const days=[]
-const bigMonth=[1,3,5,7,8,10,12]
-for(let i=1990;i<=date.getFullYear();i++){
-  years.push(i)
-}
-for(let i=1;i<=12;i++){
-  months.push(i)
-}
-for(let i=1;i<=31;i++){
-  days.push(i)
-}
+var util = require('../../utils/util.js')
+const date=new Date();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    years:years,
-    year:date.getFullYear(),
-    months:months,
-    month:2,
-    days:days,
-    day:2,
-    year:date.getFullYear(),
-    value:[9999,1,1]
-  },
-  showToask:function(){
-    wx.showToast({
-      title: '成功',
-      icon:'success',
-      duration:2000
-    })
-  },
-  contains:function(arr,obj){
-    var i=arr.length;
-    while(i--){
-      if(arr[i]==obj){
-        return true;
+    currentMonthDateLen: 0, // 当月天数
+    preMonthDateLen: 0, // 当月中，上月多余天数
+    allArr: [], // 
+    nowData: "",
+    currentYear: date.getFullYear(),
+    currentMonth: date.getMonth()+1,
+    clockDay:[
+      {
+        'year':2020,
+        'month':4,
+        'date':10
+      },{
+        'year':2020,
+        'month':3,
+        'date':11
+      },{
+        'year':2020,
+        'month':2,
+        'date':11
+      },{
+        'year':2019,
+        'month':12,
+        'date':30
       }
-    }
+    ],
+    nowYear: date.getFullYear(),
+    nowMonth: date.getMonth()+1,
   },
-  setDays:function(day){
-    const temp=[];
-    for(let i=1;i<=day;i++){
-      temp.push(i)
-    }
-    this.setData({
-      days:temp,
-    })
+  // 获取某年某月总共多少天
+  getDateLen: function (year, month){
+    let actualMonth = month - 1;
+    let timeDistance = +new Date(year, month) - +new Date(year, actualMonth);
+    return timeDistance / (1000 * 60 * 60 * 24);
   },
-  showLoading:function(){
-    wx.showLoading({
-      title: '加载中...',
-    }),setTimeout(function(){
-      wx.hideLoading()
-    },2000)
+  // 获取某月1号是周几
+  getFirstDateWeek:function(year, month) {
+    return new Date(year, month - 1, 1).getDay()
   },
-  bindChange:function(e){
-    const val=e.detail.value;
-    const setYear=this.data.years[val[0]];
-    const setMonth = this.data.months[val[1]];
-    const setDay = this.data.days[val[2]];
-    // 闰年
-    if(setMonth==2){
-      if ((setYear % 4 == 0 && setYear % 100 != 0)||setYear%400==0){
-        //闰年
-        this.setDays(29);
-      }else{
-        this.setDays(28);
+  // 上月 年、月
+  preMonth:function(year, month) {
+    if (month == 1) {
+      return {
+        year: --year,
+        month: 12
       }
     } else {
-      if (this.contains(bigMonth, setMonth)) {
-        this.setDays(31)
-      } else {
-        this.setDays(30)
+      return {
+        year: year,
+        month: --month
+      }
+    }
+  },
+  // 下月 年、月
+  nextMonth: function(year, month) {
+    if (month == 12) {
+      return {
+        year: ++year,
+        month: 1
+      }
+    } else {
+      return {
+        year: year,
+        month: ++month
+      }
+    }
+  },
+  // 获取当月数据，返回数组
+  getCurrentArr: function() {
+    let currentMonthDateLen = this.getDateLen(this.data.currentYear, this.data.currentMonth) // 获取当月天数
+    let currentMonthDateArr = [] // 定义空数组
+    if (currentMonthDateLen > 0) {
+      for (let i = 1; i <= currentMonthDateLen; i++) {
+        currentMonthDateArr.push({
+          year:this.data.currentYear,
+          month: this.data.nowMonth, // 只是为了增加标识，区分上下月
+          date: i,
+          isSelected:false
+        })
       }
     }
     this.setData({
-      year:setYear,
-      month:setMonth,
-      day:setDay
+      currentMonthDateLen
+    })
+    return currentMonthDateArr
+  },
+  // 获取当月中，上月多余数据，返回数组
+  getPreArr: function() {
+    let preMonthDateLen = this.getFirstDateWeek(this.data.currentYear, this.data.currentMonth) // 当月1号是周几 == 上月残余天数）
+    let preMonthDateArr = [] // 定义空数组
+    if (preMonthDateLen > 0) {
+      let { year, month } = this.preMonth(this.data.currentYear, this.data.currentMonth) // 获取上月 年、月
+      let date = this.getDateLen(year, month) // 获取上月天数
+      for (let i = 0; i < preMonthDateLen; i++) {
+        preMonthDateArr.unshift({ // 尾部追加
+          year: this.data.currentYear,
+          month: this.data.nowMonth-1, 
+          date: date,
+          isSelected:false
+        })
+        date--
+      }
+    }
+    this.setData({
+      preMonthDateLen
+    })
+    return preMonthDateArr
+  },
+  // 获取当月中，下月多余数据，返回数组
+  getNextArr: function() {
+    let nextMonthDateLen = 35 - this.data.preMonthDateLen - this.data.currentMonthDateLen // 下月多余天数
+    let nextMonthDateArr = [] // 定义空数组
+    if (nextMonthDateLen > 0) {
+      for (let i = 1; i <= nextMonthDateLen; i++) {
+        nextMonthDateArr.push({
+          year: this.data.currentYear,
+          month: this.data.nowMonth+1,
+          date: i,
+          isSelected:false
+        })
+      }
+    }
+    return nextMonthDateArr
+  },
+  // 整合当月所有数据
+  getAllArr: function() {
+    var that=this;
+    let preArr = this.getPreArr()
+    let currentArr = this.getCurrentArr()
+    let nextArr = this.getNextArr()
+    let isSelected=false
+    let allArr = [...preArr, ...currentArr, ...nextArr]
+    that.setData({
+      allArr
+    })
+    let sendObj = {
+      currentYear: that.data.currentYear,
+      currentMonth: that.data.currentMonth,
+      nowYear: that.data.nowYear,
+      nowMonth: that.data.nowMonth,
+      nowDate: that.data.nowDate,
+      allArr: allArr
+    }
+    that.triggerEvent('sendObj', sendObj)
+    that.data.clockDay.forEach(function(item,index){
+      for(var i=0;i<allArr.length;i++){
+        if(item.year==allArr[i].year&&item.month==allArr[i].month&&item.date==allArr[i].date){
+          let selected='allArr['+i+'].isSelected'
+          that.setData({
+            [selected]:true
+          })
+        }
+      }
     })
   },
-
+  // 点击 上月
+  gotoPreMonth: function() {
+    if(this.data.nowMonth==1){
+      this.setData({
+        nowMonth: 12
+      })
+    }else{
+      this.setData({
+        nowMonth: this.data.nowMonth - 1
+      })
+    }
+    let { year, month } = this.preMonth(this.data.currentYear, this.data.currentMonth)
+    this.setData({
+      currentYear: year,
+      currentMonth: month
+    })
+    this.getAllArr()
+  },
+  // 点击 下月
+  gotoNextMonth: function() {
+    if(this.data.nowMonth==12){
+      this.setData({
+        nowMonth:  1
+      })
+    }else{
+      this.setData({
+        nowMonth: this.data.nowMonth + 1
+      })
+    }
+    let { year, month } = this.nextMonth(this.data.currentYear, this.data.currentMonth)
+    this.setData({
+      currentYear: year,
+      currentMonth: month
+    })
+    this.getAllArr()
+  },
+  getNowData: function(e) {
+    var data = e.currentTarget.dataset.day;
+    var currency = e.currentTarget.dataset.currency;
+    if (currency == 1) {
+      this.setData({
+        nowYear: this.data.currentYear,
+        nowMonth: this.data.currentMonth,
+        nowDate: data
+      })
+    }
+    console.log(data)
+    this.getAllArr()
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    //console.log(this.data.nowYear+"-"+this.data.nowMonth+"-"+this.data.nowDay)
+    var time = util.formatTime(new Date());
+    // 再通过setData更改Page()里面的data，动态更新页面的数据
+    this.setData({
+      nowData: time
+    });
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+    this.getAllArr()
   },
 
   /**
