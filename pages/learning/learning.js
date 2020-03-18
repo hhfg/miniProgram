@@ -443,7 +443,9 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        console.log(res)
+        wx.navigateTo({
+          url: '../clockIn/clockIn',
+        })
       }
     })
 

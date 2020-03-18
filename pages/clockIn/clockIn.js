@@ -17,6 +17,7 @@ Page({
     clockDay: '',
     nowYear: date.getFullYear(),
     nowMonth: date.getMonth() + 1,
+    sign_date:''
   },
   // 获取某年某月总共多少天
   getDateLen: function (year, month) {
@@ -194,14 +195,32 @@ Page({
     console.log(data)
     this.getAllArr()
   },
+  //解析从后台传过来的打卡日期
+  parseDate:function(){
+    var that=this;
+    var index=0
+    that.data.sign_date.forEach(function(item){
+      var date=item.split("-");
+      var year='clockDay['+index+'].year'
+      var month = 'clockDay[' + index + '].month'
+      var day = 'clockDay[' + index + '].date'
+      that.setData({
+        [year]: parseInt(date[0]),
+        [month]:parseInt(date[1]),
+        [day]: parseInt(date[2])
+      })
+      index=index+1
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
     //console.log(this.data.nowYear+"-"+this.data.nowMonth+"-"+this.data.nowDay)
     var time = util.formatTime(new Date());
     // 再通过setData更改Page()里面的data，动态更新页面的数据
-    this.setData({
+    that.setData({
       nowData: time
     });
     common.sendRequest('selSignDate.do',{
@@ -209,8 +228,10 @@ Page({
     }).then((res)=>{
       console.log(res)
       that.setData({
-        clockDay:res
+        sign_date:res
       })
+      that.parseDate(that.data.sign_date);
+      that.getAllArr()
     }).catch((res)=>{
 
     })
@@ -220,7 +241,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.getAllArr()
+   // this.getAllArr()
   },
 
   /**
