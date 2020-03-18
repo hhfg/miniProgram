@@ -8,7 +8,8 @@ Page({
   data: {
     day:0,
     userData:app.globalData.userData,
-    mybook:app.globalData.mybook
+    mybook:app.globalData.mybook,
+    percent:0
   },
   //查看打卡日历
   clockIn:function(){
@@ -125,6 +126,7 @@ Page({
       that.setData({
         userData: res
       })
+
       if (that.data.userData.bookid != 0) {
         common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
           that.setData({
@@ -133,7 +135,9 @@ Page({
             'mybook.bookid': that.data.userData.bookid
           })
           app.globalData.mybook = that.data.mybook
-          console.log(app.globalData.mybook)
+          that.setData({
+            percent: (app.globalData.userData.completedNum / app.globalData.mybook.wordNum).toPrecision(3)*100
+          })
         }).catch((res) => {
           console.log(res)
         })
