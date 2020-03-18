@@ -1,6 +1,6 @@
 <view class="head">
   <view class="clock_in">
-    <view class="left"><text class="day">{{userData.clockInDay}}</text>天</view>
+    <view class="left">已经打卡<text class="day">{{userData.clockInDay}}</text>天</view>
     <view class="right" bindtap="clockIn"><image src="../../icons/index/calendar.png" style="width:15px;height:15px;" />打卡日历></view>
   </view>
   <view class="book" style="background-color:#87CEEB" >

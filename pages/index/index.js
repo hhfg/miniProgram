@@ -10,9 +10,10 @@ Page({
     userData:app.globalData.userData,
     mybook:app.globalData.mybook
   },
+  //查看打卡日历
   clockIn:function(){
     wx.navigateTo({
-      url: '../clockIn/clockIn',
+      url: '../calendar/calendar',
     })
   },
   //换书
