@@ -1,11 +1,23 @@
 /* pages/clockIn/clockIn.wxss */
+.attention{
+  height: 100rpx;
+  font-size: 16px;
+  font-weight: bold;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  line-height: 100rpx;  /** 垂直居中 **/ 
+  text-align: center;   /** 水平居中 **/ 
+
+}
 .calendar{
     width: 100%;
    background:#fff;
 }
 .pre,.next{
    color:white;
-   background:#1CA2FC;
+   background:#87CEEB;
    border-radius:100px;
    height:20px;
    width:20px;
@@ -39,7 +51,7 @@
 }
 .current{
    font-size: 36rpx;
-    color: #1CA2FC;
+    color: #87CEEB;
    font-weight: bold;
 }
 .calendar .tit .current{
@@ -71,6 +83,19 @@
 }
 .selected{
   color:#fff;
-  background:#1CA2FC;
+  background:#87CEEB;
   border-radius:100px
+}
+.btn{
+  margin-top:20px; 
+  text-align: center;   /** 水平居中 **/ 
+  background-color: #87CEEB;  
+  color: black;
+  font-weight: bold;
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  border-radius: 25px;
+  padding:2px 2px;
+  line-height: 30px;
 }

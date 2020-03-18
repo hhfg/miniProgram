@@ -1,4 +1,4 @@
-
+<view class="attention">学习完成，打卡成功!</view>
 <view class="calendar">
   <view class='tit'>
     <view class='pre' bindtap='gotoPreMonth'>{{'< '}}</view>
@@ -16,9 +16,10 @@
   </view>
   <view class='content'>
     <view wx:for="{{allArr}}" wx:key="index" class='itemData' data-currency="{{item.month == currentMonth ? '1' : '0'}}" data-day='{{item.date}}' bindtap='getNowData'>
-      <view class="{{item.month == currentMonth ? '' : 'gray'}}" style="height:20px;width:20px;line-height:20px;{{item.isSelected?'color:#fff;background:#1CA2FC;border-radius:100px':''}}">
+      <view class="{{item.month == currentMonth ? '' : 'gray'}}" style="height:20px;width:20px;line-height:20px;{{item.isSelected?'color:#fff;background:#87CEEB;border-radius:100px':''}}">
           {{item.date}}
       </view>
     </view>
   </view>
 </view>
+<button class="btn" bindtap="bindReturn">返回首页</button>
