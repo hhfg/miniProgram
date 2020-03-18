@@ -24,9 +24,6 @@
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "usingComponents":{
-    "calendar":"/components/calendar/index"
-  },
   "plugins":{
     "calendar":{
       "version":"1.1.3",

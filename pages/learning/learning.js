@@ -257,6 +257,7 @@ Page({
   setReviewData:function(index){
     var that=this;
     var ran=this.getRandom();
+   // var ran=0
     that.setData({
       learningFlag: false,
       reviewFlag: true,
@@ -286,12 +287,14 @@ Page({
     if (that.data.practise == false) {
       this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
     }
+    console.log(ind);
     var reviewWords=that.data.reviewWords
     //如果选择正确
     if (e.currentTarget.dataset.ex == reviewWords[ind].explanation){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
         //如果是练习已结束
+        console.log("练习结束")
         if (that.data.practise==true){
           that.clockIn();
           // wx.redirectTo({
@@ -432,7 +435,7 @@ Page({
     var date = new Date();
     var sign_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     wx.request({
-      url: 'http://localhost:8080/MiniProgram/insSignRecord.do',
+      url: 'http://192.168.1.105:8080/MiniProgram/insSignRecord.do',
       data: {
         nickName: app.globalData.userInfo.nickName,
         date: sign_date,
