@@ -10,11 +10,11 @@
   <view class="sign">
     <view class="desc">
       <view>连续签到</view>
-      <view>1</view>
+      <view>{{userData.continue_sign}}</view>
     </view>
     <view class="desc">
       <view>累计签到</view>
-      <view>1</view>
+      <view>{{userData.clockInDay}}</view>
     </view>
   </view>
   <view class="clear"></view>

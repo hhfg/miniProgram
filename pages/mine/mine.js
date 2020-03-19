@@ -1,11 +1,11 @@
-
+const app=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    userData: ''
   },
   //更改学习计划
   bindDateChange: function (e) {
@@ -77,7 +77,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var that=this;
+    that.setData({
+      userData: app.globalData.userData
+    })
   },
 
   /**
