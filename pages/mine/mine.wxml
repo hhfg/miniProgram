@@ -16,10 +16,6 @@
       <view>累计签到</view>
       <view>1</view>
     </view>
-    <view class="desc">
-      <view>最大连续签到</view>
-      <view>1</view>
-    </view>
   </view>
   <view class="clear"></view>
   <view class="item" hover-class="click">

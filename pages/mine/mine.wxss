@@ -43,7 +43,7 @@ page{
   margin-left: 3%;
 }
 .desc{
-  width: 33%;
+  width: 50%;
 }
 .clear{
   padding-top: 70px; 

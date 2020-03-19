@@ -136,7 +136,7 @@ Page({
           })
           app.globalData.mybook = that.data.mybook
           that.setData({
-            percent: (app.globalData.userData.completedNum / app.globalData.mybook.wordNum).toPrecision(3)*100
+            percent: Math.round(app.globalData.userData.completedNum / (app.globalData.mybook.wordNum) * 10000) / 100.00 + "%"
           })
         }).catch((res) => {
           console.log(res)
