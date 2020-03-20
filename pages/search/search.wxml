@@ -46,3 +46,6 @@
     </view>
   </view>
 </view>
+<view class="result" wx:if="{{ifFlag}}">
+  <text>查无此词</text>
+</view>

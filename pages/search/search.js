@@ -9,6 +9,7 @@ Page({
   data: {
     word:"",
     flag:false,
+    ifFlag:false,
     result:'',
     ex_array:'',
     coll_array:''
@@ -21,11 +22,17 @@ Page({
     common.sendRequest("searchWord.do",{
       word:that.data.word
       }).then((res)=>{
-        that.setData({
-          result:res,
-        })
-        that.changeField();
-        console.log(that.data.result)
+        if(res==""){
+          that.setData({
+            ifFlag:true,
+            flag:false
+          })
+        }else{
+          that.setData({
+            result:res
+          })
+          that.changeField();
+        }
       }).catch((res)=>{
         console.log(res)
       })
@@ -35,7 +42,6 @@ Page({
     that.setData({
       ex_array: that.data.result.explanation.split(";")
     })
-    console.log(that.data.ex_array)
     // 词汇搭配
     if (that.data.result.collocation != null) {
       that.setData({
@@ -43,12 +49,37 @@ Page({
       })
     }
     that.setData({
-      flag:true
+      flag:true,
+      ifFlag:false
+    })
+  },
+  //点击播放美式发音
+  pronouncePlayUS: function (event) {
+    var url = event.currentTarget.dataset.url
+    url = url.substring(1, url.length - 1)
+    this.play(url)
+  },
+  //点击播放英式发音
+  pronouncePlayUK: function (event) {
+    var url = event.currentTarget.dataset.url
+    url = url.substring(1, url.length - 1)
+    this.play(url)
+  },
+  //播放音频
+  play: function (url) {
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   },
   // 查询搜索的接口方法
   search: function () {
-    console.log(this.data.text);
+  
   },
   /**
    * 生命周期函数--监听页面加载
