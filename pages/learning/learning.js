@@ -77,7 +77,8 @@ Page({
       this.changeField(that.data.pos);
       common.sendRequest('selReviewWords.do', {
         nickName: app.globalData.userInfo.nickName,
-        review:1
+        review:1,
+        bookid: app.globalData.userData.bookid
       }).then((res) => {
         console.log(res)
         that.setData({
@@ -290,9 +291,6 @@ Page({
         console.log("练习结束")
         if (that.data.practise==true){
           that.clockIn();
-          // wx.redirectTo({
-          //   url: '../clockIn/clockIn',
-          // })
         } 
         else if (that.data.practise == false) { //如果是复习
           this.loadingLearningData();
@@ -302,6 +300,7 @@ Page({
         that.setData({
           index: ind
         })
+        
         this.setReviewData(that.data.index)       
       }
     }
@@ -313,9 +312,9 @@ Page({
         footerFlag:false,
         goAheadFlag:true,
       })
+      that.data.reviewWords.push(that.data.reviewWord);
       this.setCorrectWord(that.data.index);
     }
-
   },
   //点击继续做题
   bindGoAhead:function(){
@@ -328,9 +327,6 @@ Page({
     if(index==that.data.reviewWords.length){
       if (that.data.practise == true) {
         that.clockIn();
-        // wx.redirectTo({
-        //   url: '../clockIn/clockIn',
-        // })
       } else if(that.data.practise==false){ //如果是复习
         this.loadingLearningData();
       }
@@ -383,7 +379,8 @@ Page({
         goAheadFlag: true,
         //当前复习的单词的位置加1
       })
-      this.setCorrectWord(that.data.index);
+      that.data.reviewWords.push(that.data.reviewWord);
+      that.setCorrectWord(that.data.index);
 
     }
   },
