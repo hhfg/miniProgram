@@ -207,13 +207,6 @@ Page({
     var that=this;
     //设置单词的status为1
     this.updateStatus(app.globalData.userInfo.nickName, 1, that.data.words[that.data.pos].id)
-    // common.setStatus("updStatus.do", {
-    //   nickName: app.globalData.userInfo.nickName,
-    //   status:1,
-    //   id: that.data.words[that.data.pos].id
-    // }).then((res)=>{
-     
-    // })
     // 如果已经到最后一个单词
     if (that.data.pos === (that.data.len - 1)) { 
       that.setData({

@@ -1,16 +1,49 @@
 // pages/search/search.js
-
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    text:""
+    word:"",
+    flag:false,
+    result:'',
+    ex_array:'',
+    coll_array:''
   },
   bindGetText:function(e){
-    this.setData({
-      text:e.detail.value
+    var that=this
+    that.setData({
+      word:e.detail.value
+    })
+    common.sendRequest("searchWord.do",{
+      word:that.data.word
+      }).then((res)=>{
+        that.setData({
+          result:res,
+        })
+        that.changeField();
+        console.log(that.data.result)
+      }).catch((res)=>{
+        console.log(res)
+      })
+  },
+  changeField:function(){
+    var that=this;
+    that.setData({
+      ex_array: that.data.result.explanation.split(";")
+    })
+    console.log(that.data.ex_array)
+    // 词汇搭配
+    if (that.data.result.collocation != null) {
+      that.setData({
+        coll_array: that.data.result.collocation.split(";")
+      })
+    }
+    that.setData({
+      flag:true
     })
   },
   // 查询搜索的接口方法
