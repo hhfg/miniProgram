@@ -5,7 +5,7 @@ function sendRequest(url, data) {
       title: '加载中',
     })
     wx.request({
-      url: 'http://192.168.1.105:8080/MiniProgram/' + url,
+      url: 'http://192.168.1.106:8080/MiniProgram/' + url,
       data: data,
       method: 'GET',
       header: {
@@ -48,7 +48,7 @@ function setStatus(url,data){
   var that = this;
   return new Promise(function (resolve, reject) {
     wx.request({
-      url: 'http://192.168.1.105:8080/MiniProgram/' + url,
+      url: 'http://192.168.1.106:8080/MiniProgram/' + url,
       data: data,
       method: 'GET',
       header: {

@@ -58,7 +58,8 @@ Page({
       learningFlag: true,
       reviewFlag: false,
       index:0,
-      practise:true
+      practise:true,
+      pos:0
     })
     common.sendRequest("selLearningWords.do",{
       nickName:app.globalData.userInfo.nickName,
@@ -84,6 +85,7 @@ Page({
         that.setData({
           reviewWords: res
         })
+        console.log(that.data.reviewWords)
       })
     }).catch((res)=>{
       console.log(res)
@@ -94,7 +96,8 @@ Page({
     var that=this;
     common.sendRequest("selReviewWords.do",{
       nickName:app.globalData.userInfo.nickName,
-      review:0
+      review:0,
+      bookid:app.globalData.userData.bookid
     }).then((res)=>{
       console.log(res);
       that.setData({
@@ -356,9 +359,6 @@ Page({
       if(that.data.index+1==that.data.reviewWords.length){
         if (that.data.practise == true) {
           that.clockIn();
-          // wx.redirectTo({
-          //   url: '../clockIn/clockIn',
-          // })
         } else if (that.data.practise == false) { //如果是复习
           this.loadingLearningData();
         }
@@ -381,7 +381,6 @@ Page({
       })
       that.data.reviewWords.push(that.data.reviewWord);
       that.setCorrectWord(that.data.index);
-
     }
   },
   //随机获取一个数字
@@ -424,23 +423,14 @@ Page({
   clockIn:function(){
     var date = new Date();
     var sign_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    wx.request({
-      url: 'http://192.168.1.105:8080/MiniProgram/insSignRecord.do',
-      data: {
-        nickName: app.globalData.userInfo.nickName,
-        date: sign_date,
-        learned_num: app.globalData.userData.dayNum
-      },
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        wx.navigateTo({
-          url: '../clockIn/clockIn',
-        })
-      }
+    common.sendRequest('insSignRecord.do',{
+      nickName: app.globalData.userInfo.nickName,
+      date: sign_date,
+      learned_num: app.globalData.userData.dayNum
+    }).then((res)=>{
+      wx.navigateTo({
+        url: '../clockIn/clockIn',
+      })
     })
-
   }
 })
