@@ -26,6 +26,7 @@ Page({
     goAheadFlag:false,
     englishWord:'',      //练习填写英语单词的变量
     practise:false,
+    collectUrl:"../../icons/learning/collect.png"
   },
 
   touchStart: function (e) {
@@ -425,5 +426,19 @@ Page({
         url: '../clockIn/clockIn',
       })
     })
+  },
+  bindCollect:function(){
+    var that=this;
+    if (that.data.collectUrl==="../../icons/learning/collect.png"){
+      that.setData({
+        collectUrl: "../../icons/learning/collected.png"
+      })
+      console.log(that.data.word)
+    }else{
+      that.setData({
+        collectUrl: "../../icons/learning/collect.png"
+      })
+    }
+
   }
 })

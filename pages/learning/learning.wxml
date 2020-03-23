@@ -1,7 +1,7 @@
 <view class='wraper' wx:if="{{learningFlag}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
   <view class='header'>
     <view class="wordSection">
-      <view class="word">{{word.word}}</view>
+      <view class="word">{{word.word}}<image src="{{collectUrl}}" style="width:45rpx;height:45rpx;" bindtap="bindCollect"></image></view>
       <view  class="pron">
         <text>{{word.us_pron}}</text>
         <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="{{word.us_mp3}}"></image>
