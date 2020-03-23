@@ -231,8 +231,16 @@ Page({
   changeField:function(pos){
     var that=this;
     that.setData({
-      word: that.data.words[pos]
+      word: that.data.words[pos],
+      collectUrl: "../../icons/learning/collect.png"
     })
+    console.log(that.data.word)
+    if(that.data.word.collect==1){
+      that.setData({
+        collectUrl: "../../icons/learning/collected.png"
+      })
+
+    }
     //自动播放读音
     var url = that.data.word.us_mp3;
     url = url.substring(1, url.length - 1)
@@ -410,7 +418,6 @@ Page({
       status:status,
       id:id
     }).then((res)=>{
-      console.log(res)
     })
   },
   //打卡
@@ -429,16 +436,39 @@ Page({
   },
   bindCollect:function(){
     var that=this;
+    var wordCollect='word.collect'
     if (that.data.collectUrl==="../../icons/learning/collect.png"){
-      that.setData({
-        collectUrl: "../../icons/learning/collected.png"
-      })
-      console.log(that.data.word)
+      common.setStatus('setCollect.do',{
+        nickName:app.globalData.userInfo.nickName,
+        collect:1,
+        id:that.data.word.id
+        }).then((res)=>{
+          that.setData({
+            collectUrl: "../../icons/learning/collected.png",
+            [wordCollect]:1
+          })
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'success',
+            duration: 1000,
+          })
+        })
     }else{
-      that.setData({
-        collectUrl: "../../icons/learning/collect.png"
+      common.setStatus('setCollect.do', {
+        nickName: app.globalData.userInfo.nickName,
+        collect: 0,
+        id: that.data.word.id
+      }).then((res) => {
+        that.setData({
+          collectUrl: "../../icons/learning/collect.png",
+          [wordCollect]: 0
+        })
+        wx.showToast({
+          title: '取消成功',
+          icon: 'success',
+          duration: 1000,
+        })
       })
     }
-
   }
 })
