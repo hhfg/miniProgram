@@ -57,6 +57,8 @@ Page({
     that.setData({
       learningFlag: true,
       reviewFlag: false,
+      goAheadFlag:false,
+      footerFlag:true,
       index:0,
       practise:true,
       pos:0
@@ -68,7 +70,6 @@ Page({
       bookid: app.globalData.userData.bookid
     }).then((res)=>{
       //返回的单词存到words中
-      console.log(res)
       that.setData({
         words: res
       })
@@ -99,11 +100,9 @@ Page({
       review:0,
       bookid:app.globalData.userData.bookid
     }).then((res)=>{
-      console.log(res);
       that.setData({
         reviewWords:res
       })
-      console.log(that.data.reviewWords)
       that.setReviewData(that.data.index);
     })
   },
@@ -112,8 +111,6 @@ Page({
    */
 
   onLoad: function (options) {
-    //this.selReview();
-    //this.loadingData();
     if(app.globalData.userData.haveToReview==0){
       console.log("不需要复习");
       this.loadingLearningData();
@@ -235,7 +232,6 @@ Page({
     that.setData({
       word: that.data.words[pos]
     })
-    console.log(that.data.word)
     //自动播放读音
     var url = that.data.word.us_mp3;
     url = url.substring(1, url.length - 1)
@@ -284,14 +280,12 @@ Page({
     if (that.data.practise == false) {
       this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
     }
-    console.log(ind);
     var reviewWords=that.data.reviewWords
     //如果选择正确
     if (e.currentTarget.dataset.ex == reviewWords[ind].explanation){
       if ((ind+1)==reviewWords.length){
         //跳转到已完成学习页面，让用户进行打卡
         //如果是练习已结束
-        console.log("练习结束")
         if (that.data.practise==true){
           that.clockIn();
         } 
@@ -302,8 +296,7 @@ Page({
         ind = ind + 1
         that.setData({
           index: ind
-        })
-        
+        })   
         this.setReviewData(that.data.index)       
       }
     }
