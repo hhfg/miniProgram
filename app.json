@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/wordBook/allWords/allWords",
     "pages/index/index",
+    "pages/wordBook/allWords/allWords",   
     "pages/clockIn/clockIn",
     "pages/calendar/calendar",
     "pages/test/test",
