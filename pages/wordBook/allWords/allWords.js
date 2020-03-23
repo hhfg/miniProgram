@@ -1,11 +1,11 @@
-// pages/wordBook/wordBook.js
+// pages/wordBook/allWords/allWords.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    trans:"释义"
   },
 
   /**
@@ -63,14 +63,10 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindLook:function(e){
-    var text = e.currentTarget.dataset.text
-    console.log(text)
-    if(text=="全部单词"){
-      console.log('11')
-      wx.redirectTo({
-        url: 'allWords/allWords',
-      })
-    }
+  bindTranslate:function(){
+    var that=this;
+    that.setData({
+      trans:"n.观众;听众;读者"
+    })
   }
 })

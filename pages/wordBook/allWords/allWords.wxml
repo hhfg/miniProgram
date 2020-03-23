@@ -1,0 +1,12 @@
+<!--pages/wordBook/allWords/allWords.wxml-->
+<view class="main">
+  <scroll-view class='main-scroll' scroll-y style="height: 100%">
+    <view class="wordSection">
+      <text class="word">audience</text>
+      <view class="trans" bindtap="bindTranslate">{{trans}}</view>
+    </view>
+    <view class="hr"></view>
+  </scroll-view>
+</view>
+
+

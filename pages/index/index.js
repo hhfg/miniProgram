@@ -120,13 +120,11 @@ Page({
       nickName: app.globalData.userInfo.nickName
     }
     ).then((res) => {
-      console.log(res);
       //将数据存储在userData中 
       app.globalData.userData = res
       that.setData({
         userData: res
       })
-
       if (that.data.userData.bookid != 0) {
         common.sendRequest("selBookById.do", { id: that.data.userData.bookid }).then((res) => {
           that.setData({
@@ -151,7 +149,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log(app.globalData.userInfo)
     //查看是否授权
     common.getSetting().then((res)=>{
       if(res==="已授权"){
