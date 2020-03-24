@@ -1,4 +1,4 @@
-// pages/wordBook/wordBook.js
+// wordBooks//collectWords/collectWords.js
 Page({
 
   /**
@@ -62,21 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  bindLook:function(e){
-    var text = e.currentTarget.dataset.text
-    if(text=="全部单词"){
-      wx.redirectTo({
-        url: '../../wordBooks/allWords/allWords',
-      })
-    }else if(text=="已学词"){
-      wx.redirectTo({
-        url: '../../wordBooks/learnedWords/learnedWords',
-      })
-    }else if(text=="收藏夹"){
-      wx.redirectTo({
-        url: '../../wordBooks/collectWords/collectWords',
-      })
-    }
   }
 })

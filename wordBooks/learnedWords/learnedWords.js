@@ -1,18 +1,34 @@
-// pages/wordBook/wordBook.js
+// wordBooks//learnedWords/learnedWords.js
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    words: [],
+    change: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that=this
+    common.sendRequest("selLearnedWords.do",{
+      nickName:app.globalData.userInfo.nickName
+    }).then((res)=>{
+      that.setData({
+        change: res
+      })
+      for (var i = 0; i < that.data.change.length; i++) {
+        that.data.change[i].trans = "释义"
+      }
+      that.setData({
+        words: that.data.change
+      })
+    })
   },
 
   /**
@@ -63,20 +79,19 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindLook:function(e){
+  bindTranslate: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.id
     var text = e.currentTarget.dataset.text
-    if(text=="全部单词"){
-      wx.redirectTo({
-        url: '../../wordBooks/allWords/allWords',
+    var trans = 'words[' + index + '].trans'
+    if (text == "释义") {
+      that.setData({
+        [trans]: that.data.words[index].explanation
       })
-    }else if(text=="已学词"){
-      wx.redirectTo({
-        url: '../../wordBooks/learnedWords/learnedWords',
-      })
-    }else if(text=="收藏夹"){
-      wx.redirectTo({
-        url: '../../wordBooks/collectWords/collectWords',
+    } else {
+      that.setData({
+        [trans]: '释义'
       })
     }
-  }
+  },
 })
