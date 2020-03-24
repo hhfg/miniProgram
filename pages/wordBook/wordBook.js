@@ -66,16 +66,16 @@ Page({
   bindLook:function(e){
     var text = e.currentTarget.dataset.text
     if(text=="全部单词"){
-      wx.redirectTo({
-        url: '../../wordBooks/allWords/allWords',
+      wx.navigateTo({
+        url: '../../wordBooks/allWords/allWords?text=全部单词',
       })
     }else if(text=="已学词"){
-      wx.redirectTo({
-        url: '../../wordBooks/learnedWords/learnedWords',
+      wx.navigateTo({
+        url: '../../wordBooks/allWords/allWords?text=已学词',
       })
     }else if(text=="收藏夹"){
-      wx.redirectTo({
-        url: '../../wordBooks/collectWords/collectWords',
+      wx.navigateTo({
+        url: '../../wordBooks/allWords/allWords?text=收藏夹',
       })
     }
   }

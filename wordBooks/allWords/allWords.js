@@ -9,19 +9,44 @@ Page({
   data: {
     words:[],
     change:[],
-    page:0
+    page:0,
+    urlParam:'',
+    datas:{}
   },
-
+  setParam:function(text){
+    var that=this;
+    if (text == "全部单词") {
+      that.setData({
+        urlParam: 'selAllWords.do',
+        datas: {
+          nickName: app.globalData.userInfo.nickName,
+          page: that.data.page,
+          id: app.globalData.userData.bookid
+        }
+      })
+    } else if (text == "已学词") {
+      that.setData({
+        urlParam: 'selLearnedWords.do',
+        datas:{
+          nickName: app.globalData.userInfo.nickName
+        }
+      })
+    } else if (text == "收藏夹") {
+      that.setData({
+        urlParam: 'selCollectWords.do',
+        datas: {
+          nickName: app.globalData.userInfo.nickName
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    common.sendRequest("selAllWords.do", {
-      nickName: app.globalData.userInfo.nickName,
-      page:that.data.page,
-      id: app.globalData.userData.bookid
-    }).then((res) => {
+    that.setParam(options.text)
+    common.sendRequest(that.data.urlParam,that.data.datas).then((res) => {
       that.setData({
         change: res
       })

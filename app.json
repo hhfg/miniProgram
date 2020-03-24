@@ -18,9 +18,7 @@
     },{
       "root":"wordBooks/",
       "pages":[
-        "allWords/allWords",
-        "learnedWords/learnedWords",
-        "collectWords/collectWords"
+        "allWords/allWords"
       ]
     },{
       "root":"mine/",
