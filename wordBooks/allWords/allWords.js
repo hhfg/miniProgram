@@ -8,7 +8,8 @@ Page({
    */
   data: {
     words:[],
-    change:[]
+    change:[],
+    page:0
   },
 
   /**
@@ -18,6 +19,7 @@ Page({
     var that = this;
     common.sendRequest("selAllWords.do", {
       nickName: app.globalData.userInfo.nickName,
+      page:that.data.page,
       id: app.globalData.userData.bookid
     }).then((res) => {
       that.setData({
@@ -71,7 +73,28 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var that=this;
+    that.setData({
+      page:that.data.page+1
+    })
+    common.getData('selAllWords.do',{
+      nickName: app.globalData.userInfo.nickName,
+      page: that.data.page,
+      id: app.globalData.userData.bookid
+    }).then((res)=>{
+      that.setData({
+        change: that.data.change
+      })
+      console.log(that.data.change)
+      for (var i = 0; i < that.data.change.length; i++) {
+        that.data.change[i].trans = "释义"
+      }
+      that.setData({
+        words:that.data.words.concat(that.data.change)
+      })
+    }).catch((res)=>{
+      console.log(res)
+    })
   },
 
   /**

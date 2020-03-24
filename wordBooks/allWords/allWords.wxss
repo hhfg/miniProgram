@@ -19,11 +19,11 @@ page{
   background-color: white;
 }
 .word{
-  font-size: 12px;
+  font-size: 14px;
 }
 .trans{
   padding-top:5px; 
-  font-size: 12px;
+  font-size: 14px;
   color: blue;
 }
 .hr{
