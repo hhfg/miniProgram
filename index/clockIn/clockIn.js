@@ -214,7 +214,7 @@ Page({
   },
   bindReturn:function(){
     wx.reLaunch({
-      url: '../../page/index/index',
+      url: '../../pages/index/index',
     })
   },
   /**

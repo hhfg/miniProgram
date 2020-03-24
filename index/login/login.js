@@ -37,7 +37,7 @@ Page({
               }).then(res=>{
                 console.log(res);
                 wx.reLaunch({
-                  url: '../index/index',
+                  url: '../../pages/index/index',
                 })
               })
           }else{

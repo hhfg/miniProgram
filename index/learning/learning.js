@@ -254,6 +254,10 @@ Page({
       that.setData({
         coll_array: that.data.word.collocation.split(";")
       })
+    }else{
+      that.setData({
+        coll_array:''
+      })
     }
   },
   setReviewData:function(index){
