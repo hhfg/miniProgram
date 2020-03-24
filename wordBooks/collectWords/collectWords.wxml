@@ -1,2 +1,12 @@
 <!--wordBooks//collectWords/collectWords.wxml-->
-<text>wordBooks//collectWords/collectWords.wxml</text>
+<view class="main">
+  <scroll-view class='main-scroll' scroll-y style="height: 100%">
+    <view wx:for="{{words}}" wx:key="wid">
+      <view class="wordSection">
+        <text class="word">{{item.word}}</text>
+        <view class="trans" bindtap="bindTranslate" data-id="{{index}}" data-text="{{item.trans}}">{{item.trans}}</view>
+      </view>
+      <view class="hr"></view>
+    </view>
+  </scroll-view>
+</view>

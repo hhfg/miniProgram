@@ -1,5 +1,4 @@
 /* wordBooks//learnedWords/learnedWords.wxss */
-/* pages/wordBook/allWords/allWords.wxss */
 page{
   height: 100%;
   width: 100%;

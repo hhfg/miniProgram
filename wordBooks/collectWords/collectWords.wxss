@@ -1,1 +1,31 @@
 /* wordBooks//collectWords/collectWords.wxss */
+page{
+  height: 100%;
+  width: 100%;
+  background-color: #F5F5F5
+}
+.main{
+  flex: 1;
+  position: relative;
+}
+.main-scroll{ 
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.wordSection{
+  padding: 10px;
+  background-color: white;
+}
+.word{
+  font-size: 14px;
+}
+.trans{
+  padding-top:5px; 
+  font-size: 14px;
+  color: blue;
+}
+.hr{
+  height:2px;
+}
