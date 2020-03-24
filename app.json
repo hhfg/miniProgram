@@ -1,21 +1,34 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/wordBook/allWords/allWords",   
-    "pages/clockIn/clockIn",
-    "pages/calendar/calendar",
-    "pages/test/test",
-    "pages/learning/learning",
-    "pages/learningPlan/learningPlan",
-    "pages/books/books",
-    "pages/login/login",    
+    "pages/index/index", 
     "pages/mine/mine",  
     "pages/wordBook/wordBook",
-    "pages/learningSet/learningSet",
-    
-    "pages/record/record",  
-    "pages/search/search",
     "pages/logs/logs"
+  ],
+  "subPackages": [
+    {
+      "root": "index/",
+      "pages": [
+        "learning/learning",
+        "books/books",
+        "search/search",
+        "login/login",
+        "clockIn/clockIn"
+      ]
+    },{
+      "root":"wordBooks/",
+      "pages":[
+        "allWords/allWords"
+      ]
+    },{
+      "root":"mine/",
+      "pages":[
+        "learningPlan/learningPlan",
+        "calendar/calendar",
+        "record/record",
+        "learningSet/learningSet"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",

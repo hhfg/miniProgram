@@ -10,7 +10,7 @@ Page({
   //更改学习计划
   bindDateChange: function (e) {
     wx.navigateTo({
-      url: '../learningPlan/learningPlan',
+      url: '../../mine/learningPlan/learningPlan',
       success:function(res){
         console.log(res)
       },
@@ -22,7 +22,7 @@ Page({
   //打卡日历
   bindCalendar: function () {
     wx.navigateTo({
-      url: '../calendar/calendar',
+      url: '../../mine/calendar/calendar',
       success: function (res) {
         console.log(res);
       },
@@ -46,7 +46,7 @@ Page({
   //学习记录
   bindLearningRecord: function () {
     wx.navigateTo({
-      url: '../record/record',
+      url: '../../mine/record/record',
       success: function (res) {
         console.log(res)
       },
@@ -61,7 +61,7 @@ Page({
   //学习设置
   bindLearningSet: function () {
     wx.navigateTo({
-      url: '../learningSet/learningSet',
+      url: '../../mine/learningSet/learningSet',
       success: function (res) {
         console.log(res)
       },

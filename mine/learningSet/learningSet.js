@@ -1,13 +1,21 @@
-// pages/wordBook/wordBook.js
+// pages/learningSet/learningSet.js
+array: ['思考模式', '经典模式']
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    array: ['思考模式', '经典模式'],
+    value: '思考模式',
+    index: 0
   },
-
+  bindModeChange: function (e) {
+    console.log(e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -62,15 +70,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  bindLook:function(e){
-    var text = e.currentTarget.dataset.text
-    console.log(text)
-    if(text=="全部单词"){
-      console.log('11')
-      wx.redirectTo({
-        url: '../../wordBooks/allWords/allWords',
-      })
-    }
   }
 })

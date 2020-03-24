@@ -1,6 +1,7 @@
 //app.js
 var app=getApp();
 App({
+  require: function ($uri) { return require($uri) },
   onLaunch: function () {
     var that=this;
     // 展示本地存储能力

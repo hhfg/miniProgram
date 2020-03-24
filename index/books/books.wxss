@@ -1,0 +1,49 @@
+/* pages/books/books.wxss */
+page{
+  background-color: #F5F5F5;
+}
+.my{
+  background-color: #ffffff;
+  align-items: center;
+  padding: 5px 15px 5px 15px;
+}
+.item{
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  height:110rpx;
+  align-items: center;
+}
+.icon{ 
+  width: 50px;
+  text-align: center;
+}
+.itemName{
+  width: 60%;
+}
+.hr{
+  height:2px;
+}
+.detailed{
+  display: flex;
+  flex-direction: row;
+  padding: 5px 15px 5px 15px;
+  font-size: 14px;
+}
+.bookName{
+  width: 60%;
+}
+.wordsNum{
+  width: 40%;
+  text-align: right;
+}
+.click{
+  background-color:#87CEEB;
+}
+.hide{
+ display: none;
+}
+.show{ 
+ display: flex;
+}
+

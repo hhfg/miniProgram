@@ -1,4 +1,4 @@
-// pages/wordBook/wordBook.js
+// mine//record/record.js
 Page({
 
   /**
@@ -62,15 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  bindLook:function(e){
-    var text = e.currentTarget.dataset.text
-    console.log(text)
-    if(text=="全部单词"){
-      console.log('11')
-      wx.redirectTo({
-        url: '../../wordBooks/allWords/allWords',
-      })
-    }
   }
 })

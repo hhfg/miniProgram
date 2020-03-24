@@ -14,13 +14,13 @@ Page({
   //查看打卡日历
   clockIn:function(){
     wx.navigateTo({
-      url: '../calendar/calendar',
+      url: '../../mine/calendar/calendar',
     })
   },
   //换书
   bindChangeBook: function () {
     wx.navigateTo({
-      url: '../books/books',
+      url: '../../index/books/books',
       success: function (res) {
         console.log(res)
       },
@@ -37,7 +37,7 @@ Page({
     //如果bookid=0说明还未选择单词书
     if(app.globalData.userData.bookid==0){
       wx.navigateTo({
-        url: '../books/books',
+        url: '../../index/books/books',
         success: function (res) {
           console.log(res);
         },
@@ -49,7 +49,7 @@ Page({
        //如果已设置单词书但为制定学习计划，跳转到制定学习计划页面 
       if(app.globalData.userData.dayNum==0){
         wx.navigateTo({
-          url: '../learningPlan/learningPlan',
+          url: '../../mine/learningPlan/learningPlan',
           success:function(res){
             console.log(res);
           }
@@ -63,7 +63,7 @@ Page({
           })
         }else{//否则跳转到学习页面
           wx.navigateTo({
-            url: '../learning/learning',
+            url: '../../index/learning/learning',
           })
         }
       }
@@ -76,7 +76,7 @@ Page({
   bindSearch:function(){
     console.log("search");
     wx.navigateTo({
-      url: '../search/search',
+      url: '../../index/search/search',
       success: function (res) {
         console.log(res);
       },
@@ -157,7 +157,7 @@ Page({
       }else if(res=="未授权"){
         //跳转到登录页
         wx.navigateTo({
-          url: '../login/login',
+          url: '../../index/login/login',
         })
       }
     }).catch((res)=>{
