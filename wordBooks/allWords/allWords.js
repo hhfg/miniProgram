@@ -83,14 +83,16 @@ Page({
       id: app.globalData.userData.bookid
     }).then((res)=>{
       that.setData({
-        change: that.data.change
+        change: res.data
       })
-      console.log(that.data.change)
       for (var i = 0; i < that.data.change.length; i++) {
         that.data.change[i].trans = "释义"
       }
       that.setData({
         words:that.data.words.concat(that.data.change)
+      })
+      that.setData({
+        words:that.data.words
       })
     }).catch((res)=>{
       console.log(res)
