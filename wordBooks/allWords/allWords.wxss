@@ -24,7 +24,7 @@ page{
 .trans{
   padding-top:5px; 
   font-size: 14px;
-  color: blue;
+  color: #87CEEB;
 }
 .hr{
   height:2px;

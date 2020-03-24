@@ -144,5 +144,12 @@ Page({
         [trans]: '释义'
       })
     }
+  },
+  bindWordCard:function(e){
+    var that=this;
+    var word = JSON.stringify(e.currentTarget.dataset.word)
+    wx.navigateTo({
+      url: '../wordCard/wordCard?word='+word,
+    })
   }
 })

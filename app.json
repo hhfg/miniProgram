@@ -18,7 +18,8 @@
     },{
       "root":"wordBooks/",
       "pages":[
-        "allWords/allWords"
+        "allWords/allWords",
+        "wordCard/wordCard"
       ]
     },{
       "root":"mine/",
