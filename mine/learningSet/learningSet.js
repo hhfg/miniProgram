@@ -8,7 +8,14 @@ Page({
   data: {
     array: ['思考模式', '经典模式'],
     value: '思考模式',
-    index: 0
+    index: 0,
+    learningSet:{
+      chooseFlag: true,    //看单词选择中文
+      chooseCNFlag: false,  //听音选择中文释义
+      spellENFlag: true,    //听发音拼写单词
+      chooseENFlag: false,   //看中文选择单词
+      spellFlag: false,     //看中文拼写单词
+    }
   },
   bindModeChange: function (e) {
     console.log(e.detail.value)
@@ -70,5 +77,20 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  bindChoose:function(e){
+    console.log(e.detail)
+  },
+  bindChooseCN:function(e){
+    console.log(e.detail)
+  },
+  bindSpellEN:function(e){
+    console.log(e.detail)
+  },
+  bindChooseENFlag:function(e){
+    console.log(e.detail)
+  },
+  bindSpell:function(e){
+    console.log(e.detail)
   }
 })

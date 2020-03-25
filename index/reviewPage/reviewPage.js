@@ -7,11 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    chooseFlag: false,    //看英文选择中文
-    spellFlag: false,     //看中文拼写单词
+    chooseFlag: false,    //看单词选择中文
     chooseCNFlag: false,  //听音选择中文释义
-    chooseENFlag:false,   //看中文选择英文
-    spellENFlag:true,     //听发音拼写单词
+    spellENFlag: true,    //听发音拼写单词
+    chooseENFlag:false,   //看中文选择单词
+    spellFlag: false,     //看中文拼写单词
+    
     reviewWords: [],
     reviewWord:{},
     englishWord:''
