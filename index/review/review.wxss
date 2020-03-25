@@ -1,10 +1,8 @@
-/* index//test/test.wxss */
-/* pages/test/test.wxss */
 .tip{
   text-align: center;
 }
 .calendar{
-    width: 100%;
+  width: 100%;
    background:#fff;
 }
 .pre,.next{
@@ -84,9 +82,8 @@
   position:fixed; 
   bottom:0;
   width: 100%;
-
 }
 .footer button{
-  width: 100%;
   background-color: #87CEEB;
+  width: 100vh;
 }

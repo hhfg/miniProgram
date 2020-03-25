@@ -1,318 +1,97 @@
-const app = getApp();
-const common = require("../../utils/common.js")
-const util = require('../../utils/util.js')
-const date = new Date();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    currentMonthDateLen: 0, // 当月天数
-    preMonthDateLen: 0, // 当月中，上月多余天数
-    allArr: [], // 
-    nowData: "",
-    currentYear: date.getFullYear(),
-    currentMonth: date.getMonth() + 1,
-    clockDay: '',
-    nowYear: date.getFullYear(),
-    nowMonth: date.getMonth() + 1,
-    sign_date: '',
-    disabled:true,
-    chooseDate:''
-  },
-  // 获取某年某月总共多少天
-  getDateLen: function (year, month) {
-    let actualMonth = month - 1;
-    let timeDistance = +new Date(year, month) - +new Date(year, actualMonth);
-    return timeDistance / (1000 * 60 * 60 * 24);
-  },
-  // 获取某月1号是周几
-  getFirstDateWeek: function (year, month) {
-    return new Date(year, month - 1, 1).getDay()
-  },
-  // 上月 年、月
-  preMonth: function (year, month) {
-    if (month == 1) {
-      return {
-        year: --year,
-        month: 12
-      }
-    } else {
-      return {
-        year: year,
-        month: --month
-      }
+    chooseEnFlag:false,
+    spellEnFlag:false,
+    chooseCNFlag:true,
+    reviewWord:{
+      word:'spite',
+      us_pron:'美 [spaɪt] ',
+      uk_mp3: 'https://dictionary.blob.core.chinacloudapi.cn/media/audio/tom/f9/92/F99234157F7B58FD690C17D037A9A033.mp3',
+      choose:[
+        'n.怨恨,恶意;v.故意使烦恼,存心使苦恼;',
+        'adv.主要地,根本地;',
+        'n.挫折,阻碍;',
+        'v.抑制,阻止,控制,约束（自己）;'
+      ],
+      explanation:'n.怨恨,恶意;v.故意使烦恼,存心使苦恼;'
     }
-  },
-  // 下月 年、月
-  nextMonth: function (year, month) {
-    if (month == 12) {
-      return {
-        year: ++year,
-        month: 1
-      }
-    } else {
-      return {
-        year: year,
-        month: ++month
-      }
-    }
-  },
-  // 获取当月数据，返回数组
-  getCurrentArr: function () {
-    let currentMonthDateLen = this.getDateLen(this.data.currentYear, this.data.currentMonth) // 获取当月天数
-    let currentMonthDateArr = [] // 定义空数组
-    if (currentMonthDateLen > 0) {
-      for (let i = 1; i <= currentMonthDateLen; i++) {
-        currentMonthDateArr.push({
-          year: this.data.currentYear,
-          month: this.data.nowMonth, // 只是为了增加标识，区分上下月
-          date: i,
-          isSelected: false,
-          choose:false
-        })
-      }
-    }
-    this.setData({
-      currentMonthDateLen
-    })
-    return currentMonthDateArr
-  },
-  // 获取当月中，上月多余数据，返回数组
-  getPreArr: function () {
-    let preMonthDateLen = this.getFirstDateWeek(this.data.currentYear, this.data.currentMonth) // 当月1号是周几 == 上月残余天数）
-    let preMonthDateArr = [] // 定义空数组
-    if (preMonthDateLen > 0) {
-      let { year, month } = this.preMonth(this.data.currentYear, this.data.currentMonth) // 获取上月 年、月
-      let date = this.getDateLen(year, month) // 获取上月天数
-      for (let i = 0; i < preMonthDateLen; i++) {
-        preMonthDateArr.unshift({ // 尾部追加
-          year: this.data.currentYear,
-          month: this.data.nowMonth - 1,
-          date: date,
-          isSelected: false,
-          choose:false
-        })
-        date--
-      }
-    }
-    this.setData({
-      preMonthDateLen
-    })
-    return preMonthDateArr
-  },
-  // 获取当月中，下月多余数据，返回数组
-  getNextArr: function () {
-    let nextMonthDateLen = 35 - this.data.preMonthDateLen - this.data.currentMonthDateLen // 下月多余天数
-    let nextMonthDateArr = [] // 定义空数组
-    if (nextMonthDateLen > 0) {
-      for (let i = 1; i <= nextMonthDateLen; i++) {
-        nextMonthDateArr.push({
-          year: this.data.currentYear,
-          month: this.data.nowMonth + 1,
-          date: i,
-          isSelected: false,
-          choose:false
-        })
-      }
-    }
-    return nextMonthDateArr
-  },
-  // 整合当月所有数据
-  getAllArr: function () {
-    var that = this;
-    let preArr = this.getPreArr()
-    let currentArr = this.getCurrentArr()
-    let nextArr = this.getNextArr()
-    let isSelected = false
-    let allArr = [...preArr, ...currentArr, ...nextArr]
-    that.setData({
-      allArr
-    })
-    let sendObj = {
-      currentYear: that.data.currentYear,
-      currentMonth: that.data.currentMonth,
-      nowYear: that.data.nowYear,
-      nowMonth: that.data.nowMonth,
-      nowDate: that.data.nowDate,
-      allArr: allArr
-    }
-    that.triggerEvent('sendObj', sendObj)
-    that.data.clockDay.forEach(function (item, index) {
-      for (var i = 0; i < allArr.length; i++) {
-        if (item.year == allArr[i].year && item.month == allArr[i].month && item.date == allArr[i].date) {
-          let selected = 'allArr[' + i + '].isSelected'
-          that.setData({
-            [selected]: true
-          })
-        }
-      }
-    })
-  },
-  // 点击 上月
-  gotoPreMonth: function () {
-    if (this.data.nowMonth == 1) {
-      this.setData({
-        nowMonth: 12
-      })
-    } else {
-      this.setData({
-        nowMonth: this.data.nowMonth - 1
-      })
-    }
-    let { year, month } = this.preMonth(this.data.currentYear, this.data.currentMonth)
-    this.setData({
-      currentYear: year,
-      currentMonth: month
-    })
-    this.getAllArr()
-  },
-  // 点击 下月
-  gotoNextMonth: function () {
-    if (this.data.nowMonth == 12) {
-      this.setData({
-        nowMonth: 1
-      })
-    } else {
-      this.setData({
-        nowMonth: this.data.nowMonth + 1
-      })
-    }
-    let { year, month } = this.nextMonth(this.data.currentYear, this.data.currentMonth)
-    this.setData({
-      currentYear: year,
-      currentMonth: month
-    })
-    this.getAllArr()
   },
 
-  //解析从后台传过来的打卡日期
-  parseDate: function () {
-    var that = this;
-    var index = 0
-    that.data.sign_date.forEach(function (item) {
-      var date = item.split("-");
-      var year = 'clockDay[' + index + '].year'
-      var month = 'clockDay[' + index + '].month'
-      var day = 'clockDay[' + index + '].date'
-      that.setData({
-        [year]: parseInt(date[0]),
-        [month]: parseInt(date[1]),
-        [day]: parseInt(date[2])
-      })
-      index = index + 1
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    var time = util.formatTime(new Date());
-    // 再通过setData更改Page()里面的data，动态更新页面的数据
-    that.setData({
-      nowData: time
-    });
-    common.sendRequest('selSignDate.do', {
-      //nickName: app.globalData.userInfo.nickName
-      nickName:'yonney'
-    }).then((res) => {
-      that.setData({
-        sign_date: res
-      })
-      that.parseDate(that.data.sign_date);
-      that.getAllArr()
-    }).catch((res) => {
-
-    })
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   },
-  //点击某个日期
-  getNowData: function (e) {
-    var that = this;
-    var datas=that.data;
-    var data = e.currentTarget.dataset.day;
-    var currency = e.currentTarget.dataset.currency;
-    var allArr=that.data.allArr;
-    if (currency == 1) {
-      that.setData({
-        nowYear: this.data.currentYear,
-        nowMonth: this.data.currentMonth,
-        nowDate: data
-      })
-    }
-    //如果点击的日期是已打过卡的日期
-    for(var i=0;i<datas.clockDay.length;i++){
-      if(datas.nowYear==datas.clockDay[i].year&&datas.nowMonth==datas.clockDay[i].month&&datas.nowDate==datas.clockDay[i].date){
-        that.setData({
-          chooseDate: that.data.nowYear + "-" + that.data.nowMonth + "-" + that.data.nowDate
-        })
-        for (var j = 0; j < allArr.length; j++) {
-          if (datas.nowYear == allArr[j].year && datas.nowMonth == allArr[j].month && datas.nowDate == allArr[j].date) {
-            let choose = 'allArr[' + j + '].choose'
-            that.setData({
-              [choose]: true,
-              disabled: false
-            })
-          }else{
-            let choose = 'allArr[' + j + '].choose'
-            that.setData({
-              [choose]: false
-            })
-          }
-        }
-      }
-    }
+  pronouncePlayUS:function(event){
+    var url = event.currentTarget.dataset.url
+    //url = url.substring(1, url.length - 1)
+    this.play(url)
+    console.log("play")
   },
-  bindConfirm:function(){
-    console.log(this.data.chooseDate)
-  }
+  //播放音频
+  play: function (url) {
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
 })

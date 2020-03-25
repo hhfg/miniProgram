@@ -69,9 +69,9 @@ Page({
       }
     }
   },
-  bindTest:function(){
+  bindReview:function(){
     wx.navigateTo({
-      url: '../../index/test/test',
+      url: '../../index/review/review',
     })
   },
   //查词

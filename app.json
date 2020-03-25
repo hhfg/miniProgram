@@ -15,7 +15,7 @@
         "search/search",
         "login/login",
         "clockIn/clockIn",
-        "test/test"
+        "review/review"
       ]
     },{
       "root":"wordBooks/",

@@ -1,4 +1,4 @@
-<!--pages/test/test.wxml-->
+<!--index//review/review.wxml-->
 <view class="tip">请选择日期进行复习</view>
 <view class="calendar">
   <view class='tit'>
