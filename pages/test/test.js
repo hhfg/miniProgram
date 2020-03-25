@@ -17,7 +17,9 @@ Page({
     clockDay: '',
     nowYear: date.getFullYear(),
     nowMonth: date.getMonth() + 1,
-    sign_date: ''
+    sign_date: '',
+    disabled:true,
+    chooseDate:''
   },
   // 获取某年某月总共多少天
   getDateLen: function (year, month) {
@@ -67,7 +69,8 @@ Page({
           year: this.data.currentYear,
           month: this.data.nowMonth, // 只是为了增加标识，区分上下月
           date: i,
-          isSelected: false
+          isSelected: false,
+          choose:false
         })
       }
     }
@@ -88,7 +91,8 @@ Page({
           year: this.data.currentYear,
           month: this.data.nowMonth - 1,
           date: date,
-          isSelected: false
+          isSelected: false,
+          choose:false
         })
         date--
       }
@@ -108,7 +112,8 @@ Page({
           year: this.data.currentYear,
           month: this.data.nowMonth + 1,
           date: i,
-          isSelected: false
+          isSelected: false,
+          choose:false
         })
       }
     }
@@ -134,7 +139,6 @@ Page({
       allArr: allArr
     }
     that.triggerEvent('sendObj', sendObj)
-    console.log(that.data.clockDay)
     that.data.clockDay.forEach(function (item, index) {
       for (var i = 0; i < allArr.length; i++) {
         if (item.year == allArr[i].year && item.month == allArr[i].month && item.date == allArr[i].date) {
@@ -182,19 +186,7 @@ Page({
     })
     this.getAllArr()
   },
-  getNowData: function (e) {
-    var data = e.currentTarget.dataset.day;
-    var currency = e.currentTarget.dataset.currency;
-    if (currency == 1) {
-      this.setData({
-        nowYear: this.data.currentYear,
-        nowMonth: this.data.currentMonth,
-        nowDate: data
-      })
-    }
-    console.log(data)
-    this.getAllArr()
-  },
+
   //解析从后台传过来的打卡日期
   parseDate: function () {
     var that = this;
@@ -226,7 +218,6 @@ Page({
       //nickName: app.globalData.userInfo.nickName
       nickName:'yonney'
     }).then((res) => {
-      console.log(res)
       that.setData({
         sign_date: res
       })
@@ -283,5 +274,45 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  //点击某个日期
+  getNowData: function (e) {
+    var that = this;
+    var datas=that.data;
+    var data = e.currentTarget.dataset.day;
+    var currency = e.currentTarget.dataset.currency;
+    var allArr=that.data.allArr;
+    if (currency == 1) {
+      that.setData({
+        nowYear: this.data.currentYear,
+        nowMonth: this.data.currentMonth,
+        nowDate: data
+      })
+    }
+    //如果点击的日期是已打过卡的日期
+    for(var i=0;i<datas.clockDay.length;i++){
+      if(datas.nowYear==datas.clockDay[i].year&&datas.nowMonth==datas.clockDay[i].month&&datas.nowDate==datas.clockDay[i].date){
+        that.setData({
+          chooseDate: that.data.nowYear + "-" + that.data.nowMonth + "-" + that.data.nowDate
+        })
+        for (var j = 0; j < allArr.length; j++) {
+          if (datas.nowYear == allArr[j].year && datas.nowMonth == allArr[j].month && datas.nowDate == allArr[j].date) {
+            let choose = 'allArr[' + j + '].choose'
+            that.setData({
+              [choose]: true,
+              disabled: false
+            })
+          }else{
+            let choose = 'allArr[' + j + '].choose'
+            that.setData({
+              [choose]: false
+            })
+          }
+        }
+      }
+    }
+  },
+  bindConfirm:function(){
+    console.log(this.data.chooseDate)
   }
 })

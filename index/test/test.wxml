@@ -1,4 +1,29 @@
-<!--index//test/test.wxml-->
-<view class="reviewQuickly">
-  <view>快速复习</view>
+<!--pages/test/test.wxml-->
+<view class="tip">请选择日期进行复习</view>
+<view class="calendar">
+  <view class='tit'>
+    <view class='pre' bindtap='gotoPreMonth'>{{'< '}}</view>
+    <view class='current '>{{currentYear}}-{{currentMonth}}</view>
+    <view class='next ' bindtap='gotoNextMonth'>{{'>'}}</view>
+  </view>
+  <view class='w100P showData'>
+    <view style='color: #999'>日</view>
+    <view>一</view>
+    <view>二</view>
+    <view>三</view>
+    <view>四</view>
+    <view>五</view>
+    <view style='color: #999'>六</view>
+  </view>
+  <view class='content'>
+    <view wx:for="{{allArr}}" wx:key="index" class='itemData' data-currency="{{item.month == currentMonth ? '1' : '0'}}" data-day='{{item.date}}' bindtap='getNowData'>
+      <view class="{{item.month == currentMonth ? '' : 'gray'}}" style="height:20px;width:20px;line-height:20px;{{item.isSelected?'font-weight:bold':''}};{{item.choose?'color:#fff;background:#87CEEB;border-radius:100px':''}}">
+          {{item.date}}
+      </view>
+    </view>
+  </view>
 </view>
+<view class="footer">
+  <button disabled="{{disabled}}" bindtap="bindConfirm">确认</button>
+</view>
+
