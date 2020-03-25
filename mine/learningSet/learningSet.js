@@ -9,13 +9,7 @@ Page({
     array: ['思考模式', '经典模式'],
     value: '思考模式',
     index: 0,
-    learningSet:{
-      chooseFlag: true,    //看单词选择中文
-      chooseCNFlag: false,  //听音选择中文释义
-      spellENFlag: true,    //听发音拼写单词
-      chooseENFlag: false,   //看中文选择单词
-      spellFlag: false,     //看中文拼写单词
-    }
+    learningSet:{}
   },
   bindModeChange: function (e) {
     console.log(e.detail.value)
@@ -27,7 +21,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var learningSet=wx.getStorageSync('learningSet')
+    this.setData({
+      learningSet:learningSet
+    })
+    console.log(this.data.learningSet)
   },
 
   /**
@@ -79,18 +77,33 @@ Page({
 
   },
   bindChoose:function(e){
-    console.log(e.detail)
+    this.setData({
+      'learningSet.chooseFlag':e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindChooseCN:function(e){
-    console.log(e.detail)
+    this.setData({
+      'learningSet.chooseCNFlag': e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindSpellEN:function(e){
-    console.log(e.detail)
+    this.setData({
+      'learningSet.speccENFlag': e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindChooseENFlag:function(e){
-    console.log(e.detail)
+    this.setData({
+      'learningSet.chooseENFlag': e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindSpell:function(e){
-    console.log(e.detail)
+    this.setData({
+      'learningSet.spellFlag': e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   }
 })

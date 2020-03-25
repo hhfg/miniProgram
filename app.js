@@ -8,6 +8,23 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    wx.getStorage({
+      key: 'learningSet',
+      success: function(res) {
+      },
+      fail:function(res){
+        wx.setStorage({
+          key: 'learningSet',
+          data: {
+            chooseFlag: true,    //看单词选择中文
+            chooseCNFlag: false,  //听音选择中文释义
+            spellENFlag: true,    //听发音拼写单词
+            chooseENFlag: false,   //看中文选择单词
+            spellFlag: false,     //看中文拼写单词
+          }
+        })
+      }
+    })
     // 登录
     wx.login({
       success: res => {

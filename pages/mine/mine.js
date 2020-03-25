@@ -12,7 +12,6 @@ Page({
     wx.navigateTo({
       url: '../../mine/learningPlan/learningPlan',
       success:function(res){
-        console.log(res)
       },
       fail:function(res){
         console.log("fail")
@@ -24,7 +23,6 @@ Page({
     wx.navigateTo({
       url: '../../mine/calendar/calendar',
       success: function (res) {
-        console.log(res);
       },
       fail: function () {
         //fail
@@ -63,7 +61,7 @@ Page({
     wx.navigateTo({
       url: '../../mine/learningSet/learningSet',
       success: function (res) {
-        console.log(res)
+
       },
       fail: function () {
         //fail
