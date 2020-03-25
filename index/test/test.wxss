@@ -1,1 +1,9 @@
 /* index//test/test.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background-color:  #F5F5F5;
+}
+.reviewQuickly{
+  padding: 10px;
+}

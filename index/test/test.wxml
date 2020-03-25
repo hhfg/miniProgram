@@ -1,2 +1,4 @@
 <!--index//test/test.wxml-->
-<text>index//test/test.wxml</text>
+<view class="reviewQuickly">
+  <view>快速复习</view>
+</view>
