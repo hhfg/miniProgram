@@ -83,11 +83,9 @@ Page({
         review:1,
         bookid: app.globalData.userData.bookid
       }).then((res) => {
-        console.log(res)
         that.setData({
           reviewWords: res
         })
-        console.log(that.data.reviewWords)
       })
     }).catch((res)=>{
       console.log(res)
@@ -113,10 +111,8 @@ Page({
 
   onLoad: function (options) {
     if(app.globalData.userData.haveToReview==0){
-      console.log("不需要复习");
       this.loadingLearningData();
     }else{
-      console.log("需要复习");
       this.selReview();
     }
   }, 
@@ -234,12 +230,10 @@ Page({
       word: that.data.words[pos],
       collectUrl: "../../icons/learning/collect.png"
     })
-    console.log(that.data.word)
     if(that.data.word.collect==1){
       that.setData({
         collectUrl: "../../icons/learning/collected.png"
       })
-
     }
     //自动播放读音
     var url = that.data.word.us_mp3;
@@ -263,7 +257,6 @@ Page({
   setReviewData:function(index){
     var that=this;
     var ran=this.getRandom();
-   // var ran=0
     that.setData({
       learningFlag: false,
       reviewFlag: true,
@@ -322,7 +315,7 @@ Page({
         goAheadFlag:true,
       })
       that.data.reviewWords.push(that.data.reviewWord);
-      this.setCorrectWord(that.data.index);
+      that.setCorrectWord(that.data.index);
     }
   },
   //点击继续做题
@@ -368,8 +361,7 @@ Page({
         } else if (that.data.practise == false) { //如果是复习
           this.loadingLearningData();
         }
-      }else{
-        console.log("拼写正确");      
+      }else{ 
         that.setData({
           englishWord: '',
           index: that.data.index + 1,

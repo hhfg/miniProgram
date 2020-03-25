@@ -1,7 +1,7 @@
 <!--pages/login/login.wxml-->
 <view wx:if="{{canIUse}}">
     <view class='header'>
-        <image src='../../icons/head/head.jpg'></image>
+        <image src='../../icons/head/head.png'></image>
     </view>
  
     <view class='content'>

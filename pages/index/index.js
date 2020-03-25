@@ -70,11 +70,12 @@ Page({
     }
   },
   bindTest:function(){
-
+    wx.navigateTo({
+      url: '../../index/test/test',
+    })
   },
   //查词
   bindSearch:function(){
-    console.log("search");
     wx.navigateTo({
       url: '../../index/search/search',
       success: function (res) {

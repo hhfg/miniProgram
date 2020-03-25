@@ -13,7 +13,8 @@
         "books/books",
         "search/search",
         "login/login",
-        "clockIn/clockIn"
+        "clockIn/clockIn",
+        "test/test"
       ]
     },{
       "root":"wordBooks/",
