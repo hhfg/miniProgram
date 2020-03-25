@@ -7,9 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    chooseEnFlag: false,
-    spellEnFlag: false,
-    chooseCNFlag: true,
+    chooseFlag: false,    //看英文选择中文
+    spellFlag: false,     //看中文拼写单词
+    chooseCNFlag: false,  //听音选择中文释义
+    chooseENFlag:false,   //看中文选择英文
+    spellENFlag:true,     //听发音拼写单词
     reviewWords: [],
     reviewWord:{},
     englishWord:''
@@ -99,7 +101,7 @@ Page({
     })
   },
   //选择中文释义
-  bindChooseWord:function(e){
+  bindChoose:function(e){
     var that=this;
     console.log(e.currentTarget.dataset.ex)
     if(e.currentTarget.dataset.ex==that.data.reviewWord.explanation){
@@ -118,6 +120,14 @@ Page({
   bindConfirm:function(){
     var that=this;
     if(that.data.reviewWord.word==that.data.englishWord){
+      console.log("correct");
+    }else{
+      console.log("error")
+    }
+  },
+  bindChooseWord:function(e){
+    var that=this;
+    if(e.currentTarget.dataset.word==that.data.reviewWord.word){
       console.log("correct");
     }else{
       console.log("error")
