@@ -1,4 +1,6 @@
 // index//reviewPage/reviewPage.js
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -8,25 +10,26 @@ Page({
     chooseEnFlag: false,
     spellEnFlag: false,
     chooseCNFlag: true,
-    reviewWord: {
-      word: 'spite',
-      us_pron: '美 [spaɪt] ',
-      uk_mp3: 'https://dictionary.blob.core.chinacloudapi.cn/media/audio/tom/f9/92/F99234157F7B58FD690C17D037A9A033.mp3',
-      choose: [
-        'n.怨恨,恶意;v.故意使烦恼,存心使苦恼;',
-        'adv.主要地,根本地;',
-        'n.挫折,阻碍;',
-        'v.抑制,阻止,控制,约束（自己）;'
-      ],
-      explanation: 'n.怨恨,恶意;v.故意使烦恼,存心使苦恼;'
-    }
+    reviewWords: [],
+    reviewWord:{},
+    englishWord:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.date)
+    var date=options.date;
+    var that=this;
+    common.sendRequest("getReviewWords.do",{
+      nickName:app.globalData.userInfo.nickName,
+      date:date
+    }).then((res)=>{
+      that.setData({
+        reviewWords:res,
+        reviewWord:res[0]
+      })
+    })
   },
 
   /**
@@ -79,7 +82,7 @@ Page({
   },
   pronouncePlayUS: function (event) {
     var url = event.currentTarget.dataset.url
-    //url = url.substring(1, url.length - 1)
+    url = url.substring(1, url.length - 1)
     this.play(url)
     console.log("play")
   },
@@ -95,4 +98,29 @@ Page({
       console.log(res.errCode)
     })
   },
+  //选择中文释义
+  bindChooseWord:function(e){
+    var that=this;
+    console.log(e.currentTarget.dataset.ex)
+    if(e.currentTarget.dataset.ex==that.data.reviewWord.explanation){
+      console.log("correct");
+    }else{
+      console.log("error")
+    }
+  },
+  //得到输入的英语单词
+  getEnglishWord:function(e){
+    var that=this;
+    that.setData({
+      englishWord:e.detail.value
+    })
+  },
+  bindConfirm:function(){
+    var that=this;
+    if(that.data.reviewWord.word==that.data.englishWord){
+      console.log("correct");
+    }else{
+      console.log("error")
+    }
+  }
 })

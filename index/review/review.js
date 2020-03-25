@@ -216,8 +216,7 @@ Page({
       nowData: time
     });
     common.sendRequest('selSignDate.do', {
-      //nickName: app.globalData.userInfo.nickName
-      nickName: 'yonney'
+      nickName: app.globalData.userInfo.nickName
     }).then((res) => {
       that.setData({
         sign_date: res
