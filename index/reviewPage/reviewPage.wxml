@@ -1,0 +1,32 @@
+<!--index//reviewPage/reviewPage.wxml-->
+<view class="review" style="width:100%;height:100%">
+  <view class="choose" wx:if="{{chooseEnFlag}}">
+    <view class="wordPart">
+      <view style="font-weight:bold;font-size:25px;">{{reviewWord.word}}</view>
+      <view  class="pron">
+      <text>{{reviewWord.us_pron}} </text>
+      <image src="../../icons/learning/pron.png" style="width:50rpx;height:50rpx;" bindtap="pronouncePlayUS" data-url="{{reviewWord.uk_mp3}}"></image>
+      </view>
+    </view> 
+    <view class="options" wx:for="{{reviewWord.choose}}" wx:key="*this">
+      <button class="option" bindtap="bindChooseWord" data-ex="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
+      <view class="space"></view>
+    </view> 
+  </view>
+  <view class="spell" style="width:100%;height:100%" wx:if="{{spellEnFlag}}">
+    <view class="chinese">{{reviewWord.explanation}}</view>
+    <view class="input">
+      <input placeholder="输入英文单词" bindinput="getEnglishWord" value="{{englishWord}}"></input>
+      <button class="confirm" style="width:60px" bindtap="bindConfirm" data-word="{{reviewWord.word}}">确定</button>
+    </view>
+  </view> 
+  <view class="choose" wx:if="{{chooseCNFlag}}">
+    <view class="pronPart">
+      <image src="../../icons/learning/play.png" style="width:80rpx;height:80rpx;"  bindtap="pronouncePlayUS" data-url="{{reviewWord.uk_mp3}}"></image>
+    </view>
+    <view class="options" wx:for="{{reviewWord.choose}}" wx:key="*this">
+      <button class="option" bindtap="bindChooseWord" data-ex="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
+      <view class="space"></view>
+    </view> 
+  </view>
+</view>

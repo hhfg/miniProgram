@@ -315,5 +315,8 @@ Page({
   },
   bindConfirm: function () {
     console.log(this.data.chooseDate)
+    wx.navigateTo({
+      url: '../reviewPage/reviewPage?date='+this.data.chooseDate,
+    })
   }
 })

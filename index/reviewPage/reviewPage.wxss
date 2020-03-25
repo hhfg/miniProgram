@@ -1,0 +1,68 @@
+/* index//reviewPage/reviewPage.wxss */
+page{
+  height: 100%;
+  width: 100%;
+  background-color: #F5F5F5;
+}
+.wordPart,.pronPart{
+  height: 50vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+}
+.option{
+  background-color: white;  
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100rpx;
+  justify-content:center; 
+  align-items:center;
+  border-radius: 5px;
+ white-space: nowrap; 
+ overflow: hidden; 
+ text-overflow: ellipsis; 
+ -webkit-box-orient: vertical;
+}
+.space{
+  height: 15px;
+}
+.click{
+  background-color:#87CEEB;
+}
+/* 拼写 */
+.spell{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+
+}
+.chinese{
+  width: 70%;
+  align-items: center;
+  justify-content: center;
+}
+.input{
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: center; 
+  margin-top: 70rpx;
+  border-radius: 20px;
+  background-color: white;
+  width: 70%;
+  height: 90rpx;
+}
+.confirm {
+  background-color: #87CEEB;  
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  border-radius: 25px;
+  padding:2px 2px;
+  line-height: 30px;
+}
