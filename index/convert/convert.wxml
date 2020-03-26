@@ -1,0 +1,6 @@
+<!--index//convert/convert.wxml-->
+<view class="container">
+  <view style="font-size:20px;">复习完成!!!</view>
+  <button class="continue" bindtap="bindContinue">继续复习</button>
+  <button class="return" bindtap="bindReturn">返回首页</button>
+</view>

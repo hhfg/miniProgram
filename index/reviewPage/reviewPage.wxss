@@ -4,13 +4,20 @@ page{
   width: 100%;
   background-color: #F5F5F5;
 }
-.wordPart,.pronPart{
+.wordPart{
   height: 50vh;
   display: flex;
   flex-direction: column; 
   align-items: center;
   justify-content: center;
 }
+.pronPart{
+  height: 50px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+} 
 .option{
   background-color: white;  
   font-weight: 500;
@@ -38,7 +45,7 @@ page{
   justify-content: center; 
 
 }
-.chinese{
+.chinese,{
   width: 70%;
   align-items: center;
   justify-content: center;
@@ -48,7 +55,7 @@ page{
   flex-direction: row; 
   align-items: center;
   justify-content: center; 
-  margin-top: 70rpx;
+  margin-top: 30rpx;
   border-radius: 20px;
   background-color: white;
   width: 70%;
@@ -72,7 +79,6 @@ page{
   position: relative;
 }
 .main-scroll{
-  
   left: 0;
   right: 0;
   top: 0;

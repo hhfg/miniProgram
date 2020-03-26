@@ -82,6 +82,7 @@ Page({
         this.setData({
           chooseFlag:true
         })
+        this.autoplay();
         break;
       case 'chooseCNFlag':
         this.setData({
@@ -281,7 +282,9 @@ Page({
   ifCorrect:function(){
     var that=this;
     if (that.data.index + 1 == that.data.reviewWords.length) {
-      console.log("结束");
+      wx.redirectTo({
+        url: '../convert/convert',
+      })
     } else {
       that.setData({
         index: that.data.index + 1

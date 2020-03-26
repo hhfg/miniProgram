@@ -124,6 +124,7 @@ Page({
         this.setData({
           chooseFlag: true
         })
+        this.autoplay();
         break;
       case 'chooseCNFlag':
         this.setData({
