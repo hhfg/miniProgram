@@ -78,31 +78,31 @@ Page({
   },
   bindChoose:function(e){
     this.setData({
-      'learningSet.chooseFlag':e.detail.value
+      'learningSet[0]':e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindChooseCN:function(e){
     this.setData({
-      'learningSet.chooseCNFlag': e.detail.value
+      'learningSet[1]': e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindSpellEN:function(e){
     this.setData({
-      'learningSet.speccENFlag': e.detail.value
+      'learningSet[2]': e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindChooseENFlag:function(e){
     this.setData({
-      'learningSet.chooseENFlag': e.detail.value
+      'learningSet[3]': e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
   },
   bindSpell:function(e){
     this.setData({
-      'learningSet.spellFlag': e.detail.value
+      'learningSet[4]': e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
   }

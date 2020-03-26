@@ -30,35 +30,35 @@
     <view class="switch">
       <view>看单词选择中文释义</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch" bindchange="bindChoose"  checked="{{learningSet.chooseFlag}}"></switch>
+        <switch type="switch" bindchange="bindChoose"  checked="{{learningSet[0]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>
     <view class="switch">
       <view>听发音选择中文释义</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch" bindchange="bindChooseCN" checked="{{learningSet.chooseCNFlag}}"></switch>
+        <switch type="switch" bindchange="bindChooseCN" checked="{{learningSet[1]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>
     <view class="switch">
       <view>听发音拼写中文释义</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch" bindchange="bindSpellEN" checked="{{learningSet.spellENFlag}}"></switch>
+        <switch type="switch" bindchange="bindSpellEN" checked="{{learningSet[2]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>
     <view class="switch">
       <view>看中文释义选择单词</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch" bindchange="bindChooseENFlag" checked="{{learningSet.chooseENFlag}}"></switch>
+        <switch type="switch" bindchange="bindChooseENFlag" checked="{{learningSet[3]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>
     <view class="switch">
       <view>看中文释义拼写单词</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch" bindchange="bindSpell" checked="{{learningSet.spellFlag}}"></switch>
+        <switch type="switch" bindchange="bindSpell" checked="{{learningSet[4]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>

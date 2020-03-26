@@ -1,5 +1,6 @@
 <!--index//reviewPage/reviewPage.wxml-->
 <view class="review" style="width:100%;height:100%">
+  <!--看单词选择中文-->
   <view class="choose" wx:if="{{chooseFlag}}">
     <view class="wordPart">
       <view style="font-weight:bold;font-size:25px;">{{reviewWord.word}}</view>
@@ -13,6 +14,7 @@
       <view class="space"></view>
     </view> 
   </view>
+  <!-- 看中文拼写单词 -->
   <view class="spell" style="width:100%;height:100%" wx:if="{{spellFlag}}">
     <view class="chinese">{{reviewWord.explanation}}</view>
     <view class="input">
@@ -20,31 +22,34 @@
       <button class="confirm" style="width:60px" bindtap="bindConfirm" data-word="{{reviewWord.word}}">确定</button>
     </view>
   </view> 
+  <!-- 听音选择中文释义 -->
   <view class="choose" wx:if="{{chooseCNFlag}}">
     <view class="pronPart">
       <image src="../../icons/learning/play.png" style="width:80rpx;height:80rpx;"  bindtap="pronouncePlayUS" data-url="{{reviewWord.uk_mp3}}"></image>
     </view>
     <view class="options" wx:for="{{reviewWord.choose}}" wx:key="*this">
-      <button class="option" bindtap="bindChoose" data-ex="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
+      <button class="option" bindtap="bindChooseCN" data-ex="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
       <view class="space"></view>
     </view> 
   </view>
-    <view class="choose" wx:if="{{chooseENFlag}}">
+  <!-- 看中文选择单词 -->
+  <view class="choose" wx:if="{{chooseENFlag}}">
     <view class="wordPart">
       <view>{{reviewWord.explanation}}</view>>
     </view> 
     <view class="options" wx:for="{{reviewWord.chooseEn}}" wx:key="*this">
-      <button class="option" bindtap="bindChooseWord" data-word="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
+      <button class="option" bindtap="bindChooseEN" data-word="{{item}}" hover-class="click" style="width: 600rpx;height:120rpx">{{item}}</button>
       <view class="space"></view>
     </view> 
   </view>
+  <!-- 听发音拼写单词 -->
   <view class="spell" style="width:100%;height:100%" wx:if="{{spellENFlag}}">
     <view class="pronPart">
       <image src="../../icons/learning/play.png" style="width:80rpx;height:80rpx;"  bindtap="pronouncePlayUS" data-url="{{reviewWord.uk_mp3}}"></image>
     </view>
     <view class="input">
       <input placeholder="输入英文单词" bindinput="getEnglishWord" value="{{englishWord}}"></input>
-      <button class="confirm" style="width:60px" bindtap="bindConfirm" data-word="{{reviewWord.word}}">确定</button>
+      <button class="confirm" style="width:60px" bindtap="bindConfirmEN" data-word="{{reviewWord.word}}">确定</button>
     </view>
   </view>
 </view>

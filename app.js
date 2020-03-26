@@ -15,13 +15,8 @@ App({
       fail:function(res){
         wx.setStorage({
           key: 'learningSet',
-          data: {
-            chooseFlag: true,    //看单词选择中文
-            chooseCNFlag: false,  //听音选择中文释义
-            spellENFlag: true,    //听发音拼写单词
-            chooseENFlag: false,   //看中文选择单词
-            spellFlag: false,     //看中文拼写单词
-          }
+          data: [true,false,true,false,false]
+      //看单词选择中文,听音选择中文释义,听发音拼写单词,看中文选择单词,看中文拼写单词        
         })
       }
     })
