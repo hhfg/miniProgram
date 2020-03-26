@@ -67,6 +67,16 @@ Page({
   },
   setReviewData:function(index){
     var ran=this.getRandom();
+    this.setData({
+      chooseFlag: false,    //看单词选择中文
+      chooseCNFlag: false,  //听音选择中文释义
+      spellENFlag: false,    //听发音拼写单词
+      chooseENFlag: false,   //看中文选择单词
+      spellFlag: false,     //看中文拼写单词
+    })
+    this.setData({
+      reviewWord: this.data.reviewWords[index],
+    })
     switch (this.data.learningSet[ran]){
       case 'chooseFlag':
         this.setData({
@@ -77,6 +87,9 @@ Page({
         this.setData({
           chooseCNFlag: true
         })
+        let url=this.data.reviewWord.uk_mp3
+        url = url.substring(1, url.length - 1)
+        this.play(url)
         break;
       case 'spellENFlag':
         this.setData({
@@ -94,9 +107,7 @@ Page({
         })
         break;
     }
-    this.setData({
-      reviewWord:this.data.reviewWords[index],
-    })
+
   },
   //随机获取一个数字
   getRandom: function () {
@@ -188,7 +199,6 @@ Page({
   },
   // 修改单词字段,pos从0开始
   changeField: function (pos) {
-    console.log(this.data.word)
     var that=this
     // 释义
     that.setData({
@@ -216,26 +226,19 @@ Page({
   //选择中文释义
   bindChoose:function(e){
     var that=this;
-    console.log(that.data.index)
     if(e.currentTarget.dataset.ex==that.data.reviewWord.explanation){
-      if(that.data.index+1==that.data.reviewWords.length){
-        console.log("结束");
-      }else{
-        that.setData({
-          index:that.data.index+1
-        })
-        that.setReviewData(that.data.index)
-      }
+      that.ifCorrect();
     }else{
-      that.setData({
-        correctWord:true,
-        reviewFlag:false,
-        word:that.data.reviewWord,
-        index:that.data.index+1
-      })
-      that.data.reviewWords.push(that.data.reviewWord);
-      console.log(that.data.reviewWords.length)
-      that.changeField()
+      that.ifError();
+    }
+  },
+  //听音选择中文释义
+  bindChooseCN: function (e) {
+    var that = this;
+    if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
     }
   },
   //看中文拼写单词
@@ -247,16 +250,7 @@ Page({
       console.log("error")
     }
   },
-  //听音选择中文释义
-  bindChooseCN:function(e){
-    var that = this;
-    console.log(e.currentTarget.dataset.ex)
-    if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
-      console.log("ChooseCN");
-    } else {
-      console.log("error")
-    }
-  },
+
   //看中文选择单词
   bindChooseEN:function(e){
     var that=this;
@@ -274,5 +268,27 @@ Page({
     } else {
       console.log("error")
     }
+  },
+  ifCorrect:function(){
+    var that=this;
+    if (that.data.index + 1 == that.data.reviewWords.length) {
+      console.log("结束");
+    } else {
+      that.setData({
+        index: that.data.index + 1
+      })
+      that.setReviewData(that.data.index)
+    }
+  },
+  ifError:function(){
+    var that=this;
+    that.setData({
+      correctWord: true,
+      reviewFlag: false,
+      word: that.data.reviewWord,
+      index: that.data.index + 1
+    })
+    that.data.reviewWords.push(that.data.reviewWord);
+    that.changeField()
   }
 })

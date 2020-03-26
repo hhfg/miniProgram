@@ -42,7 +42,7 @@
     </view>
     <view class="gap"></view>
     <view class="switch">
-      <view>听发音拼写中文释义</view>
+      <view>听发音拼写单词</view>
       <view style="position:absolute;right:10px;">
         <switch type="switch" bindchange="bindSpellEN" checked="{{learningSet[2]}}"></switch>
       </view>
