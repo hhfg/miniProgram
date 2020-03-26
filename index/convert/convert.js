@@ -69,7 +69,8 @@ Page({
     })
   },
   bindReturn:function(){
-    wx.navigateTo({
+    console.log("111")
+    wx.switchTab({
       url: '../../pages/index/index',
     })
   }
