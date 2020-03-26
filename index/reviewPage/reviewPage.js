@@ -16,7 +16,12 @@ Page({
     reviewWord:{},
     englishWord:'',
     learningSet:[],
-    index:0
+    index:0,
+    correctWord:false,
+    reviewFlag:true,
+    word:'',
+    ex_array:'',
+    coll_array:''
   },
   setLearningSet:function(learningSet){
     var that=this;
@@ -56,14 +61,12 @@ Page({
     }).then((res) => {
       that.setData({
         reviewWords: res,
-        reviewWord:res[0]
       })
       that.setReviewData(that.data.index)
     })
   },
   setReviewData:function(index){
-   // var ran=this.getRandom();
-    var ran=2;
+    var ran=this.getRandom();
     switch (this.data.learningSet[ran]){
       case 'chooseFlag':
         this.setData({
@@ -91,6 +94,9 @@ Page({
         })
         break;
     }
+    this.setData({
+      reviewWord:this.data.reviewWords[index],
+    })
   },
   //随机获取一个数字
   getRandom: function () {
@@ -180,21 +186,63 @@ Page({
       englishWord: e.detail.value
     })
   },
+  // 修改单词字段,pos从0开始
+  changeField: function (pos) {
+    console.log(this.data.word)
+    var that=this
+    // 释义
+    that.setData({
+      ex_array: that.data.word.explanation.split(";")
+    })
+    // 词汇搭配
+    if (that.data.word.collocation != null) {
+      that.setData({
+        coll_array: that.data.word.collocation.split(";")
+      })
+    } else {
+      that.setData({
+        coll_array: ''
+      })
+    }
+  },
+  bindGoAhead:function(){
+    var that=this;
+    that.setData({
+      correctWord: false,
+      reviewFlag: true,
+    })
+    that.setReviewData(that.data.index)
+  },
   //选择中文释义
   bindChoose:function(e){
     var that=this;
-    console.log(e.currentTarget.dataset.ex)
+    console.log(that.data.index)
     if(e.currentTarget.dataset.ex==that.data.reviewWord.explanation){
-      console.log("correct");
+      if(that.data.index+1==that.data.reviewWords.length){
+        console.log("结束");
+      }else{
+        that.setData({
+          index:that.data.index+1
+        })
+        that.setReviewData(that.data.index)
+      }
     }else{
-      console.log("error")
+      that.setData({
+        correctWord:true,
+        reviewFlag:false,
+        word:that.data.reviewWord,
+        index:that.data.index+1
+      })
+      that.data.reviewWords.push(that.data.reviewWord);
+      console.log(that.data.reviewWords.length)
+      that.changeField()
     }
   },
   //看中文拼写单词
   bindConfirm:function(){
     var that=this;
     if(that.data.reviewWord.word==that.data.englishWord){
-      console.log("correct");
+      console.log("Confirm");
     }else{
       console.log("error")
     }
@@ -204,7 +252,7 @@ Page({
     var that = this;
     console.log(e.currentTarget.dataset.ex)
     if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
-      console.log("correct");
+      console.log("ChooseCN");
     } else {
       console.log("error")
     }
@@ -213,7 +261,7 @@ Page({
   bindChooseEN:function(e){
     var that=this;
     if(e.currentTarget.dataset.word==that.data.reviewWord.word){
-      console.log("11correct");
+      console.log("ChooseEN");
     }else{
       console.log("error")
     }
@@ -222,7 +270,7 @@ Page({
   bindConfirmEN:function(e){
     var that = this;
     if (that.data.reviewWord.word == that.data.englishWord) {
-      console.log("correct");
+      console.log("confirmEN");
     } else {
       console.log("error")
     }
