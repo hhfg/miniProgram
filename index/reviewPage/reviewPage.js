@@ -87,27 +87,31 @@ Page({
         this.setData({
           chooseCNFlag: true
         })
-        let url=this.data.reviewWord.uk_mp3
-        url = url.substring(1, url.length - 1)
-        this.play(url)
+        this.autoplay();
         break;
       case 'spellENFlag':
         this.setData({
           spellENFlag: true
         })
+        this.autoplay();
         break;
       case 'chooseENFlag':
         this.setData({
           chooseENFlag: true
         })
         break;
-      case 'chooseCNFlag':
+      case 'spellFlag':
         this.setData({
-          chooseCNFlag: true
+          spellFlag: true
         })
         break;
     }
 
+  },
+  autoplay:function(){
+    let url = this.data.reviewWord.uk_mp3;
+    url = url.substring(1, url.length - 1);
+    this.play(url);
   },
   //随机获取一个数字
   getRandom: function () {
@@ -241,34 +245,40 @@ Page({
       that.ifError();
     }
   },
+  //听发音拼写单词
+  bindConfirmEN: function (e) {
+    var that = this;
+    if (that.data.reviewWord.word == that.data.englishWord) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
+    }
+    that.setData({
+      englishWord: ""
+    })
+  },
+  //看中文选择单词
+  bindChooseEN: function (e) {
+    var that = this;
+    if (e.currentTarget.dataset.word == that.data.reviewWord.word) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
+    }
+  },
   //看中文拼写单词
   bindConfirm:function(){
     var that=this;
     if(that.data.reviewWord.word==that.data.englishWord){
-      console.log("Confirm");
+      that.ifCorrect();
     }else{
-      console.log("error")
+      that.ifError();
     }
+    that.setData({
+      englishWord: ""
+    })
   },
 
-  //看中文选择单词
-  bindChooseEN:function(e){
-    var that=this;
-    if(e.currentTarget.dataset.word==that.data.reviewWord.word){
-      console.log("ChooseEN");
-    }else{
-      console.log("error")
-    }
-  },
-  //听发音拼写单词
-  bindConfirmEN:function(e){
-    var that = this;
-    if (that.data.reviewWord.word == that.data.englishWord) {
-      console.log("confirmEN");
-    } else {
-      console.log("error")
-    }
-  },
   ifCorrect:function(){
     var that=this;
     if (that.data.index + 1 == that.data.reviewWords.length) {
