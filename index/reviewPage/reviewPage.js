@@ -106,7 +106,6 @@ Page({
         })
         break;
     }
-
   },
   autoplay:function(){
     let url = this.data.reviewWord.uk_mp3;
@@ -202,7 +201,7 @@ Page({
     })
   },
   // 修改单词字段,pos从0开始
-  changeField: function (pos) {
+  changeField: function () {
     var that=this
     // 释义
     that.setData({

@@ -9,6 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    chooseFlag: false,    //看单词选择中文
+    chooseCNFlag: false,  //听音选择中文释义
+    spellENFlag: false,    //听发音拼写单词
+    chooseENFlag: false,   //看中文选择单词
+    spellFlag: false,     //看中文拼写单词
     pos:0,              //当前学习单词是第几个
     len: 0,             //学习的单词的个数
     word:'',            //显示在页面上的单词对象
@@ -20,13 +25,12 @@ Page({
     index:0,            //当前复习的单词是第几个
     learningFlag: false,
     reviewFlag: false,
-    chooseFlag: false,
-    spellFlag: false,
-    footerFlag:true,
+    footerFlag:false,
     goAheadFlag:false,
     englishWord:'',      //练习填写英语单词的变量
     practise:false,
-    collectUrl:"../../icons/learning/collect.png"
+    collectUrl:"../../icons/learning/collect.png",
+    learningSet:[]
   },
 
   touchStart: function (e) {
@@ -72,10 +76,8 @@ Page({
     }).then((res)=>{
       //返回的单词存到words中
       that.setData({
-        words: res
-      })
-      that.setData({
-        len: res.length
+        words: res,
+        word:res[0]
       })
       this.changeField(that.data.pos);
       common.sendRequest('selReviewWords.do', {
@@ -105,18 +107,106 @@ Page({
       that.setReviewData(that.data.index);
     })
   },
+  setReviewData: function (index) {
+    var ran=this.getRandom();
+    this.setData({
+      chooseFlag: false,    //看单词选择中文
+      chooseCNFlag: false,  //听音选择中文释义
+      spellENFlag: false,    //听发音拼写单词
+      chooseENFlag: false,   //看中文选择单词
+      spellFlag: false,     //看中文拼写单词
+    })
+    this.setData({
+      reviewWord: this.data.reviewWords[index],
+    })
+    switch (this.data.learningSet[ran]) {
+      case 'chooseFlag':
+        this.setData({
+          chooseFlag: true
+        })
+        break;
+      case 'chooseCNFlag':
+        this.setData({
+          chooseCNFlag: true
+        })
+        this.autoplay();
+        break;
+      case 'spellENFlag':
+        this.setData({
+          spellENFlag: true
+        })
+        this.autoplay();
+        break;
+      case 'chooseENFlag':
+        this.setData({
+          chooseENFlag: true
+        })
+        break;
+      case 'spellFlag':
+        this.setData({
+          spellFlag: true
+        })
+        break;
+    }
+  },
+  setLearningSet: function (learningSet) {
+    var that = this;
+    let i = 0;
+    learningSet.forEach(function (item, index) {
+      if (item == true) {
+        switch (index) {
+          case 0:
+            that.data.learningSet[i] = 'chooseFlag'
+            i++;
+            break;
+          case 1:
+            that.data.learningSet[i] = 'chooseCNFlag'
+            i++;
+            break;
+          case 2:
+            that.data.learningSet[i] = 'spellENFlag'
+            i++;
+            break;
+          case 3:
+            that.data.learningSet[i] = 'chooseENFlag'
+            i++;
+            break;
+          case 4:
+            that.data.learningSet[i] = 'spellFlag'
+            i++;
+            break;
+        }
+      }
+    })
+  },
+  autoplay: function () {
+    let url = this.data.reviewWord.uk_mp3;
+    url = url.substring(1, url.length - 1);
+    this.play(url);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-
   onLoad: function (options) {
+    //获取学习设置
+    var learningSet = wx.getStorageSync('learningSet')
+    this.setLearningSet(learningSet);
+    //如果haveToReview为0（需要复习的单词个数为0，直接获取需要学习的单词
     if(app.globalData.userData.haveToReview==0){
+      this.setData({
+        learningFlag:true,
+        reviewFlag:false
+      })
       this.loadingLearningData();
     }else{
+      //否则获取需要复习的单词
+      this.setData({
+        reviewFlag:true,
+        learningFlag:false
+      })
       this.selReview();
     }
   }, 
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -197,16 +287,23 @@ Page({
       that.setData({
         pos: that.data.pos - 1
       })
-      that.changeField(that.data.pos);
+      that.setData({
+        word:that.data.words[that.data.pos]
+      })
+      that.changeField();
     }
   },
   // 点击下一个
   nextWord: function () {
     var that=this;
     //设置单词的status为1
-    this.updateStatus(app.globalData.userInfo.nickName, 1, that.data.words[that.data.pos].id)
+    that.updateStatus(1, that.data.words[that.data.pos].id)
+    that.setData({
+      pos: that.data.pos + 1
+    })
+    let index=that.data.pos
     // 如果已经到最后一个单词
-    if (that.data.pos === (that.data.len - 1)) { 
+    if (that.data.pos === that.data.words.length) { 
       that.setData({
         learningFlag:false,
         reviewFlag:true
@@ -217,23 +314,24 @@ Page({
     //将pos+1
     else {
       that.setData({
-        pos: that.data.pos + 1
+        word:that.data.words[index]
       })
       //修改单词字段
-      that.changeField(that.data.pos)
+      that.changeField()
     }
   },
   // 修改单词字段,pos从0开始
-  changeField:function(pos){
+  changeField:function(){
     var that=this;
-    that.setData({
-      word: that.data.words[pos],
-      collectUrl: "../../icons/learning/collect.png"
-    })
-    if(that.data.word.collect==1){
+    if(that.data.learningFlag==true){
       that.setData({
-        collectUrl: "../../icons/learning/collected.png"
+        collectUrl: "../../icons/learning/collect.png"
       })
+      if (that.data.word.collect == 1) {
+        that.setData({
+          collectUrl: "../../icons/learning/collected.png"
+        })
+      }
     }
     //自动播放读音
     var url = that.data.word.us_mp3;
@@ -254,137 +352,123 @@ Page({
       })
     }
   },
-  setReviewData:function(index){
-    var that=this;
-    var ran=this.getRandom();
+  //随机获取一个数字
+  getRandom:function(){
+    var random = Math.floor(Math.random() * this.data.learningSet.length);
+    return random
+  },
+  //得到输入的英语单词
+  getEnglishWord: function (e) {
+    var that = this;
+    that.setData({
+      englishWord: e.detail.value
+    })
+  },
+  bindGoAhead: function () {
+    var that = this;
+    if (that.data.reviewFlag == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
     that.setData({
       learningFlag: false,
       reviewFlag: true,
-      reviewWord: that.data.reviewWords[index]
     })
-    //0表示选择练习，1表示拼写练习
-    if(ran==0){
-      that.setData({
-        chooseFlag:true,
-        spellFlag:false
-      })
-      var url = that.data.reviewWord.uk_mp3;
-      url = url.substring(1, url.length - 1)
-      this.play(url);
-    }else{
-      that.setData({
-        chooseFlag:false,
-        spellFlag:true,
-        englishWord: ''
-      })
+    that.setReviewData(that.data.index)
+  },
+  //选择中文释义
+  bindChoose: function (e) {
+    var that = this;
+    if (that.data.reviewFlag == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
+    if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
     }
   },
-  //点击选项
-  bindChooseWord:function(e){
-    var that=this;
-    var ind=that.data.index;
-    if (that.data.practise == false) {
-      this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
+  //听音选择中文释义
+  bindChooseCN: function (e) {
+    var that = this;
+    if (that.data.reviewFlag == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
     }
-    var reviewWords=that.data.reviewWords
-    //如果选择正确
-    if (e.currentTarget.dataset.ex == reviewWords[ind].explanation){
-      if ((ind+1)==reviewWords.length){
-        //跳转到已完成学习页面，让用户进行打卡
-        //如果是练习已结束
-        if (that.data.practise==true){
-          that.clockIn();
-        } 
-        else if (that.data.practise == false) { //如果是复习
-          this.loadingLearningData();
-        }
-      }else{
-        ind = ind + 1
-        that.setData({
-          index: ind
-        })   
-        this.setReviewData(that.data.index)       
-      }
-    }
-    //如果选错，跳出单词卡界面
-    else{
-      that.setData({
-        learningFlag:true,
-        reviewFlag:false,
-        footerFlag:false,
-        goAheadFlag:true,
-      })
-      that.data.reviewWords.push(that.data.reviewWord);
-      that.setCorrectWord(that.data.index);
+    if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
     }
   },
-  //点击继续做题
-  bindGoAhead:function(){
-    var that=this;
-    var index=that.data.index+1;
+  //听发音拼写单词
+  bindConfirmEN: function (e) {
+    var that = this;
+    if (that.data.reviewFlag == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
+    if (that.data.reviewWord.word == that.data.englishWord) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
+    }
     that.setData({
+      englishWord: ""
+    })
+  },
+  //看中文选择单词
+  bindChooseEN: function (e) {
+    var that = this;
+    if (that.data.reviewFlag == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
+    if (e.currentTarget.dataset.word == that.data.reviewWord.word) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
+    }
+  },
+  //看中文拼写单词
+  bindConfirm: function () {
+    var that = this;
+    if (that.data.reviewFlag==true){
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
+    if (that.data.reviewWord.word == that.data.englishWord) {
+      that.ifCorrect();
+    } else {
+      that.ifError();
+    }
+    that.setData({
+      englishWord: ""
+    })
+
+  },
+  ifCorrect: function () {
+    var that = this;
+    if (that.data.index + 1 == that.data.reviewWords.length) {
+      if(that.data.practise==false){
+        that.loadingLearningData();
+      }else{
+        that.clockIn();
+      }
+    } else {
+      that.setData({
+        index: that.data.index + 1
+      })
+      that.setReviewData(that.data.index)
+    }
+  },
+  ifError: function () {
+    var that = this;
+    that.setData({
+      learningFlag: true,
+      goAheadFlag:true,
+      footerFlag:false,
+      reviewFlag: false,
+      word: that.data.reviewWord,
       index: that.data.index + 1
     })
-    //如果已练习到最后一个单词
-    if(index==that.data.reviewWords.length){
-      if (that.data.practise == true) {
-        that.clockIn();
-      } else if(that.data.practise==false){ //如果是复习
-        this.loadingLearningData();
-      }
-    }else{
-      that.setData({
-        learningFlag: false,
-        reviewFlag: true,    
-        reviewWord: that.data.reviewWords[index],
-        englishWord: '',        
-      })
-    }
-  },
-  //获取得到输入的单词
-  getEnglishWord:function(e){
-    var that=this
-    that.setData({
-      englishWord:e.detail.value,
-    })
-  },
-  bindConfirm:function(e){
-    var that=this;
-    if (that.data.practise == false) {
-      this.updateStatus(app.globalData.userInfo.nickName, 2, that.data.reviewWords[that.data.index].id)
-    }
-    //如果拼写正确
-    if(that.data.englishWord==e.currentTarget.dataset.word){
-      if(that.data.index+1==that.data.reviewWords.length){
-        if (that.data.practise == true) {
-          that.clockIn();
-        } else if (that.data.practise == false) { //如果是复习
-          this.loadingLearningData();
-        }
-      }else{ 
-        that.setData({
-          englishWord: '',
-          index: that.data.index + 1,
-        })
-        this.setReviewData(that.data.index);
-      }
-    }
-    else{
-      that.setData({
-        learningFlag:true,
-        reviewFlag:false,
-        footerFlag: false,
-        goAheadFlag: true,
-        //当前复习的单词的位置加1
-      })
-      that.data.reviewWords.push(that.data.reviewWord);
-      that.setCorrectWord(that.data.index);
-    }
-  },
-  //随机获取一个数字
-  getRandom:function(){
-    var random = Math.floor(Math.random() * 2);
-    return random
+    that.data.reviewWords.push(that.data.reviewWord);
+    that.changeField()
   },
   setCorrectWord:function(index){
     var that = this;
@@ -407,10 +491,9 @@ Page({
     }
   },
   //更新status
-  updateStatus:function(nickName,status,id){
-    console.log(nickName,status,id)
+  updateStatus:function(status,id){
     common.setStatus("updStatus.do",{
-      nickName:nickName,
+      nickName:app.globalData.userInfo.nickName,
       status:status,
       id:id
     }).then((res)=>{
