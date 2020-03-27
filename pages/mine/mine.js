@@ -44,7 +44,7 @@ Page({
   //学习记录
   bindLearningRecord: function () {
     wx.navigateTo({
-      url: '../../mine/record/record',
+      url: '../../mine/learningRecord/learningRecord',
       success: function (res) {
         console.log(res)
       },

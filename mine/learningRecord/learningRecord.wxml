@@ -1,0 +1,5 @@
+<!--mine//learningRecord/learningRecord.wxml-->
+<view class="container">
+  <canvas canvas-id="columnCanvas" class="canvas" ></canvas>
+  <view style="text-align:center">点击数据每一项查看详情</view>
+</view>
