@@ -11,10 +11,14 @@ Page({
     change:[],
     page:0,
     urlParam:'',
-    datas:{}
+    datas:{},
+    chooseText:''
   },
   setParam:function(text){
     var that=this;
+    that.setData({
+      chooseText:text
+    })
     if (text == "全部单词") {
       that.setData({
         urlParam: 'selAllWords.do',
@@ -28,14 +32,16 @@ Page({
       that.setData({
         urlParam: 'selLearnedWords.do',
         datas:{
-          nickName: app.globalData.userInfo.nickName
+          nickName: app.globalData.userInfo.nickName,
+          page:that.data.page
         }
       })
     } else if (text == "收藏夹") {
       that.setData({
         urlParam: 'selCollectWords.do',
         datas: {
-          nickName: app.globalData.userInfo.nickName
+          nickName: app.globalData.userInfo.nickName,
+          page:that.data.page
         }
       })
     }
@@ -50,6 +56,7 @@ Page({
       that.setData({
         change: res
       })
+      console.log(res)
       for (var i = 0; i < that.data.change.length; i++) {
         that.data.change[i].trans = "释义"
       }
@@ -102,11 +109,30 @@ Page({
     that.setData({
       page:that.data.page+1
     })
-    common.getData('selAllWords.do',{
-      nickName: app.globalData.userInfo.nickName,
-      page: that.data.page,
-      id: app.globalData.userData.bookid
-    }).then((res)=>{
+    if(that.data.chooseText=="全部单词"){
+      that.setData({
+        datas: {
+          nickName: app.globalData.userInfo.nickName,
+          page: that.data.page,
+          id: app.globalData.userData.bookid
+        }
+      })
+    }else if(that.data.chooseText=="已学词"){
+      that.setData({
+        datas: {
+          nickName: app.globalData.userInfo.nickName,
+          page: that.data.page
+        }
+      })
+    }else if(that.data.chooseText=="收藏夹"){
+      that.setData({
+        datas: {
+          nickName: app.globalData.userInfo.nickName,
+          page: that.data.page
+        }
+      })
+    }
+    common.getData(that.data.urlParam,that.data.datas).then((res)=>{
       that.setData({
         change: res.data
       })
