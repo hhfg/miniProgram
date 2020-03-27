@@ -61,12 +61,14 @@ Page({
     var page = that.data.pos;
     that.setData({
       learningFlag: true,
-      reviewFlag: false,
       goAheadFlag:false,
       footerFlag:true,
       index:0,
       practise:true,
       pos:0
+    })
+    that.setData({
+      reviewFlag:false
     })
     common.sendRequest("selLearningWords.do",{
       nickName:app.globalData.userInfo.nickName,
@@ -102,7 +104,8 @@ Page({
       bookid:app.globalData.userData.bookid
     }).then((res)=>{
       that.setData({
-        reviewWords:res
+        reviewWords:res,
+        reviewFlag:true
       })
       that.setReviewData(that.data.index);
     })
@@ -367,9 +370,6 @@ Page({
   },
   bindGoAhead: function () {
     var that = this;
-    if (that.data.reviewFlag == true) {
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     that.setData({
       learningFlag: false,
       reviewFlag: true,
@@ -379,9 +379,6 @@ Page({
   //选择中文释义
   bindChoose: function (e) {
     var that = this;
-    if (that.data.reviewFlag == true) {
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
       that.ifCorrect();
     } else {
@@ -391,9 +388,6 @@ Page({
   //听音选择中文释义
   bindChooseCN: function (e) {
     var that = this;
-    if (that.data.reviewFlag == true) {
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     if (e.currentTarget.dataset.ex == that.data.reviewWord.explanation) {
       that.ifCorrect();
     } else {
@@ -403,9 +397,6 @@ Page({
   //听发音拼写单词
   bindConfirmEN: function (e) {
     var that = this;
-    if (that.data.reviewFlag == true) {
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     if (that.data.reviewWord.word == that.data.englishWord) {
       that.ifCorrect();
     } else {
@@ -418,9 +409,6 @@ Page({
   //看中文选择单词
   bindChooseEN: function (e) {
     var that = this;
-    if (that.data.reviewFlag == true) {
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     if (e.currentTarget.dataset.word == that.data.reviewWord.word) {
       that.ifCorrect();
     } else {
@@ -430,9 +418,6 @@ Page({
   //看中文拼写单词
   bindConfirm: function () {
     var that = this;
-    if (that.data.reviewFlag==true){
-      that.updateStatus(2, that.data.reviewWord.id)
-    }
     if (that.data.reviewWord.word == that.data.englishWord) {
       that.ifCorrect();
     } else {
@@ -445,6 +430,9 @@ Page({
   },
   ifCorrect: function () {
     var that = this;
+    if (that.data.practise == false) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
     if (that.data.index + 1 == that.data.reviewWords.length) {
       if(that.data.practise==false){
         that.loadingLearningData();
@@ -460,6 +448,9 @@ Page({
   },
   ifError: function () {
     var that = this;
+    if (that.data.practise == true) {
+      that.updateStatus(2, that.data.reviewWord.id)
+    }
     that.setData({
       learningFlag: true,
       goAheadFlag:true,
