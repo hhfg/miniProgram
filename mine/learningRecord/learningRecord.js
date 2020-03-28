@@ -1,13 +1,7 @@
+const app = getApp();
+const common = require("../../utils/common.js")
 var wxCharts = require('../../utils/wxcharts.js');
-var app = getApp();
 var columnChart = null;
-var chartData = {
-  main: {
-    title: '最近一周学习记录',
-    data: [5, 10, 5, 5, 15, 5, 10],
-    categories: ['3.21', '3.22', '3.23', '3.24', '3.25', '3.26', '3.27']
-  },
-};
 Page({
 
   /**
@@ -17,38 +11,63 @@ Page({
     chartTitle: '最近一周学习记录',
     isMainChartDisplay: true,
     windowWidth: '',
-    height: ''
+    height: '',
+    day: app.globalData.userData.clockInDay,
+    count:app.globalData.userData.haveLearned,
+    chartData:{
+      title: '最近一周学习记录',
+      data: [0,0,0,0,0,0,0],
+      categories: [0, 0, 0, 0, 0, 0, 0]
+    },
+    dayNum:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
     try {
       var res = wx.getSystemInfoSync();
       this.setData({
         windowWidth: res.windowWidth,
         height: res.windowHeight
       })
-      console.log(this.data.windowWidth + ";" + this.data.height)
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
+    common.sendRequest('selCount.do',{
+      uid:app.globalData.userData.uid
+    }).then((res)=>{
+      console.log(res)
+      that.setData({
+        dayNum: res
+      })
+      that.setChartData();
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  setChartData:function(){
+    var that=this;
+    that.data.dayNum.forEach(function (item, index) {
+      let num = 'chartData.data[' + index + ']'
+      let date = 'chartData.categories[' + index + ']'
+      that.setData({
+        [num]: item.num,
+        [date]: item.date
+      })
+    })
+    that.setData({
+      chartData: that.data.chartData
+    })
+    console.log(that.data.chartData)
     columnChart = new wxCharts({
       canvasId: 'columnCanvas',
       type: 'column',
       animation: true,
-      categories: chartData.main.categories,
+      categories: this.data.chartData.categories,
       series: [{
         name: '成交量',
-        data: chartData.main.data,
+        data: this.data.chartData.data,
         format: function (val, name) {
           return val + '个';
         }
@@ -71,6 +90,12 @@ Page({
       width: this.data.windowWidth,
       height: 200,
     });
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
   },
 
   /**
