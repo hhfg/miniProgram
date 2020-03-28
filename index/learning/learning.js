@@ -74,7 +74,8 @@ Page({
       nickName:app.globalData.userInfo.nickName,
       num:app.globalData.userData.dayNum,
       start:app.globalData.userData.lastWordId,
-      bookid: app.globalData.userData.bookid
+      bookid: app.globalData.userData.bookid,
+      uid:app.globalData.userData.uid
     }).then((res)=>{
       //返回的单词存到words中
       that.setData({
