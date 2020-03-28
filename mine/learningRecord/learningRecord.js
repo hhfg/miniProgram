@@ -1,28 +1,45 @@
-// mine//learningRecord/learningRecord.js
 var wxCharts = require('../../utils/wxcharts.js');
 var app = getApp();
 var columnChart = null;
 var chartData = {
   main: {
-    title: '总成交量',
+    title: '最近一周学习记录',
     data: [5, 10, 5, 5, 15, 5, 10],
     categories: ['3.21', '3.22', '3.23', '3.24', '3.25', '3.26', '3.27']
   },
-
 };
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    chartTitle: '总成交量',
-    isMainChartDisplay: true
+    chartTitle: '最近一周学习记录',
+    isMainChartDisplay: true,
+    windowWidth: '',
+    height: ''
   },
-  onReady: function (e) {
-    var windowWidth = 320;
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
     try {
       var res = wx.getSystemInfoSync();
-      windowWidth = res.windowWidth;
+      this.setData({
+        windowWidth: res.windowWidth,
+        height: res.windowHeight
+      })
+      console.log(this.data.windowWidth + ";" + this.data.height)
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
 
     columnChart = new wxCharts({
       canvasId: 'columnCanvas',
@@ -40,7 +57,6 @@ Page({
         format: function (val) {
           return val + '个';
         },
-        title: 'hello',
         min: 0
       },
       xAxis: {
@@ -52,8 +68,50 @@ Page({
           width: 15
         }
       },
-      width: windowWidth,
+      width: this.data.windowWidth,
       height: 200,
     });
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
-});
+})

@@ -1,4 +1,41 @@
-.canvas {
-    width: 80px;
-    height: 80px;
+page{
+  width: 100%;
+  height: 100%;
+}
+.total{
+  display: flex;
+  flex-direction: row;
+}
+.learningTime,.learningCount{
+  width: 50%;
+  margin: 20px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #87CEFA;
+}
+.num{
+  padding-top: 15px;
+  justify-content: center;
+}
+.num text{
+  font-size: 18px;
+  font-weight: bold;
+}
+.tips{
+ /* background-color: greenyellow; */
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+.title {
+	text-align: center;
+	position: relative;
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.canvas{
+  width: 100%;
+  height: 200px;
 }

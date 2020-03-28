@@ -1,5 +1,18 @@
 <!--mine//learningRecord/learningRecord.wxml-->
-<view class="container">
-  <canvas canvas-id="columnCanvas" class="canvas" ></canvas>
-  <view style="text-align:center">点击数据每一项查看详情</view>
+<view class="total">
+  <view class="learningTime">
+    <image src="../../icons/mine/record1.png" style="width:20px;height:20px;"/>
+    <view class="num"><text>196</text>天</view>
+    <view class="tips">累计学习时间</view>
+  </view>
+  <view class="learningCount">
+    <image src="../../icons/mine/record2.png" style="width:20px;height:20px;"/>
+    <view class="num"><text>5827</text>个</view>
+    <view class="tips">累计学习词汇</view>
+  </view>
 </view>
+<view class="chart">
+  <view class="title">{{chartTitle}}</view>
+  <canvas canvas-id="columnCanvas" class="canvas"></canvas>  
+</view>
+
