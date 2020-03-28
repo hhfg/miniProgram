@@ -59,14 +59,13 @@ Page({
     that.setData({
       chartData: that.data.chartData
     })
-    console.log(that.data.chartData)
     columnChart = new wxCharts({
       canvasId: 'columnCanvas',
       type: 'column',
       animation: true,
       categories: this.data.chartData.categories,
       series: [{
-        name: '成交量',
+        name: '学习量',
         data: this.data.chartData.data,
         format: function (val, name) {
           return val + '个';
