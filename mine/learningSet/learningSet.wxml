@@ -63,9 +63,9 @@
     </view>
     <view class="gap"></view>
     <view class="switch">
-      <view>自动发音</view>
+      <view>答题声效</view>
       <view style="position:absolute;right:10px;">
-        <switch type="switch"></switch>
+        <switch type="switch" bindchange="bindSoundEffect" checked="{{learningSet[5]}}"></switch>
       </view>
     </view>
     <view class="gap"></view>

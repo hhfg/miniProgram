@@ -21,7 +21,8 @@ Page({
     reviewFlag:true,
     word:'',
     ex_array:'',
-    coll_array:''
+    coll_array:'',
+    soundEffect:false
   },
   setLearningSet:function(learningSet){
     var that=this;
@@ -124,6 +125,7 @@ Page({
   onLoad: function (options) {
     var date=options.date;
     var learningSet = wx.getStorageSync('learningSet')
+    this.data.soundEffect=learningSet[5]
     this.getReviewData(date);
     this.setLearningSet(learningSet)
   },
@@ -281,6 +283,10 @@ Page({
 
   ifCorrect:function(){
     var that=this;
+    if (that.data.soundEffect==true){
+      if (that.data.chooseFlag == true || that.data.chooseCNFlag == true || that.data.chooseENFlag==true)
+      that.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+    }
     if (that.data.index + 1 == that.data.reviewWords.length) {
       wx.redirectTo({
         url: '../convert/convert',
@@ -294,6 +300,11 @@ Page({
   },
   ifError:function(){
     var that=this;
+    if (that.data.soundEffect==true){
+      if (that.data.chooseFlag == true || that.data.chooseCNFlag == true || that.data.chooseENFlag == true){
+        that.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
+      } 
+    }
     that.setData({
       correctWord: true,
       reviewFlag: false,

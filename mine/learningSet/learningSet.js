@@ -105,5 +105,11 @@ Page({
       'learningSet[4]': e.detail.value
     })
     wx.setStorageSync("learningSet", this.data.learningSet)
+  },
+  bindSoundEffect:function(e){
+    this.setData({
+      'learningSet[5]':e.detail.value
+    })
+    wx.setStorageSync("learningSet", this.data.learningSet)
   }
 })

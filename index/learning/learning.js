@@ -30,7 +30,8 @@ Page({
     englishWord:'',      //练习填写英语单词的变量
     practise:false,
     collectUrl:"../../icons/learning/collect.png",
-    learningSet:[]
+    learningSet:[],
+    soundEffect: false
   },
 
   touchStart: function (e) {
@@ -195,6 +196,7 @@ Page({
   onLoad: function (options) {
     //获取学习设置
     var learningSet = wx.getStorageSync('learningSet')
+    this.data.soundEffect = learningSet[5]
     this.setLearningSet(learningSet);
     //如果haveToReview为0（需要复习的单词个数为0，直接获取需要学习的单词
     if(app.globalData.userData.haveToReview==0){
@@ -431,6 +433,10 @@ Page({
   },
   ifCorrect: function () {
     var that = this;
+    if (that.data.soundEffect == true) {
+      if (that.data.chooseFlag == true || that.data.chooseCNFlag == true || that.data.chooseENFlag == true)
+        that.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+    }
     if (that.data.practise == false) {
       that.updateStatus(2, that.data.reviewWord.id)
     }
@@ -449,6 +455,11 @@ Page({
   },
   ifError: function () {
     var that = this;
+    if (that.data.soundEffect == true) {
+      if (that.data.chooseFlag == true || that.data.chooseCNFlag == true || that.data.chooseENFlag == true) {
+        that.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
+      }
+    }
     if (that.data.practise == true) {
       that.updateStatus(2, that.data.reviewWord.id)
     }
