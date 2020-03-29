@@ -15,7 +15,7 @@ App({
       fail:function(res){
         wx.setStorage({
           key: 'learningSet',
-          data: [true,false,true,false,false,true]
+          data: [true,false,true,false,true,true]
       //看单词选择中文,听音选择中文释义,听发音拼写单词,看中文选择单词,看中文拼写单词        
         })
       }

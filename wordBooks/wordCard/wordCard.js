@@ -7,7 +7,8 @@ Page({
   data: {
     word:[],
     ex_array:'',
-    coll_array:''
+    coll_array:'',
+    collectUrl:''
   },
 
   /**
@@ -20,6 +21,14 @@ Page({
     that.setData({
       word:word,
     })
+    that.setData({
+      collectUrl: "../../icons/learning/collect.png"
+    })
+    if (that.data.word.collect == 1) {
+      that.setData({
+        collectUrl: "../../icons/learning/collected.png"
+      })
+    }
     that.setData({
       ex_array: that.data.word.explanation.split(";")
     })
@@ -37,6 +46,14 @@ Page({
   },
   changeField:function(){
     var that=this;
+    that.setData({
+      collectUrl: "../../icons/learning/collect.png"
+    })
+    if (that.data.word.collect == 1) {
+      that.setData({
+        collectUrl: "../../icons/learning/collected.png"
+      })
+    }
     that.setData({
       ex_array: that.data.word.explanation.split(";")
     })

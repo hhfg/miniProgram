@@ -136,6 +136,7 @@ Page({
       that.setData({
         change: res.data
       })
+      console.log(that.data.change)
       for (var i = 0; i < that.data.change.length; i++) {
         that.data.change[i].trans = "释义"
       }
