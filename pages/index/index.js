@@ -55,20 +55,27 @@ Page({
           }
         })
       }else{
-        wx.navigateTo({
-          url: '../../index/learning/learning',
-        })
         //如果haveToLearn和haveToReview都为0说明今日已学习完成
-        // if(app.globalData.userData.haveToLearn==0&&app.globalData.userData.haveToReview==0){
-        //   wx.showModal({
-        //     title: '提醒',
-        //     content: '今日已学习完成',
-        //   })
-        // }else{//否则跳转到学习页面
-        //   wx.navigateTo({
-        //     url: '../../index/learning/learning',
-        //   })
-        // }
+        if(app.globalData.userData.haveToLearn==0&&app.globalData.userData.haveToReview==0){
+          wx.showModal({
+            title: '今日学习任务已完成',
+            content: '是否继续学习？',
+            success:function(res){
+              if(res.cancel){
+                //点击取消
+              }else{
+                //点击确定
+                wx.navigateTo({
+                  url: '../../index/learning/learning',
+                })
+              }
+            }
+          })
+        }else{//否则跳转到学习页面
+          wx.navigateTo({
+            url: '../../index/learning/learning',
+          })
+        }
       }
     }
   },

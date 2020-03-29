@@ -1,4 +1,4 @@
-var urlParam ='http://192.168.1.104:8080/MiniProgram/'
+var urlParam ='http://192.168.1.101:8080/MiniProgram/'
 function sendRequest(url, data) {
   var that = this;
   return new Promise(function (resolve, reject) {
