@@ -2,6 +2,7 @@
 page{
   width: 100%;
   height: 100%;
+  background-color: #F5F5F5;
 }
 .total{
   display: flex;
@@ -14,7 +15,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #87CEEB;
+  
 }
 .num{
   padding-top: 15px;
@@ -34,6 +35,9 @@ page{
 	position: relative;
 	margin-top: 20rpx;
 	margin-bottom: 20rpx;
+}
+.chart{
+  margin-top:30px; 
 }
 .canvas{
   width: 100%;

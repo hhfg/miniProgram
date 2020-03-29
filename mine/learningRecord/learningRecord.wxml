@@ -13,6 +13,6 @@
 </view>
 <view class="chart">
   <view class="title">{{chartTitle}}</view>
-  <canvas canvas-id="columnCanvas" class="canvas"></canvas>  
+  <canvas canvas-id="columnCanvas" class="canvas" style="background-color:#F5F5F5"></canvas>  
 </view>
 

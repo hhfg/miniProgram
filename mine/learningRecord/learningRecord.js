@@ -75,10 +75,12 @@ Page({
         format: function (val) {
           return val + '个';
         },
+        fontColor: '#87CEEB',
         min: 0
       },
       xAxis: {
         disableGrid: false,
+        fontColor: '#87CEEB',
         type: 'calibration'
       },
       extra: {

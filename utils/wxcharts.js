@@ -24,16 +24,17 @@ var config = {
     pieChartLinePadding: 25,
     pieChartTextPadding: 15,
     xAxisTextPadding: 3,
-    titleColor: '#333333',
+    titleColor: '#000000',
     titleFontSize: 20,
-    subtitleColor: '#999999',
+    subtitleColor: '#000000',
     subtitleFontSize: 15,
     toolTipPadding: 3,
     toolTipBackground: '#000000',
     toolTipOpacity: 0.7,
     toolTipLineHeight: 14,
     radarGridCount: 3,
-    radarLabelTextMargin: 15
+    radarLabelTextMargin: 15,
+    background:'#F5F5F5'
 };
 
 // Object.assign polyfill
