@@ -1,10 +1,17 @@
-<view class="main">
-  <view class="game">
-    <view class="title">练习赛</view>
-    <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
+<view class="container">
+  <view class="rival">
+    <view class="player1">
+      <view class="headPic"></view>
+    </view>
+    <view>
+      <!-- <image src="../../icons/pk/vs2.png" style="width:50px;height:50px;"></image> -->
+      <view style="font-size:30px;font-weight:bold;color:white;">VS</view>
+    </view>
+    <view class="player2">
+      <view class="headPic"></view>
+    </view>
   </view>
-  <view class="errorBook">
-    <view class="title">错题本</view>
-    <image src="../../icons/pk/book.png" style="margin-left:80px;width:70px;height:70px"></image>
+  <view class="mess">
+    <view style="color:white">等待对手</view>
   </view>
 </view>

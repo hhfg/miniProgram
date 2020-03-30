@@ -3,7 +3,7 @@
 <view class="hr"></view>
 <view wx:for="{{type}}" wx:key="typename">
   <view class="item" bindtap="bindClick"  data-index="{{index}}">
-    <view class="icon"><image src="../../icons/books/P.png" style="width:25px;height:25px;"></image></view>
+    <view class="icon"><image src="../../icons/books/book.png" style="width:25px;height:25px;"></image></view>
     <view class="itemName">
       <view>{{item.typename}}</view>
     </view>
