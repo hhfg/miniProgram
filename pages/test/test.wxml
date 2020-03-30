@@ -1,17 +1,20 @@
-<view class="container">
+<view class="main">
   <view class="rival">
     <view class="player1">
       <view class="headPic"></view>
     </view>
     <view>
-      <!-- <image src="../../icons/pk/vs2.png" style="width:50px;height:50px;"></image> -->
       <view style="font-size:30px;font-weight:bold;color:white;">VS</view>
     </view>
     <view class="player2">
       <view class="headPic"></view>
     </view>
   </view>
-  <view class="mess">
-    <view style="color:white">等待对手</view>
+  <view class="wordPart">
+    <view style="font-weight:bold;font-size:25px;color:white">purple</view>
+    <button class="options">祖父母</button>
+    <button class="options">紫的，紫色的</button>
+    <button class="options">电子信函</button>
+    <button class="options">女朋友</button>
   </view>
 </view>
