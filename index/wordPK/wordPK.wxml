@@ -1,3 +1,4 @@
+<!--index//wordPK/wordPK.wxml-->
 <view class="main">
   <view class="game">
     <view class="title">练习赛</view>

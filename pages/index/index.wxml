@@ -34,7 +34,7 @@
 </view>
 <view class="other">
   <view class="content">
-    <view class="item">
+    <view class="item" bindtap="bindPK">
       <view><image class="icon" src="../../icons/index/pk.png"></image></view>
       <view>PK</view>
     </view>
@@ -42,13 +42,13 @@
       <view><image class="icon" src="../../icons/index/test.png"></image></view>
       <view>复习</view>
     </view>
-    <view class="item">
-      <view><image class="icon" src="../../icons/index/note.png"></image></view>
-      <view>笔记本</view>
-    </view>
     <view class="item" bindtap="bindSearch">
       <view><image class="icon" src="../../icons/index/search.png"></image></view>
       <view>查词</view>
+    </view>
+    <view class="item">
+      <view><image class="icon" src="../../icons/index/note.png"></image></view>
+      <view>笔记本</view>
     </view>
   </view>
 </view> 

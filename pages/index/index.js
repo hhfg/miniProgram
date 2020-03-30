@@ -79,6 +79,13 @@ Page({
       }
     }
   },
+  //PK
+  bindPK:function(){
+    wx.navigateTo({
+      url: '../../index/wordPK/wordPK',
+    })
+  },
+  //复习
   bindReview:function(){
     wx.navigateTo({
       url: '../../index/review/review',

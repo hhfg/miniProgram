@@ -17,7 +17,8 @@
         "clockIn/clockIn",
         "review/review",
         "reviewPage/reviewPage",
-        "convert/convert"
+        "convert/convert",
+        "wordPK/wordPK"
       ]
     },{
       "root":"wordBooks/",
