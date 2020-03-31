@@ -304,7 +304,7 @@ Page({
   nextWord: function () {
     var that=this;
     //设置单词的status为1
-    that.updateStatus(1, that.data.words[that.data.pos].id)
+    that.updateStatus(1, that.data.word.id)
     that.setData({
       pos: that.data.pos + 1
     })

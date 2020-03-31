@@ -4,7 +4,7 @@
       <view class="headPic"></view>
     </view>
     <view>
-      <view style="font-size:30px;font-weight:bold;color:white;">VS</view>
+      <view style="font-size:30px;font-weight:bold;color:black;">VS</view>
     </view>
     <view class="player2">
       <view class="headPic"></view>
