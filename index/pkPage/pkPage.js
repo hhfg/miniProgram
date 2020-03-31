@@ -1,13 +1,14 @@
+// index//pkPage/pkPage.js
 var valHandle;
-const ctx=wx.createCanvasContext("bgCanvas", this)
+const ctx = wx.createCanvasContext("bgCanvas", this)
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    stepText:10,//设置倒计时初始值
-    windowWidth:'' //屏幕
+    stepText: 10,//设置倒计时初始值
+    windowWidth: '' //屏幕
   },
 
   /**
@@ -29,50 +30,50 @@ Page({
    */
   onReady: function () {
     ctx.setLineWidth(8);//设置线条宽度
-    ctx.arc(25,25,22,0,2*Math.PI);//画弧线
+    ctx.arc(25, 25, 22, 0, 2 * Math.PI);//画弧线
     ctx.setStrokeStyle('white');//设置线条样式
     ctx.stroke();//画出当前路径的边框
     ctx.beginPath();//开始一个路径
     ctx.setLineCap('round');//设置线条的结束端点样式
     ctx.setLineWidth(5);
-    ctx.arc(25, 25, 22,1.5*Math.PI,-0.5*Math.PI,true);
+    ctx.arc(25, 25, 22, 1.5 * Math.PI, -0.5 * Math.PI, true);
     ctx.setStrokeStyle('#87CEFA');
     ctx.stroke();
     ctx.draw();
     this.timerStart();
   },
-  timerStart:function(){
+  timerStart: function () {
     console.log("倒计时动画开始");
-    var that=this;
-    that.data.stepText=10;//重新设置一遍初始值
-    var step=that.data.stepText;//定义倒计时
-    var num=-0.5;
-    var decNum=2/step/10
+    var that = this;
+    that.data.stepText = 10;//重新设置一遍初始值
+    var step = that.data.stepText;//定义倒计时
+    var num = -0.5;
+    var decNum = 2 / step / 10
     clearInterval(valHandle)
-    function drawArc(endAngle){
+    function drawArc(endAngle) {
       ctx.setLineWidth(8);
-      ctx.arc(25, 25, 22,0,2*Math.PI);
+      ctx.arc(25, 25, 22, 0, 2 * Math.PI);
       ctx.setStrokeStyle('white')
       ctx.stroke();
       ctx.beginPath();
       ctx.setLineCap('round');
       ctx.setLineWidth(5)
-      ctx.arc(25, 25, 22,1.5*Math.PI,endAngle,true);
+      ctx.arc(25, 25, 22, 1.5 * Math.PI, endAngle, true);
       ctx.setStrokeStyle('#87CEFA')
       ctx.stroke();
       ctx.draw();
     }
-    valHandle=setInterval(function(){
+    valHandle = setInterval(function () {
       that.setData({
-        stepText:parseInt(step)
+        stepText: parseInt(step)
       })
-      step=(step-0.1).toFixed(1);
-      num+=decNum
-      drawArc(num*Math.PI)
-      if(step<=0){
+      step = (step - 0.1).toFixed(1);
+      num += decNum
+      drawArc(num * Math.PI)
+      if (step <= 0) {
         clearInterval(valHandle)
       }
-    },100)
+    }, 100)
   },
   /**
    * 生命周期函数--监听页面显示
@@ -106,34 +107,34 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+
   }
 })
