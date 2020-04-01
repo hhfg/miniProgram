@@ -8,4 +8,5 @@
     <view class="title">错题本</view>
     <image src="../../icons/pk/book.png" style="margin-left:80px;width:70px;height:70px"></image>
   </view>
+  <button open-type="share">分享好友</button>
 </view>
