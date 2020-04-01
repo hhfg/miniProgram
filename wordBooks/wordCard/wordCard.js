@@ -1,4 +1,6 @@
 // wordBooks//wordCard/wordCard.js
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -139,5 +141,42 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  bindCollect: function () {
+    var that = this;
+    var wordCollect = 'word.collect'
+    if (that.data.collectUrl === "../../icons/learning/collect.png") {
+      common.setStatus('setCollect.do', {
+        nickName: app.globalData.userInfo.nickName,
+        collect: 1,
+        id: that.data.word.id
+      }).then((res) => {
+        that.setData({
+          collectUrl: "../../icons/learning/collected.png",
+          [wordCollect]: 1
+        })
+        wx.showToast({
+          title: '收藏成功',
+          icon: 'success',
+          duration: 1000,
+        })
+      })
+    } else {
+      common.setStatus('setCollect.do', {
+        nickName: app.globalData.userInfo.nickName,
+        collect: 0,
+        id: that.data.word.id
+      }).then((res) => {
+        that.setData({
+          collectUrl: "../../icons/learning/collect.png",
+          [wordCollect]: 0
+        })
+        wx.showToast({
+          title: '取消成功',
+          icon: 'success',
+          duration: 1000,
+        })
+      })
+    }
   }
 })

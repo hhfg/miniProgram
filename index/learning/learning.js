@@ -460,7 +460,7 @@ Page({
         that.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }
     }
-    if (that.data.practise == true) {
+    if (that.data.practise == false) {
       that.updateStatus(2, that.data.reviewWord.id)
     }
     that.setData({
