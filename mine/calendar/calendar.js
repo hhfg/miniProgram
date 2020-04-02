@@ -134,7 +134,6 @@ Page({
       allArr: allArr
     }
     that.triggerEvent('sendObj', sendObj)
-    console.log(that.data.clockDay)
     that.data.clockDay.forEach(function (item, index) {
       for (var i = 0; i < allArr.length; i++) {
         if (item.year == allArr[i].year && item.month == allArr[i].month && item.date == allArr[i].date) {
@@ -217,7 +216,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    //console.log(this.data.nowYear+"-"+this.data.nowMonth+"-"+this.data.nowDay)
     var time = util.formatTime(new Date());
     // 再通过setData更改Page()里面的data，动态更新页面的数据
     that.setData({
@@ -241,7 +239,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    // this.getAllArr()
   },
 
   /**
