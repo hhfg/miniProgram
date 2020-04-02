@@ -7,20 +7,6 @@ Page({
   data: {
 
   },
-  bindTest:function(){
-    wx.request({
-      url: 'http://192.168.1.103:8080/MiniProgram/createUserWordTable.do',
-      data:{
-        nickName:'啊玲'
-      },
-      success:function(res){
-        console.log(res.data)
-      },
-      fail:function(res){
-        console.log(res)
-      }
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -75,5 +61,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  changeQuestionBank:function(){
+    wx.navigateTo({
+      url: '../questionBank/questionBank',
+    })
   }
 })

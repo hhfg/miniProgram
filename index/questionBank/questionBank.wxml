@@ -1,3 +1,4 @@
+<!--index//questionBank/questionBank.wxml-->
 <view class="wordBook">
   <view class="book" bindtap="chooseIt" data-id="1" hover-class="choose">
     <image src="../../icons/pk/high.png" style="width:50px;height:50px;"></image>
