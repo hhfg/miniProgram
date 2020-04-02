@@ -4,11 +4,11 @@
     <open-data type="userAvatarUrl"  class="img"></open-data>
     <view class="account">
       <open-data type="userNickName" lang="zh_CN"></open-data>
-      <view style="padding-top:10px;color:#FFD700;font-weight:bold">四级题库 <text bindtap="changeQuestionBank">切换></text></view>
+      <view style="padding-top:10px;color:#FFD700;font-weight:bold">{{mybank}} <text bindtap="changeQuestionBank">切换></text></view>
     </view>
   <view class="nav"></view>
   </view>
-  <view class="game">
+  <view class="game" bindtap="bindGame">
     <view class="title">好友对战</view>
     <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
   </view>

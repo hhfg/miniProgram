@@ -39,7 +39,6 @@ Page({
     common.sendRequest('selCount.do',{
       uid:app.globalData.userData.uid
     }).then((res)=>{
-      console.log(res)
       that.setData({
         dayNum: res
       })

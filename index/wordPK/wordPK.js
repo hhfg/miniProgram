@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    mybank:''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -66,5 +66,20 @@ Page({
     wx.navigateTo({
       url: '../questionBank/questionBank',
     })
+  },
+  bindGame:function(){
+    if(this.data.mybank==''){
+      wx.showModal({
+        title: '提示',
+        content: '请先选择题库',
+        success:function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: '../questionBank/questionBank',
+            })
+          }
+        }
+      })     
+    }
   }
 })

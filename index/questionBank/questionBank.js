@@ -1,4 +1,6 @@
 // index//questionBank/questionBank.js
+var app = getApp();
+var common = require("../../utils/common.js");
 Page({
 
   /**
@@ -65,5 +67,11 @@ Page({
   },
   chooseIt: function (e) {
     console.log(e.currentTarget.dataset.id)
+    common.sendRequest('updBankId.do',{
+      bankId: e.currentTarget.dataset.id,
+      uid:app.globalData.userData.uid
+    }).then((res)=>{
+      console.log(res)
+    })
   }
 })
