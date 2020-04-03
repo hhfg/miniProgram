@@ -1,4 +1,6 @@
 // index//wordPK/wordPK.js
+var app = getApp();
+var common = require("../../utils/common.js");
 Page({
 
   /**
@@ -11,7 +13,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    common.sendRequest('getPlayerData.do',{
+      uid:app.globalData.userData.uid
+    }).then((res)=>{
+      console.log(res)
+    })
   },
 
   /**

@@ -1,20 +1,20 @@
 <!--index//questionBank/questionBank.wxml-->
 <view class="wordBook">
-  <view class="book" bindtap="chooseIt" data-id="1" hover-class="choose">
+  <view class="book" bindtap="chooseIt" data-bank="高中题库" hover-class="choose">
     <image src="../../icons/pk/high.png" style="width:50px;height:50px;"></image>
     <view>高中题库</view>
   </view>
-  <view class="book" bindtap="chooseIt" data-id="2" hover-class="choose">
+  <view class="book" bindtap="chooseIt" data-bank="四级题库" hover-class="choose">
     <image src="../../icons/pk/cet4.png" style="width:50px;height:50px;"></image>
     <view>四级题库</view>
   </view>
 </view>
 <view class="wordBook">
-  <view class="book" bindtap="chooseIt" data-id="3" hover-class="choose">
+  <view class="book" bindtap="chooseIt" data-bank="六级题库" hover-class="choose">
     <image src="../../icons/pk/cet6.png" style="width:50px;height:50px;"></image>
     <view>六级题库</view>
   </view>
-  <view class="book" bindtap="chooseIt" data-id="4" hover-class="choose">
+  <view class="book" bindtap="chooseIt" data-bank="考研题库" hover-class="choose">
     <image src="../../icons/pk/post.png" style="width:50px;height:50px;"></image>
     <view>考研题库</view>
   </view>

@@ -66,10 +66,10 @@ Page({
 
   },
   chooseIt: function (e) {
-    console.log(e.currentTarget.dataset.id)
-    common.sendRequest('updBankId.do',{
-      bankId: e.currentTarget.dataset.id,
-      uid:app.globalData.userData.uid
+    console.log(e.currentTarget.dataset.bank)
+    common.sendRequest('updBank.do',{
+      uid:app.globalData.userData.uid,
+      bank: e.currentTarget.dataset.bank
     }).then((res)=>{
       console.log(res)
     })
