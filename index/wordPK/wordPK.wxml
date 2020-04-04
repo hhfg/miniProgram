@@ -8,11 +8,7 @@
     </view>
   <view class="nav"></view>
   </view>
-  <!-- <view class="game" bindtap="bindGame">
-    <view class="title">好友对战</view>
-    <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
-  </view> -->
-  <button open-type="share" class="game" style="height:100px;width:100%;margin-right:20px">
+  <button open-type="share" class="game" style="height:100px;width:{{width}}px;margin-right:20px">
     <view class="title">好友对战</view>
     <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
   </button>
