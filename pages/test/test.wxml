@@ -1,20 +1,19 @@
-<view class="wordBook">
-  <view class="book" bindtap="chooseIt" data-id="1" hover-class="choose">
-    <image src="../../icons/pk/high.png" style="width:50px;height:50px;"></image>
-    <view>高中题库</view>
-  </view>
-  <view class="book" bindtap="chooseIt" data-id="2" hover-class="choose">
-    <image src="../../icons/pk/cet4.png" style="width:50px;height:50px;"></image>
-    <view>四级题库</view>
-  </view>
+<button type="default" bindtap="createConn">创建连接</button>
+<view style="display:flex;flex-direction:row;margin:10px;">
+  <input type="text" name="msg" bindblur="getMsg" style="width:200px;border:1px solid #cccccc;"></input>
+  <button type="primary" size="mini" bindtap="send">发送消息</button>
 </view>
-<view class="wordBook">
-  <view class="book" bindtap="chooseIt" data-id="3" hover-class="choose">
-    <image src="../../icons/pk/cet6.png" style="width:50px;height:50px;"></image>
-    <view>六级题库</view>
-  </view>
-  <view class="book" bindtap="chooseIt" data-id="4" hover-class="choose">
-    <image src="../../icons/pk/post.png" style="width:50px;height:50px;"></image>
-    <view>考研题库</view>
-  </view>
+<view style="height:200px">
+  <view style="font-weight:bold;">客户端发送的消息:</view>
+  <block wx:for="{{sendMsg}}" wx:for-item="item1">
+    <view style="color:green">{{item1}}</view>
+  </block>
 </view>
+<view style="height:200px">
+  <view style="font-weight:bold;">服务端返回的消息:</view>
+  <block wx:for="{{resData}}" wx:for-item="item2">
+    <view style="color:red">{{item2}}</view>
+  </block>
+</view>
+<view style="margin:10px;">{{content}}</view>
+<button type="default" bindtap="closeConn">关闭连接</button>
