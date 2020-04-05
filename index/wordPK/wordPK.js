@@ -8,7 +8,8 @@ Page({
    */
   data: {
     mybank:'',
-    width: wx.getSystemInfoSync().windowWidth-40
+    width: wx.getSystemInfoSync().windowWidth-40,
+    access_token:''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -70,7 +71,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+    var uid=11;
+    return{
+      title:'测试分享', //弹出分享时显示的标题
+      path:'index/waitRival/waitRival?shareid='+uid //传递参数到指定页面
+    }
   },
   changeQuestionBank:function(){
     wx.navigateTo({
@@ -91,7 +96,7 @@ Page({
         }
       })     
     }else{
-      //this.onShareAppMessage();
+
     }
   }
 })
