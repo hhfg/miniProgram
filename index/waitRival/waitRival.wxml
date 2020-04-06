@@ -1,17 +1,24 @@
-<view class="container">
-  <view class="rival">
-    <view class="player1">
-      <view class="headPic"></view>
-    </view>
-    <view>
-      <!-- <image src="../../icons/pk/vs2.png" style="width:50px;height:50px;"></image> -->
-      <view style="font-size:30px;font-weight:bold;color:white;">VS</view>
-    </view>
-    <view class="player2">
-      <view class="headPic"></view>
+<view class="waiting" wx:if="{{waiting}}">
+  <view class="sponsor">
+    <view style="color:white;font-weight:bold;font-size:20px;">等待对手加入...</view>
+    <view style="padding-top:40px;"><open-data type="userAvatarUrl" class="img"></open-data></view>
+  </view>
+  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">放弃</button></view>
+</view>
+<view class="rivalArrived">
+  <view class="sponsor">
+    <view style="color:white;font-weight:bold;font-size:20px;">对手已加入</view>
+    <view class="component">
+      <view class="rival">
+        <open-data type="userAvatarUrl" class="img1"></open-data>
+        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
+      </view>
+      <view class="vs">VS</view>
+      <view class="rival">
+        <open-data type="userAvatarUrl" class="img1"></open-data>
+        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
+      </view>
     </view>
   </view>
-  <view class="mess">
-    <view style="color:white">等待对手</view>
-  </view>
+  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">开始对战</button></view>
 </view>
