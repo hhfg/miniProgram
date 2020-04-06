@@ -24,7 +24,7 @@
   </view> 
   <!-- 听音选择中文释义 -->
   <view class="choose" wx:if="{{chooseCNFlag}}">
-    <view class="pronPart">
+    <view class="wordPart">
       <image src="../../icons/learning/play.png" style="width:80rpx;height:80rpx;"  bindtap="pronouncePlayUS" data-url="{{reviewWord.uk_mp3}}"></image>
     </view>
     <view class="options" wx:for="{{reviewWord.choose}}" wx:key="*this">

@@ -70,12 +70,16 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (res) {
     var uid=11;
-    return{
-      title:'测试分享', //弹出分享时显示的标题
-      path:'index/waitRival/waitRival?shareid='+uid //传递参数到指定页面
-    }
+    console.log(res)
+    wx.navigateTo({
+      url: '../waitRival/waitRival',
+    })
+    return {
+      title: '测试分享', //弹出分享时显示的标题
+      path: 'index/waitRival/waitRival?shareid=' + uid, //传递参数到指定页面
+    };
   },
   changeQuestionBank:function(){
     wx.navigateTo({
@@ -96,7 +100,8 @@ Page({
         }
       })     
     }else{
-
+      this.onShareAppMessage();
     }
+
   }
 })
