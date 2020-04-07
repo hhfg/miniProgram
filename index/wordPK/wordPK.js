@@ -85,7 +85,6 @@ Page({
       this.setData({
         id: ran
       })
-      console.log(this.data.id)
       return {
         title: '测试分享', //弹出分享时显示的标题
         path: 'index/waitRival/waitRival?shareid=' + this.data.id, //传递参数到指定页面

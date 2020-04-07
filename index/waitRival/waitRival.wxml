@@ -3,7 +3,7 @@
     <view style="color:white;font-weight:bold;font-size:20px;">等待对手加入...</view>
     <view style="padding-top:40px;"><open-data type="userAvatarUrl" class="img"></open-data></view>
   </view>
-  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">放弃</button></view>
+  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB" bindtap="bindAbandon">放弃</button></view>
 </view>
 <view class="rivalArrived" wx:if="{{canStart}}">
   <view class="sponsor">
