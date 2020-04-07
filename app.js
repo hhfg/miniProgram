@@ -1,7 +1,6 @@
 //app.js
 var app=getApp();
 App({
-  require: function ($uri) { return require($uri) },
   onLaunch: function () {
     var that=this;
     // 展示本地存储能力
@@ -35,8 +34,16 @@ App({
       }
     })
   },
+  onShow:function(){
+    // var obj = wx.getLaunchOptionsSync()
+    // if (obj.scene == '1001') {
+    //   console.log("在app内点击好友对战进入")
+    // } else if (obj.scene = '1011') {
+    //   console.log("通过分享卡片进来")
+    // }
+  },
 
-    globalData: {
+  globalData: {
     //url:'http://192.168.1.100:8080/MiniProgram',
     url:'http://localhost:8080/MiniProgram',
     userInfo: null,

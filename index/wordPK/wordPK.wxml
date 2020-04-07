@@ -8,14 +8,14 @@
     </view>
   <view class="nav"></view>
   </view>
-  <!-- <button open-type="share" bindtap="bindGame"class="game" style="height:100px;width:{{width}}px;margin-right:20px">
+  <button open-type="share" class="game" style="height:100px;width:{{width}}px;margin-right:20px">
     <view class="title">好友对战</view>
     <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
-  </button> -->
-  <view class="game" bindtap="bindGame">
+  </button>
+  <!-- <view class="game" bindtap="bindGame">
     <view class="title">好友对战</view>
     <image src="../../icons/pk/game.png" style="margin-left:80px;width:70px;height:70px;"></image>
-  </view>
+  </view> -->
   <view class="errorBook">
     <view class="title">错题本</view>
     <image src="../../icons/pk/book.png" style="margin-left:80px;width:70px;height:70px"></image>

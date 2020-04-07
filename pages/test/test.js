@@ -5,8 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    waiting:false,
-    hidden:true
+    waiting:true,
+    canStart: false,
+    btnText:'邀请好友'
   },
   /**
    * 生命周期函数--监听页面加载

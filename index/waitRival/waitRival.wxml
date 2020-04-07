@@ -5,7 +5,7 @@
   </view>
   <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">放弃</button></view>
 </view>
-<view class="rivalArrived">
+<view class="rivalArrived" wx:if="{{canStart}}">
   <view class="sponsor">
     <view style="color:white;font-weight:bold;font-size:20px;">对手已加入</view>
     <view class="component">
