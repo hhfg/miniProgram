@@ -11,12 +11,14 @@ Page({
     canStart:false,
     socketOpen:false,
     sendMsg:[],
-    resData:[]
+    resData:[],
+    id:0
   },
   createConn:function(){
     var that=this;
+    console.log("id"+that.data.id)
     wx.connectSocket({
-      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/1',
+      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+that.data.id,
       header:{
         'content-type':'Application/json'
       },
@@ -38,7 +40,7 @@ Page({
     if(this.data.socketOpen){
       console.log(this.data.socketOpen)
       wx.sendSocketMessage({
-        data: '我是对手',
+        data: this.data.id,
       });
       var sendMsg=this.data.sendMsg;
       this.setData({
@@ -66,10 +68,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.shareid)
+    this.setData({
+      id:options.id
+    })
+    //console.log(options.shareid)
     if(options.shareid==null){
       this.createConn()
     }else if(options.shareid!=null){
+      this.setData({
+        id: options.shareid
+      })
      this.setData({
        socketOpen:true
      }) 

@@ -39,7 +39,7 @@ Page({
     if(this.data.id!=0){
       if(this.data.count==0){
         wx.navigateTo({
-          url: '../waitRival/waitRival',
+          url: '../waitRival/waitRival?id=' + this.data.id,
         })
       }
       this.setData({
@@ -112,7 +112,7 @@ Page({
       })     
     }else{
      wx.redirectTo({
-       url: '../waitRival/waitRival',
+       url: '../waitRival/waitRival'
      })
     }
   }
