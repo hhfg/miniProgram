@@ -16,10 +16,7 @@ Page({
   createConn:function(){
     var that=this;
     wx.connectSocket({
-      url: 'ws://192.168.1.105:8080/MiniProgram/getServer',
-      data:{
-        id:1
-      },
+      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/1',
       header:{
         'content-type':'Application/json'
       },
