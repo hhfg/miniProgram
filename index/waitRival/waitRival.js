@@ -11,12 +11,13 @@ Page({
     canStart:false,
     socketOpen:false,
     sendMsg:[],
-    resData:[],
+    resData:['hello'],
     id:0
   },
   createConn:function(){
     var that=this;
     console.log("id"+that.data.id)
+    // 创建webSocket连接
     wx.connectSocket({
       url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+that.data.id,
       header:{
@@ -24,6 +25,7 @@ Page({
       },
       method:'GET'
     });
+    // 监听webSocket打开事件
     wx.onSocketOpen(function(res){
       console.log(res)
       that.setData({
@@ -36,25 +38,22 @@ Page({
     })
   },
   send:function(){
-    console.log('send')
     if(this.data.socketOpen){
       console.log(this.data.socketOpen)
+      //发送
       wx.sendSocketMessage({
         data: this.data.id,
       });
-      var sendMsg=this.data.sendMsg;
-      this.setData({
-        sendMsg:sendMsg
-      });
       var that=this;
+      //收到服务器的内容
       wx.onSocketMessage(function(res){
-        var resData=that.data.resData;
-        resData.push(res.data);
-        that.setData({
-          resData:resData
-        });
-        console.log(resData);
         console.log("收到服务器内容:"+res.data)
+        if(res.data=="true"){
+          that.setData({
+            waiting:false,
+            canStart:true
+          })
+        }
       })
     }
   },
