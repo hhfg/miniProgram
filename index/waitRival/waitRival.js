@@ -70,19 +70,17 @@ Page({
     this.setData({
       id:options.id
     })
-    //console.log(options.shareid)
-    if(options.shareid==null){
-      this.createConn()
-    }else if(options.shareid!=null){
-      this.setData({
-        id: options.shareid
+    //如果id为null,说明是发起者进来，创建房间
+    if(this.data.id==null){
+      common.getData('insRecord.do',{
+        playA:app.globalData.userData.uid,
+        status:-1
+      }).then((res)=>{
+        console.log(res)
+      }).catch((res)=>{
+        console.log(res)
       })
-     this.setData({
-       socketOpen:true
-     }) 
-     this.send()
-    }
-    
+    }    
   },
 
   /**
@@ -96,22 +94,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var obj=wx.getLaunchOptionsSync()
-    if(obj.scene=='1001'){
-      console.log("在app内点击好友对战进入")
-    }else if(obj.scene='1011'){
-      // common.getSetting().then((res)=>{
-      //   if(res=="未授权"){
-      //     wx.redirectTo({
-      //       url: '../../index/login/login',
-      //     })
-      //   }else if(res=='已授权'){
-      //     console.log("已授权")
-      //   }
-      // }).catch((res)=>{
-      //   console.log(res)
-      // })
-    }
+
   },
 
   /**

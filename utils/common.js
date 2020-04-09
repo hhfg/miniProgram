@@ -82,6 +82,7 @@ function getData(url,data){
     })
   })
 }
+
 module.exports={
   sendRequest:sendRequest,
   getSetting:getSetting,

@@ -39,7 +39,7 @@ Page({
     if(this.data.id!=0){
       if(this.data.count==0){
         wx.navigateTo({
-          url: '../waitRival/waitRival?id=' + this.data.id,
+          url: '../waitRival/waitRival',
         })
       }
       this.setData({
@@ -81,13 +81,13 @@ Page({
    */
   onShareAppMessage: function (res) {
     if(res.from=='button'){
-      var ran = (Math.random() * 100 + 10).toFixed(0)
+      //var ran = (Math.random() * 100 + 10).toFixed(0)
       this.setData({
-        id: ran
+        id: app.globalData.userData.uid
       })
       return {
         title: '测试分享', //弹出分享时显示的标题
-        path: 'index/waitRival/waitRival?shareid=' + this.data.id, //传递参数到指定页面
+        path: 'index/waitRival/waitRival?id=' + this.data.id, //传递参数到指定页面
       };
       
     }
