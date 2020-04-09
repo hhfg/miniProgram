@@ -12,7 +12,8 @@ Page({
     socketOpen:false,
     sendMsg:[],
     resData:['hello'],
-    id:0
+    id:0,
+    rid:0
   },
   createConn:function(){
     var that=this;
@@ -70,15 +71,38 @@ Page({
     this.setData({
       id:options.id
     })
+    var that=this;
     //如果id为null,说明是发起者进来，创建房间
     if(this.data.id==null){
+      // common.getData('insRecord.do',{
+      //   playA:app.globalData.userData.uid,
+      //   status:-1
+      // }).then((res)=>{
+      //   console.log(res.data)
+      //   that.setData({
+      //     rid:res.data
+      //   })
+      // }).catch((res)=>{
+      //   console.log(res)
+      // })
+    }
+    //如果不是null，说明是携带了发起者的id进来
+    else{
+      console.log("发起者的id:"+this.data.id)
+      console.log("好友的id"+app.globalData.userData.uid)
       common.getData('insRecord.do',{
-        playA:app.globalData.userData.uid,
-        status:-1
+        playA:this.data.id,
+        playB:app.globalData.userData.uid,
+        status:0,
       }).then((res)=>{
-        console.log(res)
+        if(res.data==1){
+          that.setData({
+            waiting: false,
+            canStart: true
+          })
+        }
       }).catch((res)=>{
-        console.log(res)
+        console.log(res.data)
       })
     }    
   },
