@@ -37,6 +37,13 @@ Page({
         }).then((res) => {
           console.log(res.data)
         })
+      }else{
+        common.getData("updRecord.do",{
+          playB:app.globalData.userData.uid,
+          roomid:roomid
+        }).then((res)=>{
+          console.log(res.data)
+        })
       }
     });
     wx.onSocketMessage(function (res) {
