@@ -39,7 +39,7 @@ Page({
     if(this.data.id!=0){
       if(this.data.count==0){
         wx.navigateTo({
-          url: '../waitRival/waitRival',
+          url: '../waitRival/waitRival?roomid=' + this.data.id
         })
       }
       this.setData({
@@ -81,13 +81,13 @@ Page({
    */
   onShareAppMessage: function (res) {
     if(res.from=='button'){
-      //var ran = (Math.random() * 100 + 10).toFixed(0)
+      var ran = (Math.random() * 90 + 10).toFixed(0)
       this.setData({
-        id: app.globalData.userData.uid
+        id: ran
       })
       return {
         title: '测试分享', //弹出分享时显示的标题
-        path: 'index/waitRival/waitRival?id=' + this.data.id, //传递参数到指定页面
+        path: 'index/waitRival/waitRival?roomid=' + ran, //传递参数到指定页面
       };
       
     }
@@ -96,24 +96,5 @@ Page({
     wx.navigateTo({
       url: '../questionBank/questionBank',
     })
-  },
-  bindGame:function(){
-    if(this.data.mybank==''){
-      wx.showModal({
-        title: '提示',
-        content: '请先选择题库',
-        success:function(res){
-          if(res.confirm){
-            wx.navigateTo({
-              url: '../questionBank/questionBank',
-            })
-          }
-        }
-      })     
-    }else{
-     wx.redirectTo({
-       url: '../waitRival/waitRival'
-     })
-    }
   }
 })

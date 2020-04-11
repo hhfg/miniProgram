@@ -10,17 +10,16 @@ Page({
     waiting: true,
     canStart:false,
     socketOpen:false,
-    sendMsg:[],
-    resData:['hello'],
-    id:0,
-    rid:0
+    rid:0,
+    playA:[],
+    playB:[],
+    roomid:0
   },
   createConn:function(){
     var that=this;
-    console.log("id"+that.data.id)
     // 创建webSocket连接
     wx.connectSocket({
-      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+that.data.id,
+      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+this.data.roomid+"/" + app.globalData.userData.uid,
       header:{
         'content-type':'Application/json'
       },
@@ -28,10 +27,11 @@ Page({
     });
     // 监听webSocket打开事件
     wx.onSocketOpen(function(res){
-      console.log(res)
       that.setData({
         socketOpen:true
       });
+      //that.send();
+      console.log(that.data.socketOpen)
       console.log("WebSocket连接已打开")
     });
     wx.onSocketError(function(res){
@@ -39,11 +39,11 @@ Page({
     })
   },
   send:function(){
+    console.log("ss"+this.data.socketOpen)
     if(this.data.socketOpen){
-      console.log(this.data.socketOpen)
       //发送
       wx.sendSocketMessage({
-        data: this.data.id,
+        data: 'hello',
       });
       var that=this;
       //收到服务器的内容
@@ -68,43 +68,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options.roomid)
     this.setData({
-      id:options.id
+      roomid:options.roomid
     })
-    var that=this;
-    //如果id为null,说明是发起者进来，创建房间
-    if(this.data.id==null){
-      // common.getData('insRecord.do',{
-      //   playA:app.globalData.userData.uid,
-      //   status:-1
-      // }).then((res)=>{
-      //   console.log(res.data)
-      //   that.setData({
-      //     rid:res.data
-      //   })
-      // }).catch((res)=>{
-      //   console.log(res)
-      // })
-    }
-    //如果不是null，说明是携带了发起者的id进来
-    else{
-      console.log("发起者的id:"+this.data.id)
-      console.log("好友的id"+app.globalData.userData.uid)
-      common.getData('insRecord.do',{
-        playA:this.data.id,
-        playB:app.globalData.userData.uid,
-        status:0,
-      }).then((res)=>{
-        if(res.data==1){
-          that.setData({
-            waiting: false,
-            canStart: true
-          })
-        }
-      }).catch((res)=>{
-        console.log(res.data)
-      })
-    }    
+    this.createConn();
   },
 
   /**
