@@ -13,13 +13,14 @@ Page({
     rid:0,
     playA:[],
     playB:[],
-    roomid:0
+    roomid:0,
+    flag:false
   },
-  createConn:function(){
+  createConn:function(roomid){
     var that=this;
     // 创建webSocket连接
     wx.connectSocket({
-      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+this.data.roomid+"/" + app.globalData.userData.uid,
+      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
       header:{
         'content-type':'Application/json'
       },
@@ -27,23 +28,34 @@ Page({
     });
     // 监听webSocket打开事件
     wx.onSocketOpen(function(res){
-      that.setData({
-        socketOpen:true
-      });
-      //that.send();
-      console.log(that.data.socketOpen)
-      console.log("WebSocket连接已打开")
+      //flag为false说明是发起者进来，在建立连接后在后端创建对战记录
+      if(that.data.flag==false){
+        common.getData("insRecord.do", {
+          roomid: roomid,
+          playA: app.globalData.userData.uid,
+          status:-1
+        }).then((res) => {
+          console.log(res.data)
+        })
+      }
     });
+    wx.onSocketMessage(function (res) {
+      if (res.data == "true") {
+        that.setData({
+          waiting: false,
+          canStart: true
+        })
+      }
+    })
     wx.onSocketError(function(res){
       console.log("WebSocket连接打开失败，请检查")
     })
   },
-  send:function(){
-    console.log("ss"+this.data.socketOpen)
+  send:function(roomid){
     if(this.data.socketOpen){
       //发送
       wx.sendSocketMessage({
-        data: 'hello',
+        data: roomid,
       });
       var that=this;
       //收到服务器的内容
@@ -68,11 +80,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.roomid)
-    this.setData({
-      roomid:options.roomid
-    })
-    this.createConn();
+    //发起者携带参数名为id进来
+    if(options.id!=null){
+      console.log(options.id)
+      this.createConn(options.id)
+    }
+    //好友携带参数roomid进来
+    if(options.roomid!=null){
+      this.setData({
+        flag:true
+      })
+      this.createConn(options.roomid);
+    }
+    //this.createConn();
   },
 
   /**
