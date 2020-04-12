@@ -10,13 +10,13 @@
     <view style="color:white;font-weight:bold;font-size:20px;">对手已加入</view>
     <view class="component">
       <view class="rival">
-        <open-data type="userAvatarUrl" class="img1"></open-data>
-        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
+        <image src="{{playA.avatarUrl}}" class="img1"></image>
+        <view class="name">{{playA.nickName}}</view>
       </view>
       <view class="vs">VS</view>
       <view class="rival">
-        <open-data type="userAvatarUrl" class="img1"></open-data>
-        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
+        <image src="{{playB.avatarUrl}}" class="img1"></image>
+        <view class="name">{{playB.nickName}}</view>
       </view>
     </view>
   </view>

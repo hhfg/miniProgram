@@ -58,11 +58,16 @@ Page({
       if (res.data == "true") {
         console.log("canstart");
         console.log(that.data.id)
-        // common.getData('getUserMess.do',{
-        //   id:that.data.id
-        // }).then((res)=>{
-        //   console.log(res.data)
-        // })
+        common.getData('getUserMess.do',{
+          id:that.data.id
+        }).then((res)=>{
+          that.setData({
+            playA:res.data[0],
+            playB:res.data[1]
+          })
+          console.log(that.data.playA)
+          console.log(that.data.playB)
+        })
         that.setData({
           waiting: false,
           canStart: true
