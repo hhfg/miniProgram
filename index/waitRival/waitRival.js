@@ -46,7 +46,6 @@ Page({
           playB: app.globalData.userData.uid,
           status: 0
         }).then((res) => {
-          console.log("id:"+res.data)
           that.setData({
             id: res.data
           })
@@ -56,8 +55,6 @@ Page({
     });
     wx.onSocketMessage(function (res) {
       if (res.data == "true") {
-        console.log("canstart");
-        console.log(that.data.id)
         common.getData('getUserMess.do',{
           id:that.data.id
         }).then((res)=>{
@@ -65,12 +62,14 @@ Page({
             playA:res.data[0],
             playB:res.data[1]
           })
-          console.log(that.data.playA)
-          console.log(that.data.playB)
         })
         that.setData({
           waiting: false,
           canStart: true
+        })
+      }else if(res.data="start"){
+        wx.navigateTo({
+          url: '../pkPage/pkPage',
         })
       }
     })
@@ -80,9 +79,18 @@ Page({
   },
   send:function(roomid){
       //发送
-    wx.sendSocketMessage({
-      data: roomid,
-    });
+    //如果可以开始，则发送0为后端,0用来后端判断是否应该开始
+    if(this.data.canStart==true){
+      wx.sendSocketMessage({
+        data: "0"+roomid,
+      });
+    }
+    //否则发送房间号给后台
+    else{
+      wx.sendSocketMessage({
+        data: roomid,
+      });
+    }
   },
   closeConn:function(e){
     wx.closeSocket();
@@ -163,5 +171,8 @@ Page({
     wx.switchTab({
       url: '../../pages/index/index',
     })
+  },
+  startGame:function(){
+    this.send(this.data.roomid)
   }
 })

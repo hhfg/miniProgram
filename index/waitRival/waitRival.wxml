@@ -20,5 +20,5 @@
       </view>
     </view>
   </view>
-  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">开始对战</button></view>
+  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB" bindtap="startGame">开始对战</button></view>
 </view>
