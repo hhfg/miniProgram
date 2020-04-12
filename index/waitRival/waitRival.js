@@ -10,7 +10,7 @@ Page({
     waiting: true,
     canStart:false,
     socketOpen:false,
-    rid:0,
+    id:0,
     playA:[],
     playB:[],
     roomid:0,
@@ -20,7 +20,7 @@ Page({
     var that=this;
     // 创建webSocket连接
     wx.connectSocket({
-      url: 'ws://192.168.1.105:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
+      url: 'ws://192.168.1.106:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
       header:{
         'content-type':'Application/json'
       },
@@ -35,19 +35,31 @@ Page({
           playA: app.globalData.userData.uid,
           status:-1
         }).then((res) => {
-          console.log(res.data)
+          that.setData({
+            id:res.data
+          })
         })
       }else{
         common.getData("updRecord.do",{
+          roomid:roomid,
           playB:app.globalData.userData.uid,
-          roomid:roomid
+          status:0
         }).then((res)=>{
           console.log(res.data)
+          that.setData({
+            id: res.data
+          })
         })
       }
     });
     wx.onSocketMessage(function (res) {
       if (res.data == "true") {
+        console.log(that.data.id)
+        common.getData('getUserMess.do',{
+          id:that.data.id
+        }).then((res)=>{
+          console.log(res.data)
+        })
         that.setData({
           waiting: false,
           canStart: true
