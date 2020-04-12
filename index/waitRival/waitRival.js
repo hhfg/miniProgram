@@ -33,33 +33,36 @@ Page({
         common.getData("insRecord.do", {
           roomid: roomid,
           playA: app.globalData.userData.uid,
-          status:-1
+          status: -1
         }).then((res) => {
-          that.setData({
-            id:res.data
-          })
-        })
-      }else{
-        common.getData("updRecord.do",{
-          roomid:roomid,
-          playB:app.globalData.userData.uid,
-          status:0
-        }).then((res)=>{
-          console.log(res.data)
+          console.log("id:" + res.data)
           that.setData({
             id: res.data
           })
+        })
+      }else{
+        common.getData("updRecord.do", {
+          roomid: roomid,
+          playB: app.globalData.userData.uid,
+          status: 0
+        }).then((res) => {
+          console.log("id:"+res.data)
+          that.setData({
+            id: res.data
+          })
+          that.send(roomid);
         })
       }
     });
     wx.onSocketMessage(function (res) {
       if (res.data == "true") {
+        console.log("canstart");
         console.log(that.data.id)
-        common.getData('getUserMess.do',{
-          id:that.data.id
-        }).then((res)=>{
-          console.log(res.data)
-        })
+        // common.getData('getUserMess.do',{
+        //   id:that.data.id
+        // }).then((res)=>{
+        //   console.log(res.data)
+        // })
         that.setData({
           waiting: false,
           canStart: true
@@ -71,23 +74,10 @@ Page({
     })
   },
   send:function(roomid){
-    if(this.data.socketOpen){
       //发送
-      wx.sendSocketMessage({
-        data: roomid,
-      });
-      var that=this;
-      //收到服务器的内容
-      wx.onSocketMessage(function(res){
-        console.log("收到服务器内容:"+res.data)
-        if(res.data=="true"){
-          that.setData({
-            waiting:false,
-            canStart:true
-          })
-        }
-      })
-    }
+    wx.sendSocketMessage({
+      data: roomid,
+    });
   },
   closeConn:function(e){
     wx.closeSocket();
@@ -101,7 +91,9 @@ Page({
   onLoad: function (options) {
     //发起者携带参数名为id进来
     if(options.id!=null){
-      console.log(options.id)
+      this.setData({
+        roomid:options.id
+      })
       this.createConn(options.id)
     }
     //好友携带参数roomid进来
@@ -111,7 +103,6 @@ Page({
       })
       this.createConn(options.roomid);
     }
-    //this.createConn();
   },
 
   /**
