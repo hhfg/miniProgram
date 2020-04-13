@@ -172,6 +172,15 @@ Page({
     })
   },
   startGame:function(){
-    this.send(this.data.roomid)
+    var that=this;
+    common.getData('updRoomStatus.do',{
+      roomid:this.data.roomid,
+      playA:this.data.playA.id,
+      playB:this.data.playB.id
+    }).then((res)=>{
+      if(res.data==1){
+        that.send(this.data.roomid)
+      }
+    })
   }
 })
