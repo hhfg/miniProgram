@@ -1,6 +1,3 @@
-// index//pkPage/pkPage.js
-var valHandle;
-const ctx = wx.createCanvasContext("bgCanvas", this)
 Page({
 
   /**
@@ -9,10 +6,21 @@ Page({
   data: {
     stepText: 10,//设置倒计时初始值
     windowWidth: '',//屏幕,
-    playA:[],
-    playB:[]
+    playA: [],
+    playB: []
   },
-
+  drawProgressbg: function () {
+    // 使用 wx.createContext 获取绘图上下文 context
+    var ctx = wx.createCanvasContext('canvasProgressbg')
+    ctx.setLineWidth(6);// 设置圆环的宽度
+    ctx.setStrokeStyle('white'); // 设置圆环的颜色
+    ctx.setLineCap('round') // 设置圆环端点的形状
+    ctx.beginPath();//开始一个新的路径
+    ctx.arc(42, 42, 25, 0, 2 * Math.PI, false);
+    //设置一个原点(100,100)//半径为90的圆的路径到当前路径
+    ctx.stroke();//对当前路径进行描边
+    ctx.draw();
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -25,93 +33,65 @@ Page({
     this.setData({
       playB: JSON.parse(options.playB)
     })
-    try {
-      var res = wx.getSystemInfoSync();
-      this.setData({
-        windowWidth: res.windowWidth,
-      })
-    } catch (e) {
-      console.error('getSystemInfoSync failed!');
+    var step = 1,//计数动画次数
+      num = 0,//计数倒计时秒数（n - num）
+      start = 1.5 * Math.PI,// 开始的弧度
+      end = -0.5 * Math.PI,// 结束的弧度
+      time = null;// 计时器容器
+
+    var animation_interval = 1000,// 每1秒运行一次计时器
+      n = 10; // 当前倒计时为10秒
+    // 动画函数
+    function animation() {
+      if (step <= n) {
+        end = end + 2 * Math.PI / n;
+        ringMove(start, end);
+        step++;
+      } else {
+        clearInterval(time);
+      }
+    };
+    // 画布绘画函数
+    function ringMove(s, e) {
+      var context = wx.createCanvasContext('secondCanvas')
+      // 绘制圆环
+      context.setStrokeStyle('#87CEFA')
+      context.beginPath()
+      context.setLineWidth(4)
+      context.arc(42, 42, 25, s, e, true)
+      context.stroke()
+      context.closePath()
+      // 绘制倒计时文本
+      context.beginPath()
+      context.setLineWidth(1)
+      context.setFontSize(20)
+      context.setFillStyle('#0D0D0D')
+      context.setTextAlign('center')
+      context.setTextBaseline('middle')
+      context.fillText(n - num + '', 42, 42, 25)
+      context.fill()
+      context.closePath()
+      context.draw()
+      // 每完成一次全程绘制就+1
+      num++;
     }
+    // 倒计时前先绘制整圆的圆环
+    ringMove(start, end);
+    // 创建倒计时
+    time = setInterval(animation, animation_interval);
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    ctx.setLineWidth(8);//设置线条宽度
-    ctx.arc(25, 25, 22, 0, 2 * Math.PI);//画弧线
-    ctx.setStrokeStyle('white');//设置线条样式
-    ctx.stroke();//画出当前路径的边框
-    ctx.beginPath();//开始一个路径
-    ctx.setLineCap('round');//设置线条的结束端点样式
-    ctx.setLineWidth(5);
-    ctx.arc(25, 25, 22, 1.5 * Math.PI, -0.5 * Math.PI, true);
-    ctx.setStrokeStyle('#87CEFA');
-    ctx.stroke();
-    ctx.draw();
-    this.timerStart();
-  },
-  timerStart: function () {
-    console.log("倒计时动画开始");
-    var that = this;
-    that.data.stepText = 10;//重新设置一遍初始值
-    var step = that.data.stepText;//定义倒计时
-    var num = -0.5;
-    var decNum = 2 / step / 10
-    clearInterval(valHandle)
-    function drawArc(endAngle) {
-      ctx.setLineWidth(8);
-      ctx.arc(25, 25, 22, 0, 2 * Math.PI);
-      ctx.setStrokeStyle('white')
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.setLineCap('round');
-      ctx.setLineWidth(5)
-      ctx.arc(25, 25, 22, 1.5 * Math.PI, endAngle, true);
-      ctx.setStrokeStyle('#87CEFA')
-      ctx.stroke();
-      ctx.draw();
-    }
-    valHandle = setInterval(function () {
-      that.setData({
-        stepText: parseInt(step)
-      })
-      step = (step - 0.1).toFixed(1);
-      num += decNum
-      drawArc(num * Math.PI)
-      if (step <= 0) {
-        clearInterval(valHandle)
-      }
-    }, 100)
+    this.drawProgressbg();
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    //this.countDown();
-  },
-  countDown: function () {
-    let that = this;
-    let countDownNum = that.data.countDownNum;//获取倒计时初始值
-    //如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
-    that.setData({
-      timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
-        //每隔一秒countDownNum就减一，实现同步
-        countDownNum--;
-        //然后把countDownNum存进data，好让用户知道时间在倒计着
-        that.setData({
-          countDownNum: countDownNum
-        })
-        //在倒计时还未到0时，这中间可以做其他的事情，按项目需求来
-        if (countDownNum == 0) {
-          //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
-          //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
-          clearInterval(that.data.timer);
-          //关闭定时器之后，可作其他处理codes go here
-        }
-      }, 1000)
-    })
+    
   },
   /**
    * 生命周期函数--监听页面隐藏

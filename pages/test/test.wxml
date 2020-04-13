@@ -1,24 +1,28 @@
-<view class="waiting" wx:if="{{waiting}}">
-  <view class="sponsor">
-    <view style="color:white;font-weight:bold;font-size:20px;" wx:if="{{shared}}">等待对手加入...</view>
-    <view style="padding-top:40px;"><open-data type="userAvatarUrl" class="img"></open-data></view>
-  </view>
-  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">{{btnText}}</button></view>
-</view>
-<view class="rivalArrived" wx:if="{{canStart}}">
-  <view class="sponsor">
-    <view style="color:white;font-weight:bold;font-size:20px;">对手已加入</view>
-    <view class="component">
-      <view class="rival">
-        <open-data type="userAvatarUrl" class="img1"></open-data>
-        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
-      </view>
-      <view class="vs">VS</view>
-      <view class="rival">
-        <open-data type="userAvatarUrl" class="img1"></open-data>
-        <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
-      </view>
+<!--index//pkPage/pkPage.wxml-->
+<view class="main">
+  <view class="rival">
+    <view class="player1">
+      <open-data type="userAvatarUrl"  class="img1"></open-data>
+    </view>
+    <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
+    <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
+    <view class="player2">
+      <open-data type="userAvatarUrl"  class="img1"></open-data>
     </view>
   </view>
-  <view style="margin-top:500rpx;"><button type="default" style="color:#87CEEB">开始对战</button></view>
+  <view class="wordPart">
+    <view style="font-weight:bold;font-size:25px;">purple</view>
+    <view class="space"></view>
+    <button class="options" style="width: 600rpx;height:120rpx">祖父母</button>
+    <view class="space"></view>
+    <button class="options" style="width: 600rpx;height:120rpx">紫的，紫色的</button>
+    <view class="space"></view>
+    <button class="options" style="width: 600rpx;height:120rpx">电子信函</button>
+    <view class="space"></view>
+    <button class="options" style="width: 600rpx;height:120rpx">女朋友</button>
+    <view class="space"></view>
+  </view>
 </view>
+
+
+

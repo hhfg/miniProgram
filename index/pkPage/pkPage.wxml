@@ -2,16 +2,17 @@
 <view class="main">
   <view class="rival">
     <view class="player1">
-      <view class="headPic"></view>
+      	<image src="{{playA.avatarUrl}}" class="img1"></image>
     </view>
-    <canvas class="bgCanvas" canvas-id="bgCanvas"></canvas>
-    <view class="stepText">{{stepText}}</view>
+    <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
+    <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
     <view class="player2">
-      <view class="headPic"></view>
+      	<image src="{{playB.avatarUrl}}" class="img1"></image>
     </view>
   </view>
   <view class="wordPart">
     <view style="font-weight:bold;font-size:25px;">purple</view>
+    <view class="space"></view>
     <button class="options" style="width: 600rpx;height:120rpx">祖父母</button>
     <view class="space"></view>
     <button class="options" style="width: 600rpx;height:120rpx">紫的，紫色的</button>
@@ -22,10 +23,6 @@
     <view class="space"></view>
   </view>
 </view>
-<!-- <view class="timer">
-  <canvas class="bgCanvas" canvas-id="bgCanvas"></canvas>
-  <view class="stepText">{{stepText}}</view>
-</view>
-<button bindtap="clickStartBtn">开始倒计时</button> -->
+
 
 
