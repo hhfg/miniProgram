@@ -69,7 +69,7 @@ Page({
         })
       }else if(res.data="start"){
         wx.navigateTo({
-          url: '../pkPage/pkPage',
+          url: '../pkPage/pkPage?playA=' + JSON.stringify(that.data.playA) + '&playB=' + JSON.stringify(that.data.playB),
         })
       }
     })
@@ -78,7 +78,6 @@ Page({
     })
   },
   send:function(roomid){
-      //发送
     //如果可以开始，则发送0为后端,0用来后端判断是否应该开始
     if(this.data.canStart==true){
       wx.sendSocketMessage({

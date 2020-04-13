@@ -8,13 +8,23 @@ Page({
    */
   data: {
     stepText: 10,//设置倒计时初始值
-    windowWidth: '' //屏幕
+    windowWidth: '',//屏幕,
+    playA:[],
+    playB:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(JSON.parse(options.playA))
+    console.log(JSON.parse(options.playB))
+    this.setData({
+      playA: JSON.parse(options.playA)
+    })
+    this.setData({
+      playB: JSON.parse(options.playB)
+    })
     try {
       var res = wx.getSystemInfoSync();
       this.setData({
