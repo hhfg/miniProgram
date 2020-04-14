@@ -1,27 +1,18 @@
 <!--index//pkPage/pkPage.wxml-->
-<view class="main">
-  <view class="rival">
-    <view class="player1">
-      <open-data type="userAvatarUrl"  class="img1"></open-data>
-    </view>
-    <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
-    <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
-    <view class="player2">
-      <open-data type="userAvatarUrl"  class="img1"></open-data>
-    </view>
+<view class="rival">
+  <view class="player1">
+    <open-data type="userAvatarUrl"  class="img1"></open-data>
   </view>
-  <view class="wordPart">
-    <view style="font-weight:bold;font-size:25px;">purple</view>
-    <view class="space"></view>
-    <button class="options" style="width: 600rpx;height:120rpx">祖父母</button>
-    <view class="space"></view>
-    <button class="options" style="width: 600rpx;height:120rpx">紫的，紫色的</button>
-    <view class="space"></view>
-    <button class="options" style="width: 600rpx;height:120rpx">电子信函</button>
-    <view class="space"></view>
-    <button class="options" style="width: 600rpx;height:120rpx">女朋友</button>
-    <view class="space"></view>
+  <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
+  <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
+  <view class="player2">
+    <open-data type="userAvatarUrl"  class="img1"></open-data>
   </view>
+</view>
+
+<view class="chooseSection">
+  <progress class="ascore" percent="50" stroke-width="14" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
+  <progress class="bscore" percent="50" stroke-width="14" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
 </view>
 
 

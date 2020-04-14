@@ -9,7 +9,11 @@ Page({
     stepText: 10,//设置倒计时初始值
     windowWidth: '',//屏幕,
     playA: [],
-    playB: []
+    playB: [],
+    height:0,
+    left:0,
+    top:0,
+    right:0
   },
   canvasIdErrorCallback: function (e) {
     console.error(e.detail.errMsg);
@@ -18,6 +22,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    try {
+      var res = wx.getSystemInfoSync();
+      this.setData({
+        windowWidth: res.windowWidth,
+        height: (res.windowHeight*0.8).toFixed(0),
+        left: res.windowWidth-(res.windowHeight*0.8*0.5).toFixed(0)-40,
+        top: (res.windowHeight * 0.8 * 0.5).toFixed(0)-10,
+        right: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 40
+      })
+      console.log(res.windowHeight+":"+res.windowWidth)
+      console.log(this.data.right)
+    } catch (e) {
+      console.error('getSystemInfoSync failed!');
+    }
     // console.log(JSON.parse(options.playA))
     // console.log(JSON.parse(options.playB))
     // this.setData({
