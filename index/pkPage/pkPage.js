@@ -1,3 +1,5 @@
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -11,12 +13,11 @@ Page({
     height: 0,
     left: 0,
     top: 0,
-    right: 0
+    right: 0,
+    pkwords:[],
+    pkword:[]
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  getParam:function(){
     try {
       var res = wx.getSystemInfoSync();
       this.setData({
@@ -29,14 +30,8 @@ Page({
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
-    console.log(JSON.parse(options.playA))
-    console.log(JSON.parse(options.playB))
-    this.setData({
-      playA: JSON.parse(options.playA)
-    })
-    this.setData({
-      playB: JSON.parse(options.playB)
-    })
+  },
+  countdown:function(){
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
@@ -84,7 +79,31 @@ Page({
     // 创建倒计时
     time = setInterval(animation, animation_interval);
   },
-
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.getParam();
+    this.setData({
+      playA: JSON.parse(options.playA)
+    })
+    this.setData({
+      playB: JSON.parse(options.playB)
+    })
+    this.getPKWords();
+    this.countdown();
+  },
+  getPKWords: function () {
+    var that=this;
+    common.getData('selPKWords.do', {
+      uid: this.data.playA.id
+    }).then((res) => {
+      that.setData({
+        pkwords:res.data,
+        pkword:res.data[0]
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

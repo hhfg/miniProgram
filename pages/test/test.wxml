@@ -1,13 +1,13 @@
 <!--index//pkPage/pkPage.wxml-->
 <view class="rival">
   <view class="player1">
-    <open-data type="userAvatarUrl"  class="img1"></open-data>
+    <image src="{{playA.avatarUrl}}" class="img1"></image>
     <view style="color:white;font-weight:bold">120</view>
   </view>
   <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
   <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
   <view class="player2">
-    <open-data type="userAvatarUrl"  class="img1"></open-data>
+    <image src="{{playB.avatarUrl}}" class="img1"></image>
     <view style="color:white;font-weight:bold">120</view>
   </view>
 </view>

@@ -1,5 +1,5 @@
-var valHandle;
-const ctx = wx.createCanvasContext("bgCanvas", this)
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
@@ -10,38 +10,26 @@ Page({
     windowWidth: '',//屏幕,
     playA: [],
     playB: [],
-    height:0,
-    left:0,
-    top:0,
-    right:0
+    height: 0,
+    left: 0,
+    top: 0,
+    right: 0
   },
-  canvasIdErrorCallback: function (e) {
-    console.error(e.detail.errMsg);
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  getParam: function () {
     try {
       var res = wx.getSystemInfoSync();
       this.setData({
         windowWidth: res.windowWidth,
-        height: (res.windowHeight*0.8).toFixed(0),
-        left: res.windowWidth-(res.windowHeight*0.8*0.5).toFixed(0)-20,
-        top: (res.windowHeight * 0.8 * 0.5).toFixed(0)-10,
+        height: (res.windowHeight * 0.8).toFixed(0),
+        left: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 20,
+        top: (res.windowHeight * 0.8 * 0.5).toFixed(0) - 10,
         right: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 20
       })
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
-    // console.log(JSON.parse(options.playA))
-    // console.log(JSON.parse(options.playB))
-    // this.setData({
-    //   playA: JSON.parse(options.playA)
-    // })
-    // this.setData({
-    //   playB: JSON.parse(options.playB)
-    // })
+  },
+  countdown: function () {
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
@@ -88,6 +76,27 @@ Page({
     ringMove(start, end);
     // 创建倒计时
     time = setInterval(animation, animation_interval);
+  },
+  getPKWords:function(){
+    common.getData('selPKWords.do',{
+      uid:36
+    }).then((res)=>{
+      console.log(res.data)
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.getParam();
+    // this.setData({
+    //   playA: JSON.parse(options.playA)
+    // })
+    // this.setData({
+    //   playB: JSON.parse(options.playB)
+    // })
+    this.getPKWords();
+    this.countdown();
   },
 
   /**

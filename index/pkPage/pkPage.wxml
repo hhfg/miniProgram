@@ -15,16 +15,20 @@
 <progress class="ascore" percent="50" stroke-width="14" color="#00BFFF" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
 <progress class="bscore" percent="50" stroke-width="14" color="#1E90FF" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
   <view class="wordPart">
-    <view style="font-weight:bold;font-size:25px;color:white">purple</view>
+    <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
     <view style="height:50px"></view>
-    <button class="options" style="width: 500rpx;height:120rpx">祖父母</button>
+    <view wx:for="{{pkword.choose}}" wx:key="*this">
+      <button class="options" style="width: 500rpx;height:120rpx">{{item}}</button>
+      <view class="space"></view>
+    </view>
+    <!-- <button class="options" style="width: 500rpx;height:120rpx">祖父母</button>
     <view class="space"></view>
     <button class="options" style="width: 500rpx;height:120rpx">紫的，紫色的</button>
     <view class="space"></view>
     <button class="options" style="width: 500rpx;height:120rpx">电子信函</button>
     <view class="space"></view>
     <button class="options" style="width: 500rpx;height:120rpx">女朋友</button>
-    <view class="space"></view>
+    <view class="space"></view> -->
   </view>
 
 

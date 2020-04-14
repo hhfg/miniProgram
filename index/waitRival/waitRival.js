@@ -174,7 +174,6 @@ Page({
   },
   startGame:function(){
     var that=this;
-    console.log(this.data.roomid+";"+this.data.playA.id+";"+this.data.playB.id)
     common.getData('updRoomStatus.do',{
       roomid:this.data.roomid,
       playA:this.data.playA.id,
