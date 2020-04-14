@@ -13,10 +13,18 @@ page{
 .player1{
   position:fixed;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .player2{
   position: fixed;
   right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .headPic{
   width: 50px;
@@ -47,13 +55,13 @@ page{
   width:84px;
   height: 84px; 
 }
-/* .wordPart{
+.wordPart{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 80%;
-} */
+}
 .options{
   font-weight: 500;
   font-size: 15px;

@@ -7,24 +7,28 @@ Page({
     stepText: 10,//设置倒计时初始值
     windowWidth: '',//屏幕,
     playA: [],
-    playB: []
-  },
-  drawProgressbg: function () {
-    // 使用 wx.createContext 获取绘图上下文 context
-    var ctx = wx.createCanvasContext('canvasProgressbg')
-    ctx.setLineWidth(6);// 设置圆环的宽度
-    ctx.setStrokeStyle('white'); // 设置圆环的颜色
-    ctx.setLineCap('round') // 设置圆环端点的形状
-    ctx.beginPath();//开始一个新的路径
-    ctx.arc(42, 42, 25, 0, 2 * Math.PI, false);
-    //设置一个原点(100,100)//半径为90的圆的路径到当前路径
-    ctx.stroke();//对当前路径进行描边
-    ctx.draw();
+    playB: [],
+    height: 0,
+    left: 0,
+    top: 0,
+    right: 0
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    try {
+      var res = wx.getSystemInfoSync();
+      this.setData({
+        windowWidth: res.windowWidth,
+        height: (res.windowHeight * 0.8).toFixed(0),
+        left: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 20,
+        top: (res.windowHeight * 0.8 * 0.5).toFixed(0) - 10,
+        right: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 20
+      })
+    } catch (e) {
+      console.error('getSystemInfoSync failed!');
+    }
     console.log(JSON.parse(options.playA))
     console.log(JSON.parse(options.playB))
     this.setData({
@@ -87,11 +91,23 @@ Page({
   onReady: function () {
     this.drawProgressbg();
   },
+  drawProgressbg: function () {
+    // 使用 wx.createContext 获取绘图上下文 context
+    var ctx = wx.createCanvasContext('canvasProgressbg')
+    ctx.setLineWidth(6);// 设置圆环的宽度
+    ctx.setStrokeStyle('white'); // 设置圆环的颜色
+    ctx.setLineCap('round') // 设置圆环端点的形状
+    ctx.beginPath();//开始一个新的路径
+    ctx.arc(42, 42, 25, 0, 2 * Math.PI, false);
+    //设置一个原点(100,100)//半径为90的圆的路径到当前路径
+    ctx.stroke();//对当前路径进行描边
+    ctx.draw();
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
   /**
    * 生命周期函数--监听页面隐藏

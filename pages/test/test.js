@@ -27,12 +27,10 @@ Page({
       this.setData({
         windowWidth: res.windowWidth,
         height: (res.windowHeight*0.8).toFixed(0),
-        left: res.windowWidth-(res.windowHeight*0.8*0.5).toFixed(0)-40,
+        left: res.windowWidth-(res.windowHeight*0.8*0.5).toFixed(0)-20,
         top: (res.windowHeight * 0.8 * 0.5).toFixed(0)-10,
-        right: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 40
+        right: res.windowWidth - (res.windowHeight * 0.8 * 0.5).toFixed(0) - 20
       })
-      console.log(res.windowHeight+":"+res.windowWidth)
-      console.log(this.data.right)
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
