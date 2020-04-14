@@ -111,7 +111,8 @@ Page({
     //好友携带参数roomid进来
     if(options.roomid!=null){
       this.setData({
-        flag:true
+        flag:true,
+        roomid:options.roomid
       })
       this.createConn(options.roomid);
     }
@@ -173,6 +174,7 @@ Page({
   },
   startGame:function(){
     var that=this;
+    console.log(this.data.roomid+";"+this.data.playA.id+";"+this.data.playB.id)
     common.getData('updRoomStatus.do',{
       roomid:this.data.roomid,
       playA:this.data.playA.id,
