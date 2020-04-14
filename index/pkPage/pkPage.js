@@ -15,7 +15,8 @@ Page({
     top: 0,
     right: 0,
     pkwords:[],
-    pkword:[]
+    pkword:[],
+    roomid:0
   },
   getParam:function(){
     try {
@@ -85,23 +86,28 @@ Page({
   onLoad: function (options) {
     this.getParam();
     this.setData({
-      playA: JSON.parse(options.playA)
-    })
-    this.setData({
-      playB: JSON.parse(options.playB)
+      playA: JSON.parse(options.playA),
+      playB: JSON.parse(options.playB),
+      roomid:options.roomid
     })
     this.getPKWords();
     this.countdown();
   },
   getPKWords: function () {
     var that=this;
-    common.getData('selPKWords.do', {
-      uid: this.data.playA.id
-    }).then((res) => {
-      that.setData({
-        pkwords:res.data,
-        pkword:res.data[0]
-      })
+    // common.getData('selPKWords.do', {
+    //   uid: this.data.playA.id
+    // }).then((res) => {
+    //   that.setData({
+    //     pkwords:res.data,
+    //     pkword:res.data[0]
+    //   })
+    // })
+    wx.sendSocketMessage({
+      data: "p"+this.data.roomid,
+    })
+    wx.onSocketMessage(function(res){
+      console.log(res)
     })
   },
   /**
