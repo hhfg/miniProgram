@@ -95,21 +95,20 @@ Page({
   },
   getPKWords: function () {
     var that=this;
-    // common.getData('selPKWords.do', {
-    //   uid: this.data.playA.id
-    // }).then((res) => {
-    //   that.setData({
-    //     pkwords:res.data,
-    //     pkword:res.data[0]
-    //   })
-    // })
-    wx.sendSocketMessage({
-      data: "p"+this.data.roomid,
-    })
-    wx.onSocketMessage(function(res){
-      console.log(res)
+    console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
+    if (app.globalData.userData.uid == this.data.playA.id) {
+      wx.sendSocketMessage({
+        data: "p" + this.data.roomid+";"+this.data.playA.id,
+      })
+    }
+    wx.onSocketMessage(function (res) {
+      that.setData({
+        pkwords: JSON.parse(res.data),
+        pkword: JSON.parse(res.data)[0]
+      })
     })
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
