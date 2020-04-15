@@ -13,7 +13,12 @@ Page({
     height: 0,
     left: 0,
     top: 0,
-    right: 0
+    right: 0,
+    pkwords:[],
+    pkword:[],
+    index:0,
+    start:0,
+    end:0
   },
   getParam: function () {
     try {
@@ -30,6 +35,11 @@ Page({
     }
   },
   countdown: function () {
+    var date = new Date();
+    this.setData({
+      start: date.getTime()
+    })
+    console.log(this.data.start)
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
@@ -78,10 +88,15 @@ Page({
     time = setInterval(animation, animation_interval);
   },
   getPKWords:function(){
+    var that=this;
     common.getData('selPKWords.do',{
       uid:36
     }).then((res)=>{
-      console.log(res.data)
+      that.setData({
+        pkwords:res.data,
+        pkword:res.data[that.data.index]
+      })
+      this.countdown();
     })
   },
   /**
@@ -96,7 +111,7 @@ Page({
     //   playB: JSON.parse(options.playB)
     // })
     this.getPKWords();
-    this.countdown();
+    
   },
 
   /**
@@ -123,38 +138,22 @@ Page({
   onShow: function () {
 
   },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  bindChoose: function (e) {
+    var date=new Date()
+    this.setData({
+      end:date.getTime()
+    })
+    console.log(this.data.end)
+    var second=((this.data.end-this.data.start)/1000).toFixed(1)
+    console.log(second)
+    // this.setData({
+    //   index: this.data.index + 1
+    // })
+    // if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+    //   this.setData({
+    //     pkword: this.data.pkwords[this.data.index]
+    //   })
+    // } else {
+    // }
   }
 })

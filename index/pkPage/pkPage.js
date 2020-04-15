@@ -17,7 +17,9 @@ Page({
     pkwords:[],
     pkword:[],
     roomid:0,
-    index:0
+    index:0,
+    start:0,
+    end:0
   },
   getParam:function(){
     try {
@@ -34,12 +36,16 @@ Page({
     }
   },
   countdown:function(){
+    var date=new Date()
+    this.setData({
+      start:date.getTime()
+    })
+    console.log(this.data.start)
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
       end = -0.5 * Math.PI,// 结束的弧度
       time = null;// 计时器容器
-
     var animation_interval = 1000,// 每1秒运行一次计时器
       n = 10; // 当前倒计时为10秒
     // 动画函数
@@ -92,7 +98,6 @@ Page({
       roomid:options.roomid
     })
     this.getPKWords();
-    this.countdown();
   },
   getPKWords: function () {
     var that=this;
@@ -103,6 +108,7 @@ Page({
       })
     }
     wx.onSocketMessage(function (res) {
+      that.countdown();
       that.setData({
         pkwords: JSON.parse(res.data),
         pkword: JSON.parse(res.data)[that.data.index]
@@ -139,6 +145,14 @@ Page({
       index:this.data.index+1
     })
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      var date = new Date()
+      this.setData({
+        end: date.getTime()
+      })
+      console.log(this.data.end)
+      var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
+      var score=(10-second)*10+100
+      console.log(second+",score:"+score)
       this.setData({
         pkword:this.data.pkwords[this.data.index]
       })
