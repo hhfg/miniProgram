@@ -18,17 +18,9 @@
     <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
     <view style="height:50px"></view>
     <view wx:for="{{pkword.choose}}" wx:key="*this">
-      <button class="options" style="width: 500rpx;height:120rpx">{{item}}</button>
+      <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx">{{item}}</button>
       <view class="space"></view>
     </view>
-    <!-- <button class="options" style="width: 500rpx;height:120rpx">祖父母</button>
-    <view class="space"></view>
-    <button class="options" style="width: 500rpx;height:120rpx">紫的，紫色的</button>
-    <view class="space"></view>
-    <button class="options" style="width: 500rpx;height:120rpx">电子信函</button>
-    <view class="space"></view>
-    <button class="options" style="width: 500rpx;height:120rpx">女朋友</button>
-    <view class="space"></view> -->
   </view>
 
 

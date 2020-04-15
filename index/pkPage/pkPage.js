@@ -16,7 +16,8 @@ Page({
     right: 0,
     pkwords:[],
     pkword:[],
-    roomid:0
+    roomid:0,
+    index:0
   },
   getParam:function(){
     try {
@@ -104,7 +105,7 @@ Page({
     wx.onSocketMessage(function (res) {
       that.setData({
         pkwords: JSON.parse(res.data),
-        pkword: JSON.parse(res.data)[0]
+        pkword: JSON.parse(res.data)[that.data.index]
       })
     })
   },
@@ -133,38 +134,15 @@ Page({
   onShow: function () {
 
   },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  bindChoose:function(e){
+    this.setData({
+      index:this.data.index+1
+    })
+    if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      this.setData({
+        pkword:this.data.pkwords[this.data.index]
+      })
+    } else {
+    }
   }
 })
