@@ -19,7 +19,7 @@
   <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
   <view style="height:50px"></view>
   <view wx:for="{{pkword.choose}}" wx:key="*this">
-    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx" >{{item}}</button>
+    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx"><image src="../../icons/pk/correct.png" style="width:20px;height:20px;"></image>{{item}}</button>
     <view class="space"></view>
   </view>
 </view>
