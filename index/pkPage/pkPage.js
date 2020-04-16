@@ -108,7 +108,7 @@ Page({
     console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
     if (app.globalData.userData.uid == this.data.playA.id) {
       wx.sendSocketMessage({
-        data: "p" + this.data.roomid+";"+this.data.playA.id,
+        data: "2"
       })
     }
     wx.onSocketMessage(function (res) {

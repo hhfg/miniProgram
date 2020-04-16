@@ -78,16 +78,16 @@ Page({
     })
   },
   send:function(roomid){
-    //如果可以开始，则发送0为后端,0用来后端判断是否应该开始
+    //如果可以开始，则发送1给后端
     if(this.data.canStart==true){
       wx.sendSocketMessage({
-        data: "0"+roomid,
+        data: "1",
       });
     }
-    //否则发送房间号给后台
+    //否则发送0给后端，表示可以切换界面用户已进来
     else{
       wx.sendSocketMessage({
-        data: roomid,
+        data: "0",
       });
     }
   },
