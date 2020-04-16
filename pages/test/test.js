@@ -18,7 +18,8 @@ Page({
     pkword:[],
     index:0,
     start:0,
-    end:0
+    end:0,
+    apercent:0
   },
   getParam: function () {
     try {
@@ -36,9 +37,9 @@ Page({
   },
   countdown: function () {
     var date = new Date();
-    // this.setData({
-    //   start: date.getTime()
-    // })
+    this.setData({
+      start: date.getTime()
+    })
     console.log(date.getTime())
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
@@ -46,7 +47,7 @@ Page({
       end = -0.5 * Math.PI,// 结束的弧度
       time = null;// 计时器容器      
     var animation_interval = 1000,// 每1秒运行一次计时器
-      n = 10; // 当前倒计时为10秒
+      n = 8; // 当前倒计时为10秒
     var pkwords = this.data.pkwords
     var index = this.data.index+1
     var pkword = this.data.pkword
@@ -126,7 +127,7 @@ Page({
     // this.setData({
     //   playB: JSON.parse(options.playB)
     // })
-    //this.getPKWords();
+    this.getPKWords();
     //this.countdown();
     
   },
@@ -156,21 +157,19 @@ Page({
 
   },
   bindChoose: function (e) {
-    var date=new Date()
-    this.setData({
-      end:date.getTime()
-    })
-    console.log(this.data.end)
-    var second=((this.data.end-this.data.start)/1000).toFixed(1)
-    console.log(second)
-    // this.setData({
-    //   index: this.data.index + 1
-    // })
-    // if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
-    //   this.setData({
-    //     pkword: this.data.pkwords[this.data.index]
-    //   })
-    // } else {
-    // }
+    var date=new Date()  
+    if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      this.setData({
+        end: date.getTime()
+      })
+      var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
+      var score = (8 - second) * 10 + 100
+      console.log(score)
+      this.setData({
+        apercent:(score/1440)*100
+      })
+      console.log(this.data.apercent)
+    } else {
+    }
   }
 })

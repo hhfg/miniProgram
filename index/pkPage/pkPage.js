@@ -22,7 +22,9 @@ Page({
     end:0,       //某一道题选择正确结束的时间（毫秒时间戳
     ascore:0,    //玩家A的分数
     bscore:0,    //玩家B的分数
-    myscore:0    //我的分数
+    myscore:0,    //我的分数
+    apercent:0,
+    bpercent:0
   },
   getParam:function(){
     try {
@@ -98,9 +100,6 @@ Page({
     //开始倒计时
     this.countdown();
     this.setData({
-      index: this.data.index + 1
-    })
-    this.setData({
       pkword: this.data.pkwords[this.data.index]
     })
   },
@@ -125,6 +124,7 @@ Page({
       })
     }
     wx.onSocketMessage(function (res) {
+      console.log(JSON.parse(res.data))
       that.countdown();
       that.setData({
         pkwords: JSON.parse(res.data),
@@ -173,9 +173,15 @@ Page({
         this.setData({
           ascore: this.data.ascore+score
         })
+        this.setData({
+          apercent:(this.data.ascore/1440)*100
+        })
       } else {
         this.setData({
           bscore: this.data.bscore+score
+        })
+        this.setData({
+          bpercent: (this.data.bscore / 1440) * 100
         })
       }
     } else {
