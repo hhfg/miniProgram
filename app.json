@@ -21,7 +21,8 @@
         "wordPK/wordPK",
         "waitRival/waitRival",
         "pkPage/pkPage",
-        "questionBank/questionBank"
+        "questionBank/questionBank",
+        "pkresult/pkresult"
       ]
     },{
       "root":"wordBooks/",

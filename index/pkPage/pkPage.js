@@ -52,7 +52,7 @@ Page({
       end = -0.5 * Math.PI,// 结束的弧度
       time = null;// 计时器容器      
     var animation_interval = 1000,// 每1秒运行一次计时器
-      n = 10; // 当前倒计时为10秒
+      n = 8; // 当前倒计时为10秒
     var that = this;
     // 倒计时前先绘制整圆的圆环
     this.ringMove(start, end, n, num);
@@ -65,13 +65,23 @@ Page({
         that.ringMove(start, end, n, num);
         step++;
       } else {
-        step = 1;
-        num = 0;
-        n = 10;
+        that.setData({
+          index: that.data.index + 1
+        })
         //销毁计时器
         clearInterval(time);
-        //获取下一个单词
-        that.nextWord();
+        console.log(that.data.index+";"+that.data.pkwords.length)
+        if(that.data.index==that.data.pkwords.length){
+          wx.redirectTo({
+            url: '../pkresult/pkresult',
+          })
+        }else{
+          step = 1;
+          num = 0;
+          n = 8;     
+          //获取下一个单词
+          that.nextWord();
+        }
       }
     }, animation_interval)
   },
@@ -142,6 +152,7 @@ Page({
       })
     }
     wx.onSocketMessage(function (res) {
+      console.log('收到消息了!!!!')
       console.log(res.data)
       if (res.data.length >= 5) {
         that.countdown();
@@ -198,9 +209,6 @@ Page({
   bindChoose:function(e){
     //获取当前时间
     var date = new Date()
-    this.setData({
-      index:this.data.index+1
-    })
     //如果选择正确
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
       this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
