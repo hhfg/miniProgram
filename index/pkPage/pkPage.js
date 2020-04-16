@@ -102,6 +102,24 @@ Page({
     this.setData({
       pkword: this.data.pkwords[this.data.index]
     })
+    this.autoplay()
+  },
+  autoplay: function () {
+    let url = this.data.pkword.us_mp3;
+    url = url.substring(1, url.length - 1);
+    this.play(url);
+  },
+  //播放音频
+  play: function (url) {
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -131,6 +149,7 @@ Page({
           pkwords: JSON.parse(res.data),
           pkword: JSON.parse(res.data)[that.data.index]
         })
+        that.autoplay()
       } else {//否则是对方的成绩
         if (app.globalData.userData.uid == that.data.playA.id) {
           that.setData({
@@ -184,6 +203,7 @@ Page({
     })
     //如果选择正确
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
       //计算所用时间
       this.setData({
         end: date.getTime()
@@ -208,6 +228,7 @@ Page({
       }
       this.send(this.data.myscore)
     } else {
+      this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
     }
   }
 })

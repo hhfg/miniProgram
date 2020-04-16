@@ -227,41 +227,6 @@ Page({
   onShow: function () {
     
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   //点击播放美式发音
   pronouncePlayUS: function (event) {
     var url = event.currentTarget.dataset.url
@@ -433,26 +398,32 @@ Page({
   },
   ifCorrect: function () {
     var that = this;
+    //如果音效设置有开
     if (that.data.soundEffect == true) {
       if (that.data.chooseFlag == true || that.data.chooseCNFlag == true || that.data.chooseENFlag == true)
         that.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
     }
+    //如果是复习，更改单词的状态
     if (that.data.practise == false) {
       that.updateStatus(2, that.data.reviewWord.id)
     }
+    //如果已到最后一个单词
     if (that.data.index + 1 == that.data.reviewWords.length) {
+      //如果不是练习（即复习，加载要学习的单词
       if(that.data.practise==false){
         that.loadingLearningData();
-      }else{
+      }else{//否则打开
         that.clockIn();
       }
-    } else {
+    } else {//否则index+1
       that.setData({
         index: that.data.index + 1
       })
+      //获取复习的单词
       that.setReviewData(that.data.index)
     }
   },
+  //如果错误
   ifError: function () {
     var that = this;
     if (that.data.soundEffect == true) {
@@ -517,6 +488,7 @@ Page({
       })
     })
   },
+  //收藏单词
   bindCollect:function(){
     var that=this;
     var wordCollect='word.collect'
