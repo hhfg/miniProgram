@@ -124,15 +124,34 @@ Page({
       })
     }
     wx.onSocketMessage(function (res) {
-      console.log(JSON.parse(res.data))
-      that.countdown();
-      that.setData({
-        pkwords: JSON.parse(res.data),
-        pkword: JSON.parse(res.data)[that.data.index]
-      })
+      console.log(res.data)
+      if (res.data.length >= 5) {
+        that.countdown();
+        that.setData({
+          pkwords: JSON.parse(res.data),
+          pkword: JSON.parse(res.data)[that.data.index]
+        })
+      } else {//否则是对方的成绩
+        if (app.globalData.userData.uid == that.data.playA.id) {
+          that.setData({
+            bscore: res.data,
+            bpercent: (parseInt(res.data) / 1440) * 100
+          })
+        } else {
+          that.setData({
+            ascore: res.data,
+            apercent: (parseInt(res.data) / 1440) * 100
+          })
+        }
+      }
     })
   },
-
+  //发送成绩到websocket
+  send:function(score){
+    wx.sendSocketMessage({
+      data: score.toString(),
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -158,45 +177,37 @@ Page({
 
   },
   bindChoose:function(e){
+    //获取当前时间
     var date = new Date()
     this.setData({
       index:this.data.index+1
     })
+    //如果选择正确
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      //计算所用时间
       this.setData({
         end: date.getTime()
       })
       var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
       var score=(10-second)*10+100
-      console.log(second+",score:"+score)
+      this.setData({
+        myscore:this.data.myscore+score
+      })
+      console.log("myscore:"+this.data.myscore)
+      //如果本用户是玩家A，则将myscore赋给ascore
       if (app.globalData.userData.uid == this.data.playA.id) {
         this.setData({
-          ascore: this.data.ascore+score
-        })
-        this.setData({
-          apercent:(this.data.ascore/1440)*100
+          ascore: this.data.myscore,
+          apercent:(this.data.myscore/1440)*100
         })
       } else {
         this.setData({
-          bscore: this.data.bscore+score
-        })
-        this.setData({
-          bpercent: (this.data.bscore / 1440) * 100
+          bscore: this.data.myscore,
+          bpercent:(this.data.myscore/1440)*100
         })
       }
+      this.send(this.data.myscore)
     } else {
-    }
-  },
-  setScore:function(){
-    console.log(app.globalData.userData.uid+";"+this.data.playA.id)
-    if (app.globalData.userData.uid == this.data.playA.id) {
-      this.setData({
-        ascore: this.data.myscore
-      })
-    } else {
-      this.setData({
-        bscore: this.data.myscore
-      })
     }
   }
 })

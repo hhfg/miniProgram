@@ -77,7 +77,7 @@ Page({
       console.log("WebSocket连接打开失败，请检查")
     })
   },
-  send:function(roomid){
+  send:function(){
     //如果可以开始，则发送1给后端
     if(this.data.canStart==true){
       wx.sendSocketMessage({
@@ -174,13 +174,15 @@ Page({
   },
   startGame:function(){
     var that=this;
+    console.log("点击开始")
     common.getData('updRoomStatus.do',{
       roomid:this.data.roomid,
       playA:this.data.playA.id,
       playB:this.data.playB.id
     }).then((res)=>{
+      console.log(res.data)
       if(res.data==1){
-        that.send(this.data.roomid)
+        that.send()
       }
     })
   }
