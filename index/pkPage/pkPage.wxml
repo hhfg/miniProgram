@@ -2,13 +2,13 @@
 <view class="rival">
   <view class="player1">
     <image src="{{playA.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">120</view>
+    <view style="color:white;font-weight:bold">{{ascore}}</view>
   </view>
   <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
   <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
   <view class="player2">
     <image src="{{playB.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">120</view>
+    <view style="color:white;font-weight:bold">{{bscore}}</view>
   </view>
 </view>
 

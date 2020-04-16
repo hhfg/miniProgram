@@ -8,18 +8,21 @@ Page({
   data: {
     stepText: 10,//设置倒计时初始值
     windowWidth: '',//屏幕,
-    playA: [],
-    playB: [],
-    height: 0,
+    playA: [],   //玩家A的信息
+    playB: [],   //玩家B的信息
+    height: 0,   //纵向进度条的位置高度
     left: 0,
     top: 0,
     right: 0,
-    pkwords:[],
-    pkword:[],
-    roomid:0,
-    index:0,
-    start:0,
-    end:0
+    pkwords:[],  //获取的pk单词数组
+    pkword:[],   //当前pk的单词
+    roomid:0,    //房间id
+    index:0,     //当前第几道题
+    start:0,     //某一道题开始的时间（毫秒时间戳
+    end:0,       //某一道题选择正确结束的时间（毫秒时间戳
+    ascore:0,    //玩家A的分数
+    bscore:0,    //玩家B的分数
+    myscore:0    //我的分数
   },
   getParam:function(){
     try {
@@ -56,6 +59,7 @@ Page({
         step++;
       } else {
         clearInterval(time);
+
       }
     };
     // 画布绘画函数
@@ -141,22 +145,42 @@ Page({
 
   },
   bindChoose:function(e){
+    var date = new Date()
     this.setData({
       index:this.data.index+1
     })
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
-      var date = new Date()
       this.setData({
         end: date.getTime()
       })
-      console.log(this.data.end)
       var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
       var score=(10-second)*10+100
       console.log(second+",score:"+score)
+      if (app.globalData.userData.uid == this.data.playA.id) {
+        this.setData({
+          ascore: this.data.ascore+score
+        })
+      } else {
+        this.setData({
+          bscore: this.data.bscore+score
+        })
+      }
+      // this.setData({
+      //   pkword:this.data.pkwords[this.data.index]
+      // })
+    } else {
+    }
+  },
+  setScore:function(){
+    console.log(app.globalData.userData.uid+";"+this.data.playA.id)
+    if (app.globalData.userData.uid == this.data.playA.id) {
       this.setData({
-        pkword:this.data.pkwords[this.data.index]
+        ascore: this.data.myscore
       })
     } else {
+      this.setData({
+        bscore: this.data.myscore
+      })
     }
   }
 })
