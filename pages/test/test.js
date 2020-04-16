@@ -113,7 +113,7 @@ Page({
         pkwords:res.data,
         pkword:res.data[that.data.index]
       })
-      this.countdown();
+      //this.countdown();
     })
   },
   /**

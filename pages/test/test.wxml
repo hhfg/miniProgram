@@ -14,14 +14,15 @@
 
 <progress class="ascore" percent="{{apercent}}" stroke-width="14" color="#00BFFF" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
 <progress class="bscore" percent="50" stroke-width="14" color="#1E90FF" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
-  <view class="wordPart">
-    <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
-    <view style="height:50px"></view>
-    <view wx:for="{{pkword.choose}}" wx:key="*this">
-      <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx">{{item}}</button>
-      <view class="space"></view>
-    </view>
+<view class="wordPart">
+  <view style="font-weight:bold;font-size:25px;color:white;padding-bottom:50px;">第{{index+1}}题</view>
+  <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
+  <view style="height:50px"></view>
+  <view wx:for="{{pkword.choose}}" wx:key="*this">
+    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx" >{{item}}</button>
+    <view class="space"></view>
   </view>
+</view>
 
 
 
