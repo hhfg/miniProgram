@@ -38,58 +38,71 @@ Page({
       console.error('getSystemInfoSync failed!');
     }
   },
-  countdown:function(){
-    var date=new Date()
+  countdown: function () {
+    var date = new Date();
     this.setData({
-      start:date.getTime()
+      start: date.getTime()
     })
-    console.log(this.data.start)
+    console.log(date.getTime())
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
       end = -0.5 * Math.PI,// 结束的弧度
-      time = null;// 计时器容器
+      time = null;// 计时器容器      
     var animation_interval = 1000,// 每1秒运行一次计时器
       n = 10; // 当前倒计时为10秒
-    // 动画函数
-    function animation() {
+    var that = this;
+    // 倒计时前先绘制整圆的圆环
+    this.ringMove(start, end, n, num);
+    // 创建倒计时
+    var that = this;
+    time = setInterval(function () {
       if (step <= n) {
-        end = end + 2 * Math.PI / n;
-        ringMove(start, end);
+        end = end + 2 * Math.PI / n
+        num++
+        that.ringMove(start, end, n, num);
         step++;
       } else {
+        step = 1;
+        num = 0;
+        n = 10;
+        //销毁计时器
         clearInterval(time);
-
+        //获取下一个单词
+        that.nextWord();
       }
-    };
-    // 画布绘画函数
-    function ringMove(s, e) {
-      var context = wx.createCanvasContext('secondCanvas')
-      // 绘制圆环
-      context.setStrokeStyle('#87CEFA')
-      context.beginPath()
-      context.setLineWidth(4)
-      context.arc(42, 42, 25, s, e, true)
-      context.stroke()
-      context.closePath()
-      // 绘制倒计时文本
-      context.beginPath()
-      context.setLineWidth(1)
-      context.setFontSize(20)
-      context.setFillStyle('#0D0D0D')
-      context.setTextAlign('center')
-      context.setTextBaseline('middle')
-      context.fillText(n - num + '', 42, 42, 25)
-      context.fill()
-      context.closePath()
-      context.draw()
-      // 每完成一次全程绘制就+1
-      num++;
-    }
-    // 倒计时前先绘制整圆的圆环
-    ringMove(start, end);
-    // 创建倒计时
-    time = setInterval(animation, animation_interval);
+    }, animation_interval)
+  },
+  ringMove: function (s, e, n, num) {
+    var context = wx.createCanvasContext('secondCanvas')
+    // 绘制圆环
+    context.setStrokeStyle('#87CEFA')
+    context.beginPath()
+    context.setLineWidth(4)
+    context.arc(42, 42, 25, s, e, true)
+    context.stroke()
+    context.closePath()
+    // 绘制倒计时文本
+    context.beginPath()
+    context.setLineWidth(1)
+    context.setFontSize(20)
+    context.setFillStyle('#0D0D0D')
+    context.setTextAlign('center')
+    context.setTextBaseline('middle')
+    context.fillText(n - num + '', 42, 42, 25)
+    context.fill()
+    context.closePath()
+    context.draw()
+  },
+  nextWord: function () {
+    //开始倒计时
+    this.countdown();
+    this.setData({
+      index: this.data.index + 1
+    })
+    this.setData({
+      pkword: this.data.pkwords[this.data.index]
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -165,9 +178,6 @@ Page({
           bscore: this.data.bscore+score
         })
       }
-      // this.setData({
-      //   pkword:this.data.pkwords[this.data.index]
-      // })
     } else {
     }
   },
