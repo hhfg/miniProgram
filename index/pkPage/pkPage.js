@@ -26,7 +26,9 @@ Page({
     rivalpercent:0,  //玩家B的分数占比
     my:[],       //我的信息
     rival:[],     //对手的信息
-    choosed:false //用来判断是否已经答题
+    mchoosed:false, //用来判断自己是否已经答题
+    rchoosed:false, //用来判断对手是否已经答题
+    time:null
   },
   getParam:function(){
     try {
@@ -52,8 +54,8 @@ Page({
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
-      end = -0.5 * Math.PI,// 结束的弧度
-      time = null;// 计时器容器      
+      end = -0.5 * Math.PI;// 结束的弧度
+     // time = null;   
     var animation_interval = 1000,// 每1秒运行一次计时器
       n = 8; // 当前倒计时为10秒
     var that = this;
@@ -61,7 +63,7 @@ Page({
     this.ringMove(start, end, n, num);
     // 创建倒计时
     var that = this;
-    time = setInterval(function () {
+    that.data.time = setInterval(function () {
       if (step <= n) {
         end = end + 2 * Math.PI / n
         num++
@@ -72,7 +74,7 @@ Page({
           index: that.data.index + 1
         })
         //销毁计时器
-        clearInterval(time);
+        clearInterval(that.data.time);
         console.log(that.data.index+";"+that.data.pkwords.length)
         if(that.data.index==that.data.pkwords.length){
           wx.redirectTo({
@@ -115,7 +117,8 @@ Page({
     this.countdown();
     this.setData({
       pkword: this.data.pkwords[this.data.index],
-      choosed:false
+      mchoosed:false,
+      rchoosed:false
     })
     this.autoplay()
   },
@@ -182,9 +185,13 @@ Page({
         that.autoplay()
       } else {//否则是对方的成绩
         that.setData({
-          rivalscore:res.data,
+          rchoosed: true,
+          rivalscore: res.data,
           rivalpercent: (parseInt(res.data) / 1440) * 100
         })
+        // if (that.data.mchoosed == true) {
+        //   that.send("3")
+        // }
       }
     })
   },
@@ -219,13 +226,10 @@ Page({
 
   },
   bindChoose:function(e){
-    if(this.data.choosed==false){
+    if(this.data.mchoosed==false){
       //获取当前时间
       var date = new Date()
       //设置已经选择，如果用户在点击则不做处理
-      this.setData({
-        choosed:true
-      })
       //如果选择正确
       if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
@@ -247,6 +251,12 @@ Page({
       } else {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }
+      this.setData({
+        mchoosed: true
+      })
+      // if(this.data.rchoosed==true){
+      //   this.send("3")
+      // }
     }
   }
 })
