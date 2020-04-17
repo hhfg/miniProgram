@@ -18,7 +18,10 @@ Page({
    */
   onLoad: function (options) {
     var that=this;
-    var word=JSON.parse(options.word)
+    var deword=decodeURIComponent(options.word)
+    var word=JSON.parse(deword)
+    console.log(word)
+    var word=options.word
     console.log(word)
     that.setData({
       word:word,

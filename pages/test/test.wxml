@@ -2,13 +2,13 @@
 <view class="rival">
   <view class="player1">
     <image src="{{playA.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">120</view>
+    <view style="color:white;font-weight:bold">{{ascore}}</view>
   </view>
   <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
   <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
   <view class="player2">
     <image src="{{playB.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">120</view>
+    <view style="color:white;font-weight:bold">{{rivalscore}}</view>
   </view>
 </view>
 
@@ -19,7 +19,7 @@
   <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
   <view style="height:50px"></view>
   <view wx:for="{{pkword.choose}}" wx:key="*this">
-    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx"><image src="../../icons/pk/correct.png" style="width:20px;height:20px;"></image>{{item}}</button>
+    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx">{{item}}</button>
     <view class="space"></view>
   </view>
 </view>

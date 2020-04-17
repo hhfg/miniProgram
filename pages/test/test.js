@@ -19,7 +19,8 @@ Page({
     index:0,
     start:0,
     end:0,
-    apercent:0
+    myscore:0,
+    rivalscore:0
   },
   getParam: function () {
     try {
@@ -40,7 +41,7 @@ Page({
     this.setData({
       start: date.getTime()
     })
-    console.log(date.getTime())
+    //console.log(date.getTime())
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
@@ -103,16 +104,36 @@ Page({
     this.setData({
       pkword: this.data.pkwords[this.data.index]
     })
+    this.autoplay();
+  },
+  //自动播放
+  autoplay: function () {
+    let url = this.data.pkword.us_mp3;
+    url = url.substring(1, url.length - 1);
+    this.play(url);
+  },
+  //播放音频
+  play: function (url) {
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
   },
   getPKWords:function(){
     var that=this;
     common.getData('selPKWords.do',{
-      uid:36
+      uid:43
     }).then((res)=>{
       that.setData({
         pkwords:res.data,
         pkword:res.data[that.data.index]
       })
+      this.autoplay();
       //this.countdown();
     })
   },
@@ -128,7 +149,7 @@ Page({
     //   playB: JSON.parse(options.playB)
     // })
     this.getPKWords();
-    //this.countdown();
+    this.countdown();
     
   },
 
@@ -159,6 +180,7 @@ Page({
   bindChoose: function (e) {
     var date=new Date()  
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+      this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
       this.setData({
         end: date.getTime()
       })
@@ -166,10 +188,12 @@ Page({
       var score = (8 - second) * 10 + 100
       console.log(score)
       this.setData({
+        ascore:score,
         apercent:(score/1440)*100
       })
       console.log(this.data.apercent)
     } else {
+      this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
     }
   }
 })
