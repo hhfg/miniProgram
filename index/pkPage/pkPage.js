@@ -201,21 +201,20 @@ Page({
         
       }        
       else {//否则是对方的成绩
-      console.log(that)
-      that.setData({
-        rchoosed: true,
-        rivalscore: res.data,
-        rivalpercent: (parseInt(res.data) / 1440) * 100
-      })
-      if (that.data.mchoosed == true && that.data.rchoosed == true) {
+        console.log(that)
         that.setData({
-          rchoosed: false,
-          mchoosed: false
+          rchoosed: true,
+          rivalscore: res.data,
+          rivalpercent: (parseInt(res.data) / 1440) * 100
         })
-        that.send("3")
-        clearInterval(that.data.time)
-      }
-        
+        if (that.data.mchoosed == true && that.data.rchoosed == true) {
+          that.setData({
+            rchoosed: false,
+            mchoosed: false
+          })
+          that.send("3")
+          clearInterval(that.data.time)
+        }    
       }
     })
   },
@@ -251,9 +250,6 @@ Page({
   },
   bindChoose:function(e){
     if(this.data.mchoosed==false){
-      this.setData({
-        mchoosed: true
-      })
       //获取当前时间
       var date = new Date()
       //设置已经选择，如果用户在点击则不做处理
@@ -276,8 +272,12 @@ Page({
         //将我的成绩传到后台
         this.send(this.data.myscore)
       } else {
+        this.send(this.data.myscore)
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }
+      this.setData({
+        mchoosed: true
+      })
       if(this.data.rchoosed==true&&this.data.mchoosed==true){
         this.setData({
           rchoosed:false,
