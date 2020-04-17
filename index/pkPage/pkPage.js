@@ -25,7 +25,8 @@ Page({
     mypercent:0,  //玩家A的分数占比
     rivalpercent:0,  //玩家B的分数占比
     my:[],       //我的信息
-    rival:[]     //对手的信息
+    rival:[],     //对手的信息
+    choosed:false //用来判断是否已经答题
   },
   getParam:function(){
     try {
@@ -108,11 +109,13 @@ Page({
     context.closePath()
     context.draw()
   },
+  //下一道题
   nextWord: function () {
     //开始倒计时
     this.countdown();
     this.setData({
-      pkword: this.data.pkwords[this.data.index]
+      pkword: this.data.pkwords[this.data.index],
+      choosed:false
     })
     this.autoplay()
   },
@@ -216,28 +219,34 @@ Page({
 
   },
   bindChoose:function(e){
-    //获取当前时间
-    var date = new Date()
-    //如果选择正确
-    if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
-      this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
-      //计算所用时间
+    if(this.data.choosed==false){
+      //获取当前时间
+      var date = new Date()
+      //设置已经选择，如果用户在点击则不做处理
       this.setData({
-        end: date.getTime()
+        choosed:true
       })
-      var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
-      var score=(10-second)*10+100
-      this.setData({
-        myscore:this.data.myscore+score
-      })
-      this.setData({
-        mypercent:(this.data.myscore/1440)*100
-      })
-      console.log("myscore:"+this.data.myscore)
-      //将我的成绩传到后台
-      this.send(this.data.myscore)
-    } else {
-      this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
+      //如果选择正确
+      if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+        this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+        //计算所用时间
+        this.setData({
+          end: date.getTime()
+        })
+        var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
+        var score = (10 - second) * 10 + 100
+        this.setData({
+          myscore: this.data.myscore + score
+        })
+        this.setData({
+          mypercent: (this.data.myscore / 1440) * 100
+        })
+        console.log("myscore:" + this.data.myscore)
+        //将我的成绩传到后台
+        this.send(this.data.myscore)
+      } else {
+        this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
+      }
     }
   }
 })
