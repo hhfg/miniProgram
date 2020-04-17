@@ -2,18 +2,18 @@
 <view class="rival">
   <view class="player1">
     <image src="{{me.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">{{ascore}}</view>
+    <view style="color:white;font-weight:bold">{{myscore}}</view>
   </view>
   <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
   <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
   <view class="player2">
     <image src="{{rival.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">{{bscore}}</view>
+    <view style="color:white;font-weight:bold">{{rivalscore}}</view>
   </view>
 </view>
 
-<progress class="ascore" percent="{{apercent}}" stroke-width="14" color="#00BFFF" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
-<progress class="bscore" percent="{{bpercent}}" stroke-width="14" color="#1E90FF" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
+<progress class="ascore" percent="{{mypercent}}" stroke-width="14" color="#00BFFF" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
+<progress class="bscore" percent="{{rivalpercent}}" stroke-width="14" color="#1E90FF" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
 <view class="wordPart">
   <view style="font-weight:bold;font-size:25px;color:white;padding-bottom:50px;">第{{index+1}}题</view>
   <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>

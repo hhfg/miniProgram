@@ -20,11 +20,10 @@ Page({
     index:0,     //当前第几道题
     start:0,     //某一道题开始的时间（毫秒时间戳
     end:0,       //某一道题选择正确结束的时间（毫秒时间戳
-    ascore:0,    //玩家A的分数
-    bscore:0,    //玩家B的分数
-    myscore:0,    //我的分数
-    apercent:0,  //玩家A的分数占比
-    bpercent:0,  //玩家B的分数占比
+    myscore:0,   //玩家A的分数
+    rivalscore:0,//玩家B的分数
+    mypercent:0,  //玩家A的分数占比
+    rivalpercent:0,  //玩家B的分数占比
     my:[],       //我的信息
     rival:[]     //对手的信息
   },
@@ -158,7 +157,6 @@ Page({
         roomid: options.roomid
       })
     }
-
     this.getPKWords();
   },
   getPKWords: function () {
@@ -180,17 +178,10 @@ Page({
         })
         that.autoplay()
       } else {//否则是对方的成绩
-        if (app.globalData.userData.uid == that.data.playA.id) {
-          that.setData({
-            bscore: res.data,
-            bpercent: (parseInt(res.data) / 1440) * 100
-          })
-        } else {
-          that.setData({
-            ascore: res.data,
-            apercent: (parseInt(res.data) / 1440) * 100
-          })
-        }
+        that.setData({
+          rivalscore:res.data,
+          rivalpercent: (parseInt(res.data) / 1440) * 100
+        })
       }
     })
   },
@@ -239,19 +230,11 @@ Page({
       this.setData({
         myscore:this.data.myscore+score
       })
+      this.setData({
+        mypercent:(this.data.myscore/1440)*100
+      })
       console.log("myscore:"+this.data.myscore)
-      //如果本用户是玩家A，则将myscore赋给ascore
-      if (app.globalData.userData.uid == this.data.playA.id) {
-        this.setData({
-          ascore: this.data.myscore,
-          apercent:(this.data.myscore/1440)*100
-        })
-      } else {
-        this.setData({
-          bscore: this.data.myscore,
-          bpercent:(this.data.myscore/1440)*100
-        })
-      }
+      //将我的成绩传到后台
       this.send(this.data.myscore)
     } else {
       this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
