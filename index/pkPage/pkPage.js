@@ -23,8 +23,10 @@ Page({
     ascore:0,    //玩家A的分数
     bscore:0,    //玩家B的分数
     myscore:0,    //我的分数
-    apercent:0,
-    bpercent:0
+    apercent:0,  //玩家A的分数占比
+    bpercent:0,  //玩家B的分数占比
+    my:[],       //我的信息
+    rival:[]     //对手的信息
   },
   getParam:function(){
     try {
@@ -40,6 +42,7 @@ Page({
       console.error('getSystemInfoSync failed!');
     }
   },
+  //倒计时 
   countdown: function () {
     var date = new Date();
     this.setData({
@@ -114,6 +117,7 @@ Page({
     })
     this.autoplay()
   },
+  //自动播放
   autoplay: function () {
     let url = this.data.pkword.us_mp3;
     url = url.substring(1, url.length - 1);
@@ -136,11 +140,25 @@ Page({
    */
   onLoad: function (options) {
     this.getParam();
+    //playA为发起者的信息
     this.setData({
       playA: JSON.parse(options.playA),
-      playB: JSON.parse(options.playB),
-      roomid:options.roomid
     })
+    //如果本用户是发起者
+    if (app.globalData.userData.uid == this.data.playA.id) {
+      this.setData({//将playA的信息赋给me,将playB的信息赋给rival
+        me: JSON.parse(options.playA),
+        rival: JSON.parse(options.playB),
+        roomid: options.roomid
+      })
+    } else {
+      this.setData({
+        me: JSON.parse(options.playB),
+        rival: JSON.parse(options.playA),
+        roomid: options.roomid
+      })
+    }
+
     this.getPKWords();
   },
   getPKWords: function () {
