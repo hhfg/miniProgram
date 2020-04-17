@@ -70,11 +70,12 @@ Page({
         that.ringMove(start, end, n, num);
         step++;
       } else {
+        //销毁计时器
+        clearInterval(that.data.time);
+        console.log(that.data.index)
         that.setData({
           index: that.data.index + 1
         })
-        //销毁计时器
-        clearInterval(that.data.time);
         console.log(that.data.index+";"+that.data.pkwords.length)
         if(that.data.index==that.data.pkwords.length){
           wx.redirectTo({
@@ -111,17 +112,7 @@ Page({
     context.closePath()
     context.draw()
   },
-  //下一道题
-  nextWord: function () {
-    //开始倒计时
-    this.countdown();
-    this.setData({
-      pkword: this.data.pkwords[this.data.index],
-      mchoosed:false,
-      rchoosed:false
-    })
-    this.autoplay()
-  },
+
   //自动播放
   autoplay: function () {
     let url = this.data.pkword.us_mp3;
@@ -165,6 +156,17 @@ Page({
     }
     this.getPKWords();
   },
+  //下一道题
+  nextWord: function () {
+    //开始倒计时
+    this.countdown();
+    this.setData({
+      pkword: this.data.pkwords[this.data.index],
+      mchoosed: false,
+      rchoosed: false
+    })
+    this.autoplay()
+  },
   getPKWords: function () {
     var that=this;
     console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
@@ -183,15 +185,37 @@ Page({
           pkword: JSON.parse(res.data)[that.data.index]
         })
         that.autoplay()
-      } else {//否则是对方的成绩
+      } else if(res.data=="next"){//进行下一个单词
+        console.log(that.data.index)
         that.setData({
-          rchoosed: true,
-          rivalscore: res.data,
-          rivalpercent: (parseInt(res.data) / 1440) * 100
+          index: that.data.index + 1
         })
-        // if (that.data.mchoosed == true) {
-        //   that.send("3")
-        // }
+        if (that.data.index == that.data.pkwords.length) {
+          clearInterval(that.data.time)
+          wx.redirectTo({
+            url: '../pkresult/pkresult',
+          })
+        }else{
+          that.nextWord();
+        }
+        
+      }        
+      else {//否则是对方的成绩
+      console.log(that)
+      that.setData({
+        rchoosed: true,
+        rivalscore: res.data,
+        rivalpercent: (parseInt(res.data) / 1440) * 100
+      })
+      if (that.data.mchoosed == true && that.data.rchoosed == true) {
+        that.setData({
+          rchoosed: false,
+          mchoosed: false
+        })
+        that.send("3")
+        clearInterval(that.data.time)
+      }
+        
       }
     })
   },
@@ -227,6 +251,9 @@ Page({
   },
   bindChoose:function(e){
     if(this.data.mchoosed==false){
+      this.setData({
+        mchoosed: true
+      })
       //获取当前时间
       var date = new Date()
       //设置已经选择，如果用户在点击则不做处理
@@ -238,7 +265,7 @@ Page({
           end: date.getTime()
         })
         var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
-        var score = (10 - second) * 10 + 100
+        var score = (8 - second) * 10 + 100
         this.setData({
           myscore: this.data.myscore + score
         })
@@ -251,12 +278,14 @@ Page({
       } else {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }
-      this.setData({
-        mchoosed: true
-      })
-      // if(this.data.rchoosed==true){
-      //   this.send("3")
-      // }
+      if(this.data.rchoosed==true&&this.data.mchoosed==true){
+        this.setData({
+          rchoosed:false,
+          mchoosed:false
+        })
+        this.send("3")
+        clearInterval(this.data.time)
+      }
     }
   }
 })

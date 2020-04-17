@@ -192,10 +192,10 @@ Page({
       playA:this.data.playA.id,
       playB:this.data.playB.id
     }).then((res)=>{
-      console.log(res.data)
-      if(res.data==1){
+      if(res.data!=0){
         that.send()
       }
+      
     })
   }
 })
