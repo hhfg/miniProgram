@@ -12,7 +12,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var myChooseItem=JSON.parse(options.myChooseItem);
+    var rivalChooseItem=JSON.parse(options.rivalChooseItem);
+    console.log(myChooseItem);
+    console.log(rivalChooseItem);
   },
 
   /**

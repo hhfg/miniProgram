@@ -1,7 +1,7 @@
 <!--index//pkPage/pkPage.wxml-->
 <view class="rival">
   <view class="player1">
-    <image src="{{playA.avatarUrl}}" class="img1"></image>
+    <open-data type="userAvatarUrl"  class="img1"></open-data>
     <view style="color:white;font-weight:bold">{{ascore}}</view>
   </view>
   <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 

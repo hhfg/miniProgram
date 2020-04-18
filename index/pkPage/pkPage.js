@@ -33,7 +33,9 @@ Page({
     rivalchoose:['','','',''],
     btnClass: ['', '', '', ''],
     rivaltemp:'',
-    ridx:null
+    ridx:null,
+    myChooseItem:[false,false,false,false,false,false,false],
+    rivalChooseItem:[false,false,false,false,false,false,false]
   },
   getParam:function(){
     try {
@@ -228,20 +230,20 @@ Page({
             console.log('WebSocket已关闭!')
           })
           wx.redirectTo({
-            url: '../pkresult/pkresult',
+            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem),
           })
         }else{
           that.nextWord();
         }
       }        
       else {//否则是对方的成绩加选项
-        console.log(res.data)
         var score=res.data.split(";")[0]          //获取对手的成绩
         var idx = parseInt(res.data.split(";")[1])//获取对手的选项
-        console.log(idx);
-        if(score==that.data.rivalscore){
+        var chooseItem='rivalChooseItem['+that.data.index+']'
+        if(score==that.data.rivalscore){          //收到的成绩如果和之前的相等，说明选择错误
           that.setData({
-            rivaltemp:'error'
+            rivaltemp:'error',
+            [chooseItem]:true
           })
         }else{
           that.setData({
@@ -317,13 +319,15 @@ Page({
       //如果选择正确
       if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+        var chooseItem='myChooseItem['+this.data.index+']'
         var my = 'mychoose[' + idx + ']'
         var btn = 'btnClass[' + idx + ']'
         //计算所用时间
         this.setData({
           end: date.getTime(),
           [my]: '../../icons/pk/correct.png',
-          [btn]: '#87CEFA'
+          [btn]: '#87CEFA',
+          [chooseItem]:true                  //记录用户本道题选择正确
         })
         var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
         if(this.data.index+1==this.data.pkwords.length){//如果是最后一题,分数双倍
