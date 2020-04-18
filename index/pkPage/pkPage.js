@@ -72,11 +72,6 @@ Page({
       } else {
         //销毁计时器
         clearInterval(that.data.time);
-        console.log(that.data.index)
-        // that.setData({
-        //   index: that.data.index + 1
-        // })
-        console.log(that.data.index+";"+that.data.pkwords.length)
         if(that.data.index+1==that.data.pkwords.length){
           wx.closeSocket();
           wx.onSocketClose(function (res) {
@@ -176,24 +171,20 @@ Page({
         mask:true
       })
       setTimeout(function(){
-        that.countdown();
-        that.setData({
-          pkword: that.data.pkwords[that.data.index],
-          mchoosed: false,
-          rchoosed: false
-        })
-        that.autoplay()
+        that.getNext();
       },1500)
     }else{
-      this.countdown();
-      this.setData({
-        pkword: this.data.pkwords[this.data.index],
-        mchoosed: false,
-        rchoosed: false
-      })
-      this.autoplay()
+      this.getNext();
     }
-
+  },
+  getNext:function(){
+    this.countdown();
+    this.setData({
+      pkword: this.data.pkwords[this.data.index],
+      mchoosed: false,
+      rchoosed: false
+    })
+    this.autoplay()
   },
   getPKWords: function () {
     var that=this;
@@ -293,7 +284,11 @@ Page({
           end: date.getTime()
         })
         var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
-        var score = (8 - second) * 10 + 100
+        if(this.data.index+1==this.data.pkwords.length){//如果是最后一题,分数双倍
+          var score = ((8 - second) * 10 + 100)*2
+        }else{
+          var score = (8 - second) * 10 + 100
+        }
         this.setData({
           myscore: this.data.myscore + score
         })
