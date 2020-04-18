@@ -30,8 +30,10 @@ Page({
     rchoosed:false, //用来判断对手是否已经答题
     time:null,
     mychoose: ['', '', '', ''],
-    rivalchoose: false,
-    btnClass: ['', '', '', '']
+    rivalchoose:['','','',''],
+    btnClass: ['', '', '', ''],
+    rivaltemp:'',
+    ridx:null
   },
   getParam:function(){
     try {
@@ -162,28 +164,30 @@ Page({
   nextWord: function () {
     var that=this
     //开始倒计时
-    for(var i=0;i<4;i++){
-      var item='mychoose['+i+']'
-      var btn='btnClass['+i+']'
+    for (var i = 0; i < 4; i++) {
+      var my = 'mychoose[' + i + ']'
+      var rival='rivalchoose['+i+']'
+      var btn = 'btnClass[' + i + ']'
       this.setData({
-        [item]:'',
-        [btn]:''
+        [my]: '',
+        [rival]:'',
+        [btn]: ''
       })
     }
     this.setData({
-      index:this.data.index+1
+      index:this.data.index+1,
     })
     //如果是最后一题，提示双倍分数
     if(this.data.index+1==this.data.pkwords.length){
       wx.showToast({
         title: '最后一题双倍分数',
         icon:'none',
-        duration:1500,
+        duration:1000,
         mask:true
       })
       setTimeout(function(){
         that.getNext();
-      },1500)
+      },1000)
     }else{
       this.getNext();
     }
@@ -208,7 +212,7 @@ Page({
     wx.onSocketMessage(function (res) {
       console.log('收到消息了!!!!')
       console.log(res.data)
-      if (res.data.length >= 5) {
+      if (res.data.length > 10) {
         that.countdown();
         that.setData({
           pkwords: JSON.parse(res.data),
@@ -229,28 +233,53 @@ Page({
         }else{
           that.nextWord();
         }
-        
       }        
-      else {//否则是对方的成绩
-        console.log(that)
-        that.setData({
-          rchoosed: true,
-          rivalscore: res.data,
-          rivalpercent: (parseInt(res.data) / 1440) * 100
-        })
-        if (that.data.mchoosed == true && that.data.rchoosed == true) {
+      else {//否则是对方的成绩加选项
+        console.log(res.data)
+        var score=res.data.split(";")[0]          //获取对手的成绩
+        var idx = parseInt(res.data.split(";")[1])//获取对手的选项
+        console.log(idx);
+        if(score==that.data.rivalscore){
           that.setData({
-            rchoosed: false,
-            mchoosed: false
+            rivaltemp:'error'
           })
-          that.send("n")
-          clearInterval(that.data.time)
+        }else{
+          that.setData({
+            rivaltemp:'correct'
+          })
+        }
+        that.setData({
+          ridx:idx,
+          rchoosed: true,                        //设置对手已经选择了的标记
+          rivalscore: score,                     //将发送过来的成绩赋给对手的成绩
+          rivalpercent: (parseInt(score) / 1440) * 100
+        })
+        //如果双方都已选择完毕
+        if (that.data.mchoosed == true && that.data.rchoosed == true) {
+          var rival = 'rivalchoose[' + idx + ']'
+          var btn = 'btnClass[' + idx + ']'
+          if (that.data.rivaltemp == 'correct') {
+            that.setData({
+              [rival]: '../../icons/pk/correct.png',
+              [btn]: '#87CEFA'
+            })
+          } else {
+            that.setData({
+              [rival]: '../../icons/pk/error.png',
+              [btn]: '#87CEFA'
+            })
+          }
+          setTimeout(function(){
+            that.send("n")//发送给后端，说明可进行下一道题
+          },800)
+          clearInterval(that.data.time)//清除定时器
         }    
       }
     })
   },
   //发送成绩到websocket
   send:function(score){
+    console.log(score)
     wx.sendSocketMessage({
       data: score.toString(),
     })
@@ -281,10 +310,10 @@ Page({
   },
   bindChoose:function(e){
     if(this.data.mchoosed==false){
-      //获取当前时间
+      //获取用户选择的选项
       var idx = e.currentTarget.dataset.idx
+      //获取当前时间
       var date = new Date()
-      //设置已经选择，如果用户在点击则不做处理
       //如果选择正确
       if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
@@ -309,28 +338,41 @@ Page({
           mypercent: (this.data.myscore / 1440) * 100
         })
         console.log("myscore:" + this.data.myscore)
-        //将我的成绩传到后台
-        this.send(this.data.myscore)
-      } else {
+      } else {//如果选择错误
         var my = 'mychoose[' + idx + ']'
         var btn = 'btnClass[' + idx + ']'
         this.setData({
           [my]: '../../icons/pk/error.png',
           [btn]: '#87CEFA'
         })
-        this.send(this.data.myscore)
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }
+      //发送用户的成绩加选项给对方
+      this.send(this.data.myscore + ";" + idx)
+      //设置本用户已经选择
       this.setData({
         mchoosed: true
       })
+      //如果双方都已选择
       if(this.data.rchoosed==true&&this.data.mchoosed==true){
-        this.setData({
-          rchoosed:false,
-          mchoosed:false
-        })
-        this.send("n")
-        clearInterval(this.data.time)
+        var that=this;
+        var rival = 'rivalchoose[' + that.data.ridx + ']'
+        var btn = 'btnClass[' + that.data.ridx + ']'
+        if (that.data.rivaltemp == 'correct') {
+          that.setData({
+            [rival]: '../../icons/pk/correct.png',
+            [btn]: '#87CEFA'
+          })
+        } else {
+          that.setData({
+            [rival]: '../../icons/pk/error.png',
+            [btn]: '#87CEFA'
+          })
+        }
+        setTimeout(function(){
+          that.send("n");      //发送n到后台，可进行下一道题
+        },800)
+        clearInterval(this.data.time)//销毁计时器
       }
     }
   }
