@@ -28,7 +28,10 @@ Page({
     rival:[],     //对手的信息
     mchoosed:false, //用来判断自己是否已经答题
     rchoosed:false, //用来判断对手是否已经答题
-    time:null
+    time:null,
+    mychoose: ['', '', '', ''],
+    rivalchoose: false,
+    btnClass: ['', '', '', '']
   },
   getParam:function(){
     try {
@@ -159,6 +162,14 @@ Page({
   nextWord: function () {
     var that=this
     //开始倒计时
+    for(var i=0;i<4;i++){
+      var item='mychoose['+i+']'
+      var btn='btnClass['+i+']'
+      this.setData({
+        [item]:'',
+        [btn]:''
+      })
+    }
     this.setData({
       index:this.data.index+1
     })
@@ -206,9 +217,6 @@ Page({
         that.autoplay()
       } else if(res.data=="next"){//进行下一个单词
         console.log(that.data.index)
-        // that.setData({
-        //   index: that.data.index + 1
-        // })
         if (that.data.index+1 == that.data.pkwords.length) {
           clearInterval(that.data.time)
           wx.closeSocket();
@@ -274,14 +282,19 @@ Page({
   bindChoose:function(e){
     if(this.data.mchoosed==false){
       //获取当前时间
+      var idx = e.currentTarget.dataset.idx
       var date = new Date()
       //设置已经选择，如果用户在点击则不做处理
       //如果选择正确
       if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
         this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+        var my = 'mychoose[' + idx + ']'
+        var btn = 'btnClass[' + idx + ']'
         //计算所用时间
         this.setData({
-          end: date.getTime()
+          end: date.getTime(),
+          [my]: '../../icons/pk/correct.png',
+          [btn]: '#87CEFA'
         })
         var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
         if(this.data.index+1==this.data.pkwords.length){//如果是最后一题,分数双倍
@@ -299,6 +312,12 @@ Page({
         //将我的成绩传到后台
         this.send(this.data.myscore)
       } else {
+        var my = 'mychoose[' + idx + ']'
+        var btn = 'btnClass[' + idx + ']'
+        this.setData({
+          [my]: '../../icons/pk/error.png',
+          [btn]: '#87CEFA'
+        })
         this.send(this.data.myscore)
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }

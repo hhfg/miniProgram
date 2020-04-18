@@ -20,7 +20,10 @@ Page({
     start:0,
     end:0,
     myscore:0,
-    rivalscore:0
+    rivalscore:0,
+    mychoose:['','','',''],
+    rivalchoose:false,
+    btnClass:['','','','']
   },
   getParam: function () {
     try {
@@ -69,7 +72,7 @@ Page({
         num=0;
         n=10;
         clearInterval(time);
-        that.nextWord();
+        //that.nextWord();
       }
     },animation_interval)
   },
@@ -129,11 +132,12 @@ Page({
     common.getData('selPKWords.do',{
       uid:43
     }).then((res)=>{
+      console.log(res.data)
       that.setData({
         pkwords:res.data,
         pkword:res.data[that.data.index]
       })
-      this.autoplay();
+      that.autoplay();
       //this.countdown();
     })
   },
@@ -149,7 +153,7 @@ Page({
     //   playB: JSON.parse(options.playB)
     // })
     this.getPKWords();
-    this.countdown();
+    //this.countdown();
     
   },
 
@@ -178,11 +182,17 @@ Page({
 
   },
   bindChoose: function (e) {
+    console.log(e.currentTarget.dataset.idx)
+    var idx = e.currentTarget.dataset.idx
     var date=new Date()  
     if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
       this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
+      var my='mychoose['+idx+']'
+      var btn='btnClass['+idx+']'
       this.setData({
-        end: date.getTime()
+        end: date.getTime(),
+        [my]: '../../icons/pk/correct.png',
+        [btn]:'#1E90FF'
       })
       var second = ((this.data.end - this.data.start) / 1000).toFixed(1)
       var score = (8 - second) * 10 + 100
@@ -193,6 +203,13 @@ Page({
       })
       console.log(this.data.apercent)
     } else {
+      var my = 'mychoose[' + idx + ']'
+      var btn = 'btnClass[' + idx + ']'
+      this.setData({
+        end: date.getTime(),
+        [my]: '../../icons/pk/error.png',
+        [btn]: '#87CEFA'
+      })
       this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
     }
   }

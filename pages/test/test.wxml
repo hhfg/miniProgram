@@ -18,11 +18,14 @@
   <view style="font-weight:bold;font-size:25px;color:white;padding-bottom:50px;">第{{index+1}}题</view>
   <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
   <view style="height:50px"></view>
-  <view wx:for="{{pkword.choose}}" wx:key="*this">
-    <button class="options" bindtap="bindChoose" data-ex="{{item}}" style="width: 500rpx;height:120rpx">{{item}}</button>
+  <view wx:for="{{pkword.choose}}" class="item" wx:key="*this">
+    <image src="{{mychoose[index]}}" style="width:20px;height:20px;"/> 
+    <button class="options" bindtap="bindChoose" data-ex="{{item}}"  data-idx="{{index}}" style="width: 500rpx;height:110rpx;background-color:{{btnClass[index]}}">{{item}}</button>
+    <image src="{{rivalchoose[index]}}" style="width:20px;height:20px;"/>
     <view class="space"></view>
   </view>
 </view>
+
 
 
 
