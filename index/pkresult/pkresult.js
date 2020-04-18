@@ -14,8 +14,10 @@ Page({
   onLoad: function (options) {
     var myChooseItem=JSON.parse(options.myChooseItem);
     var rivalChooseItem=JSON.parse(options.rivalChooseItem);
+    var pkwords=JSON.parse(options.pkwords);
     console.log(myChooseItem);
     console.log(rivalChooseItem);
+    console.log(pkwords)
   },
 
   /**

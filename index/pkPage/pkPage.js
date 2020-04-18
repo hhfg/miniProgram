@@ -212,8 +212,6 @@ Page({
       })
     }
     wx.onSocketMessage(function (res) {
-      console.log('收到消息了!!!!')
-      console.log(res.data)
       if (res.data.length > 10) {
         that.countdown();
         that.setData({
@@ -230,7 +228,7 @@ Page({
             console.log('WebSocket已关闭!')
           })
           wx.redirectTo({
-            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem),
+            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords),
           })
         }else{
           that.nextWord();
@@ -272,9 +270,9 @@ Page({
             })
           }
           setTimeout(function(){
-            that.send("n")//发送给后端，说明可进行下一道题
+            that.send("n")//发送给后端，可进行下一道题
           },800)
-          clearInterval(that.data.time)//清除定时器
+          clearInterval(that.data.time)//销毁定时器
         }    
       }
     })
