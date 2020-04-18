@@ -60,7 +60,6 @@ Page({
         delete that.data.change[item].choose;
         delete that.data.change[item].chooseEn
       }
-      console.log(that.data.change);
       for (var i = 0; i < that.data.change.length; i++) {
         that.data.change[i].trans = "释义"
       }
@@ -179,8 +178,6 @@ Page({
   bindWordCard:function(e){
     var that=this;
     var word = JSON.stringify(e.currentTarget.dataset.word)
-    //var word=e.currentTarget.dataset.word
-    console.log(word)
     wx.navigateTo({
       url: '../wordCard/wordCard?word='+encodeURIComponent(word),
     })
