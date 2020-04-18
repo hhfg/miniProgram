@@ -1,31 +1,54 @@
-<!--index//pkPage/pkPage.wxml-->
 <view class="rival">
   <view class="player1">
+    <!-- <image src="{{me.avatarUrl}}" class="img1"></image> -->
     <open-data type="userAvatarUrl"  class="img1"></open-data>
-    <view style="color:white;font-weight:bold">{{ascore}}</view>
+    <open-data type="userNickName" lang="zh_CN"></open-data>
+    <view style="color:white;font-weight:bold;font-size:25px;margin-top:20px">1240</view>
   </view>
-  <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
-  <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
+  <view class="outcome">
+    <image src="../../icons/pk/win.png" style="width:50px;height:50px;"></image>
+    <view style="color:white;font-weight:bold">YOU WIN</view>
+  </view>
   <view class="player2">
-    <image src="{{playB.avatarUrl}}" class="img1"></image>
-    <view style="color:white;font-weight:bold">{{rivalscore}}</view>
+    <open-data type="userAvatarUrl"  class="img1"></open-data>
+    <open-data type="userNickName" lang="zh_CN"></open-data>
+    <view style="color:white;font-weight:bold;font-size:25px;margin-top:20px">1020</view>
   </view>
 </view>
-
-<progress class="ascore" percent="{{apercent}}" stroke-width="14" color="#00BFFF" style="width:{{height}}px;margin-top:{{top}}px;margin-right:{{right}}px"></progress>
-<progress class="bscore" percent="50" stroke-width="14" color="#1E90FF" style="width:{{height}}px;margin-left:{{left}}px;margin-top:{{top}}px"></progress>
 <view class="wordPart">
-  <view style="font-weight:bold;font-size:25px;color:white;padding-bottom:50px;">第{{index+1}}题</view>
-  <view style="font-weight:bold;font-size:25px;color:white">{{pkword.word}}</view>
-  <view style="height:50px"></view>
-  <view wx:for="{{pkword.choose}}" class="item" wx:key="*this">
-    <image src="{{mychoose[index]}}" style="width:20px;height:20px;"/> 
-    <button class="options" bindtap="bindChoose" data-ex="{{item}}"  data-idx="{{index}}" style="width: 500rpx;height:110rpx;background-color:{{btnClass[index]}}">{{item}}</button>
-    <image src="{{rivalchoose[index]}}" style="width:20px;height:20px;"/>
-    <view class="space"></view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">boundart 分界线，边界</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">kilometer 千米，公里</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">artword 艺术品，美术品</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">artword 艺术品，美术品</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">artword 艺术品，美术品</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">artword 艺术品，美术品</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+  </view>
+  <view class="word">
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+    <view class="english">artword 艺术品，美术品</view>
+    <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
   </view>
 </view>
-
-
-
-

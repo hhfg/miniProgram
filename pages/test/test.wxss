@@ -1,4 +1,3 @@
-/* index//pkPage/pkPage.wxss */
 page{
   width: 100%;
   height: 100%;
@@ -26,77 +25,42 @@ page{
   justify-content: center;
   align-items: center;
 }
-.headPic{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
 .img1{
-  margin: 10px;
+  margin: 20px;
   width: 140rpx;
   height:140rpx;
   border-radius: 50%;
   display: flex;
   overflow: hidden;
 }
-.name{
-  color: white;
-}
-.mess{
-  justify-content: center;
-  margin-top: 70%;
-}
-.progress_bg{
-  position: absolute;
-  width:84px;
-  height: 84px; 
-}
-.progress_canvas{
-  width:84px;
-  height: 84px; 
-}
-.wordPart{
+.outcome{
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
-.item{
+.wordPart{
+  margin: 30% 5% 0 5%;
+  background-color: 	#87CEFA;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;  
+  padding: 10px;
+  /* align-items: center; */
+}
+.word{
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
-.options{
-  margin:8px 0px 8px 0px;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 90rpx;
-  justify-content:center; 
-  align-items:center;
-  border-radius: 5px;
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
-  -webkit-box-orient: vertical;
-  background-color: rgb(95, 190, 228); 
-  /* background-color: #FF4500; */
+.english{
+  color:white;
+  width:90%;
+  padding-left: 10px;
+  /* text-align: center; */
+  /* display:flex;
+  justify-content:center;
+  align-items:center; */
 }
-.ascore{
-  transform: rotate(-90deg);
-  position: fixed;
-  right:0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.bscore{
-  transform: rotate(-90deg);
-  position: fixed;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.space{
-  height: 15px;
-}
-
-
