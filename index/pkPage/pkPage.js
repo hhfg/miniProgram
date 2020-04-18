@@ -73,11 +73,15 @@ Page({
         //销毁计时器
         clearInterval(that.data.time);
         console.log(that.data.index)
-        that.setData({
-          index: that.data.index + 1
-        })
+        // that.setData({
+        //   index: that.data.index + 1
+        // })
         console.log(that.data.index+";"+that.data.pkwords.length)
-        if(that.data.index==that.data.pkwords.length){
+        if(that.data.index+1==that.data.pkwords.length){
+          wx.closeSocket();
+          wx.onSocketClose(function (res) {
+            console.log('WebSocket已关闭!')
+          })
           wx.redirectTo({
             url: '../pkresult/pkresult',
           })
@@ -158,14 +162,38 @@ Page({
   },
   //下一道题
   nextWord: function () {
+    var that=this
     //开始倒计时
-    this.countdown();
     this.setData({
-      pkword: this.data.pkwords[this.data.index],
-      mchoosed: false,
-      rchoosed: false
+      index:this.data.index+1
     })
-    this.autoplay()
+    //如果是最后一题，提示双倍分数
+    if(this.data.index+1==this.data.pkwords.length){
+      wx.showToast({
+        title: '最后一题双倍分数',
+        icon:'none',
+        duration:1500,
+        mask:true
+      })
+      setTimeout(function(){
+        that.countdown();
+        that.setData({
+          pkword: that.data.pkwords[that.data.index],
+          mchoosed: false,
+          rchoosed: false
+        })
+        that.autoplay()
+      },1500)
+    }else{
+      this.countdown();
+      this.setData({
+        pkword: this.data.pkwords[this.data.index],
+        mchoosed: false,
+        rchoosed: false
+      })
+      this.autoplay()
+    }
+
   },
   getPKWords: function () {
     var that=this;
@@ -187,11 +215,15 @@ Page({
         that.autoplay()
       } else if(res.data=="next"){//进行下一个单词
         console.log(that.data.index)
-        that.setData({
-          index: that.data.index + 1
-        })
-        if (that.data.index == that.data.pkwords.length) {
+        // that.setData({
+        //   index: that.data.index + 1
+        // })
+        if (that.data.index+1 == that.data.pkwords.length) {
           clearInterval(that.data.time)
+          wx.closeSocket();
+          wx.onSocketClose(function (res) {
+            console.log('WebSocket已关闭!')
+          })
           wx.redirectTo({
             url: '../pkresult/pkresult',
           })
