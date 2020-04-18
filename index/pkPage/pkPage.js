@@ -172,7 +172,7 @@ Page({
     console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
     if (app.globalData.userData.uid == this.data.playA.id) {
       wx.sendSocketMessage({
-        data: "2"
+        data: "p"
       })
     }
     wx.onSocketMessage(function (res) {
@@ -212,7 +212,7 @@ Page({
             rchoosed: false,
             mchoosed: false
           })
-          that.send("3")
+          that.send("n")
           clearInterval(that.data.time)
         }    
       }
@@ -283,7 +283,7 @@ Page({
           rchoosed:false,
           mchoosed:false
         })
-        this.send("3")
+        this.send("n")
         clearInterval(this.data.time)
       }
     }
