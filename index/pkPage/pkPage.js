@@ -76,7 +76,7 @@ Page({
         num++
         that.ringMove(start, end, n, num);
         step++;
-      } else {
+      } else {//时间到了
         //销毁计时器
         clearInterval(that.data.time);
         if(that.data.index+1==that.data.pkwords.length){
@@ -85,7 +85,7 @@ Page({
             console.log('WebSocket已关闭!')
           })
           wx.redirectTo({
-            url: '../pkresult/pkresult',
+            url: '../pkresult/pkresult?myChooseItem=' + JSON.stringify(that.data.myChooseItem) + "&rivalChooseItem=" + JSON.stringify(that.data.rivalChooseItem) + '&pkwords=' + JSON.stringify(that.data.pkwords) + '&my=' + JSON.stringify(that.data.me) + '&rival=' + JSON.stringify(that.data.rival) + '&myscore=' + that.data.myscore + '&rivalscore=' + that.data.rivalscore,
           })
         }else{
           step = 1;
@@ -179,6 +179,7 @@ Page({
     this.setData({
       index:this.data.index+1,
     })
+    console.log('index:'+this.data.index)
     //如果是最后一题，提示双倍分数
     if(this.data.index+1==this.data.pkwords.length){
       wx.showToast({
@@ -206,7 +207,6 @@ Page({
   //获取单词
   getPKWords: function () {
     var that=this;
-    console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
     if (app.globalData.userData.uid == this.data.playA.id) {
       wx.sendSocketMessage({
         data: "p"
@@ -228,6 +228,8 @@ Page({
           wx.onSocketClose(function (res) {
             console.log('WebSocket已关闭!')
           })
+          console.log(that.data.myChooseItem);
+          console.log(that.data.rivalChooseItem)
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore,
           })
@@ -239,16 +241,20 @@ Page({
         var score=res.data.split(";")[0]          //获取对手的成绩
         var idx = parseInt(res.data.split(";")[1])//获取对手的选项
         var chooseItem='rivalChooseItem['+that.data.index+']'
-        if(score==that.data.rivalscore){          //收到的成绩如果和之前的相等，说明选择错误
+        console.log(score+":"+that.data.rivalscore)
+        if (score==that.data.rivalscore){          //收到的成绩如果和之前的相等，说明选择错误
           that.setData({
             rivaltemp:'error',
-            [chooseItem]:true
+            [chooseItem]:false
           })
+          console.log('rival:' +that.data.index+':true')
         }else{
           that.setData({
-            rivaltemp:'correct'
+            rivaltemp:'correct',
+            [chooseItem]:true
           })
         }
+        
         that.setData({
           ridx:idx,
           rchoosed: true,                        //设置对手已经选择了的标记
@@ -280,7 +286,6 @@ Page({
   },
   //发送成绩到websocket
   send:function(score){
-    console.log(score)
     wx.sendSocketMessage({
       data: score.toString(),
     })
@@ -343,11 +348,13 @@ Page({
         })
         console.log("myscore:" + this.data.myscore)
       } else {//如果选择错误
+        var chooseItem = 'myChooseItem[' + this.data.index + ']'
         var my = 'mychoose[' + idx + ']'
         var btn = 'btnClass[' + idx + ']'
         this.setData({
           [my]: '../../icons/pk/error.png',
-          [btn]: '#87CEFA'
+          [btn]: '#87CEFA',
+          [chooseItem]:false
         })
         this.play('http://img.tukuppt.com/newpreview_music/09/00/60/5c89396f017e881994.mp3')
       }

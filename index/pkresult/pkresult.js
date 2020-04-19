@@ -7,8 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    myChooseItem: [false, false, false, false, false, false, false],
-    rivalChooseItem: [false, false, false, false, false, false, false],
+    myChooseItem: [],
+    rivalChooseItem: [],
     pkwords:[],
     my:[],
     rival:[],
@@ -29,11 +29,6 @@ Page({
     var rivalscore=options.rivalscore
     console.log(myChooseItem);
     console.log(rivalChooseItem);
-    console.log(pkwords)
-    console.log(my);
-    console.log(rival);
-    console.log(myscore);
-    console.log(rivalscore)
     this.setData({
       myChooseItem:myChooseItem,
       rivalChooseItem:rivalChooseItem,

@@ -18,9 +18,9 @@
 <view class="wordPart">
   <view wx:for="{{pkwords}}">
     <view class="word">
-      <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+      <image src="{{myChooseItem[index]?'../../icons/pk/correct.png':'../../icons/pk/error.png'}}" style="width:20px;height:20px;"/> 
       <view class="english">{{item.word}}</view>
-      <image src="../../icons/pk/correct.png" style="width:20px;height:20px;"/> 
+      <image src="{{rivalChooseItem[index]?'../../icons/pk/correct.png':'../../icons/pk/error.png'}}" style="width:20px;height:20px;"/> 
     </view>
   </view>
 </view>
