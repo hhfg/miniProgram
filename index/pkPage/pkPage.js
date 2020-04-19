@@ -6,10 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    stepText: 10,//设置倒计时初始值
+    stepText: 8,//设置倒计时初始值
     windowWidth: '',//屏幕,
     playA: [],   //玩家A的信息
-    playB: [],   //玩家B的信息
     height: 0,   //纵向进度条的位置高度
     left: 0,
     top: 0,
@@ -35,7 +34,8 @@ Page({
     rivaltemp:'',
     ridx:null,
     myChooseItem:[false,false,false,false,false,false,false],
-    rivalChooseItem:[false,false,false,false,false,false,false]
+    rivalChooseItem:[false,false,false,false,false,false,false],
+    id:0
   },
   getParam:function(){
     try {
@@ -141,6 +141,7 @@ Page({
    */
   onLoad: function (options) {
     this.getParam();
+    console.log(options.id)
     //playA为发起者的信息
     this.setData({
       playA: JSON.parse(options.playA),
@@ -150,13 +151,15 @@ Page({
       this.setData({//将playA的信息赋给me,将playB的信息赋给rival
         me: JSON.parse(options.playA),
         rival: JSON.parse(options.playB),
-        roomid: options.roomid
+        roomid: options.roomid,
+        id:options.id
       })
     } else {
       this.setData({
         me: JSON.parse(options.playB),
         rival: JSON.parse(options.playA),
-        roomid: options.roomid
+        roomid: options.roomid,
+        id:options.id
       })
     }
     this.getPKWords();
@@ -223,7 +226,7 @@ Page({
         //clearInterval(that.data.time)
         if (that.data.index+1 == that.data.pkwords.length) {
           wx.redirectTo({
-            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore,
+            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore+'&id='+that.data.id,
           })
         }else{
           that.nextWord();

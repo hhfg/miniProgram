@@ -15,17 +15,21 @@ Page({
     myscore:0,            //我的成绩
     rivalscore:0,         //对手的成绩
     resultUrl:'',         //结果图片地址
-    result:''             //结果
+    result:'',             //结果
+    id:''                 //记录在数据库表中的id
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  //关闭websocket连接
+  closeConn:function(){
     wx.closeSocket();
     wx.onSocketClose(function (res) {
       console.log('WebSocket已关闭!')
     })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.closeConn();
     var myChooseItem=JSON.parse(options.myChooseItem);
     var rivalChooseItem=JSON.parse(options.rivalChooseItem);
     var pkwords=JSON.parse(options.pkwords);
@@ -33,6 +37,8 @@ Page({
     var rival=JSON.parse(options.rival);
     var myscore=options.myscore;
     var rivalscore=options.rivalscore
+    var id=options.id
+    console.log(id)
     this.setData({
       myChooseItem:myChooseItem,
       rivalChooseItem:rivalChooseItem,
@@ -40,17 +46,20 @@ Page({
       my:my,
       rival:rival,
       myscore:myscore,
-      rivalscore:rivalscore
+      rivalscore:rivalscore,
+      id:id
     })
-    if(this.data.myscore<this.data.rivalscore){
+  },
+  setPageData:function(){
+    if (this.data.myscore < this.data.rivalscore) {
       this.setData({
-        resultUrl:'../../icons/pk/win.png',
-        result:'YOU WIN'
+        resultUrl: '../../icons/pk/win.png',
+        result: 'YOU WIN'
       })
-    }else{
+    } else {
       this.setData({
-        resultUrl:'../../icons/pk/lose.png',
-        result:'YOU LOSE'
+        resultUrl: '../../icons/pk/lose.png',
+        result: 'YOU LOSE'
       })
     }
   },

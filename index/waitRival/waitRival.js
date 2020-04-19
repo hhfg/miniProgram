@@ -10,7 +10,7 @@ Page({
     waiting: true,
     canStart:false,
     socketOpen:false,
-    id:0,
+    id:0,             //记录在数据库的id
     playA:[],
     playB:[],
     roomid:0,
@@ -40,7 +40,7 @@ Page({
             id: res.data
           })
         })
-      }else{
+      }else{//对手进来后，更改房间状态
         common.getData("updRecord.do", {
           roomid: roomid,
           playB: app.globalData.userData.uid,
@@ -81,7 +81,7 @@ Page({
         })
       }else if(res.data="start"){
         wx.navigateTo({
-          url: '../pkPage/pkPage?playA=' + JSON.stringify(that.data.playA) + '&playB=' + JSON.stringify(that.data.playB)+'&roomid='+that.data.roomid,
+          url: '../pkPage/pkPage?playA=' + JSON.stringify(that.data.playA) + '&playB=' + JSON.stringify(that.data.playB)+'&roomid='+that.data.roomid+'&id='+that.data.id,
         })
       }
     })
@@ -186,16 +186,13 @@ Page({
   },
   startGame:function(){
     var that=this;
-    console.log("点击开始")
     common.getData('updRoomStatus.do',{
-      roomid:this.data.roomid,
-      playA:this.data.playA.id,
-      playB:this.data.playB.id
+      id:this.data.id,
+      status:1
     }).then((res)=>{
       if(res.data!=0){
         that.send()
       }
-      
     })
   }
 })
