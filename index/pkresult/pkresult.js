@@ -1,11 +1,19 @@
 // index//pkresult/pkresult.js
+const app = getApp();
+const common = require("../../utils/common.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    myChooseItem: [false, false, false, false, false, false, false],
+    rivalChooseItem: [false, false, false, false, false, false, false],
+    pkwords:[],
+    my:[],
+    rival:[],
+    myscore:0,
+    rivalscore:0
   },
 
   /**
@@ -15,9 +23,26 @@ Page({
     var myChooseItem=JSON.parse(options.myChooseItem);
     var rivalChooseItem=JSON.parse(options.rivalChooseItem);
     var pkwords=JSON.parse(options.pkwords);
+    var my=JSON.parse(options.my);
+    var rival=JSON.parse(options.rival);
+    var myscore=options.myscore;
+    var rivalscore=options.rivalscore
     console.log(myChooseItem);
     console.log(rivalChooseItem);
     console.log(pkwords)
+    console.log(my);
+    console.log(rival);
+    console.log(myscore);
+    console.log(rivalscore)
+    this.setData({
+      myChooseItem:myChooseItem,
+      rivalChooseItem:rivalChooseItem,
+      pkwords:pkwords,
+      my:my,
+      rival:rival,
+      myscore:myscore,
+      rivalscore:rivalscore
+    })
   },
 
   /**

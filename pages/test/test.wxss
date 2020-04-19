@@ -7,7 +7,6 @@ page{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 20%;
 }
 .player1{
   position:fixed;
@@ -26,9 +25,9 @@ page{
   align-items: center;
 }
 .img1{
-  margin: 20px;
-  width: 140rpx;
-  height:140rpx;
+  margin: 20px 20px 10px 20px;
+  width: 120rpx;
+  height:120rpx;
   border-radius: 50%;
   display: flex;
   overflow: hidden;
@@ -41,19 +40,18 @@ page{
   align-items: center;
 }
 .wordPart{
-  margin: 30% 5% 0 5%;
+  margin: 20% 5% 0 5%;
   background-color: 	#87CEFA;
   border-radius: 10px;
   display: flex;
   flex-direction: column;  
-  padding: 10px;
+  padding: 0px 10px 10px 10px;
   /* align-items: center; */
 }
 .word{
   display: flex;
   flex-direction: row;
   padding-top: 15px;
-  padding-bottom: 10px;
 }
 .english{
   color:white;

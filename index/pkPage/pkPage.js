@@ -24,7 +24,7 @@ Page({
     rivalscore:0,//玩家B的分数
     mypercent:0,  //玩家A的分数占比
     rivalpercent:0,  //玩家B的分数占比
-    my:[],       //我的信息
+    me:[],       //我的信息
     rival:[],     //对手的信息
     mchoosed:false, //用来判断自己是否已经答题
     rchoosed:false, //用来判断对手是否已经答题
@@ -203,6 +203,7 @@ Page({
     })
     this.autoplay()
   },
+  //获取单词
   getPKWords: function () {
     var that=this;
     console.log(this.data.playA.id + ";" + app.globalData.userData.uid)
@@ -228,7 +229,7 @@ Page({
             console.log('WebSocket已关闭!')
           })
           wx.redirectTo({
-            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords),
+            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore,
           })
         }else{
           that.nextWord();
@@ -270,7 +271,7 @@ Page({
             })
           }
           setTimeout(function(){
-            that.send("n")//发送给后端，可进行下一道题
+            that.send("n")//发送n给后端，表示可进行下一道题
           },800)
           clearInterval(that.data.time)//销毁定时器
         }    
@@ -316,6 +317,7 @@ Page({
       var date = new Date()
       //如果选择正确
       if (e.currentTarget.dataset.ex == this.data.pkword.explanation) {
+        //播放音效
         this.play('http://img.tukuppt.com/newpreview_music/09/00/62/5c893bc616c6053343.mp3')
         var chooseItem='myChooseItem['+this.data.index+']'
         var my = 'mychoose[' + idx + ']'
