@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/test/test",
+    "pages/index/index",
     "pages/mine/mine",  
     "pages/wordBook/wordBook",
     "pages/logs/logs"
@@ -22,7 +22,8 @@
         "waitRival/waitRival",
         "pkPage/pkPage",
         "questionBank/questionBank",
-        "pkresult/pkresult"
+        "pkresult/pkresult",
+        "errorBook/errorBook"
       ]
     },{
       "root":"wordBooks/",

@@ -58,6 +58,7 @@ Page({
       id:id
     })
     this.updRecord();
+    this.setPageData();
   },
   setPageData:function(){
     if (this.data.myscore < this.data.rivalscore) {

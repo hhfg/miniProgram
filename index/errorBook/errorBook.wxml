@@ -1,3 +1,4 @@
+<!--index//errorBook/errorBook.wxml-->
 <view style="margin-top:10px;margin-bottom:10px;">
   <view class="date">4月18日</view>
   <view class="wordPart">
