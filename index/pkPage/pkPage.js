@@ -57,7 +57,6 @@ Page({
     this.setData({
       start: date.getTime()
     })
-    console.log(date.getTime())
     var step = 1,//计数动画次数
       num = 0,//计数倒计时秒数（n - num）
       start = 1.5 * Math.PI,// 开始的弧度
@@ -179,7 +178,6 @@ Page({
     this.setData({
       index:this.data.index+1,
     })
-    console.log('index:'+this.data.index)
     //如果是最后一题，提示双倍分数
     if(this.data.index+1==this.data.pkwords.length){
       wx.showToast({
@@ -221,14 +219,9 @@ Page({
         })
         that.autoplay()
       } else if(res.data=="next"){//进行下一个单词
-        console.log("next")
+        console.log("next"+(that.data.index+1))
         //clearInterval(that.data.time)
-        console.log(that.data.index+1+":"+that.data.pkwords.length)
         if (that.data.index+1 == that.data.pkwords.length) {
-          wx.closeSocket();
-          wx.onSocketClose(function (res) {
-            console.log('WebSocket已关闭!')
-          })
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore,
           })
@@ -240,13 +233,11 @@ Page({
         var score=res.data.split(";")[0]          //获取对手的成绩
         var idx = parseInt(res.data.split(";")[1])//获取对手的选项
         var chooseItem='rivalChooseItem['+that.data.index+']'
-        console.log(score+":"+that.data.rivalscore)
         if (score==that.data.rivalscore){          //收到的成绩如果和之前的相等，说明选择错误
           that.setData({
             rivaltemp:'error',
             [chooseItem]:false
           })
-          console.log('rival:' +that.data.index+':true')
         }else{
           that.setData({
             rivaltemp:'correct',
@@ -344,7 +335,6 @@ Page({
         this.setData({
           mypercent: (this.data.myscore / 1440) * 100
         })
-        console.log("myscore:" + this.data.myscore)
       } else {//如果选择错误
         var chooseItem = 'myChooseItem[' + this.data.index + ']'
         var my = 'mychoose[' + idx + ']'
@@ -379,7 +369,7 @@ Page({
           })
         }
         setTimeout(function(){
-          console.log('对手已答完然后我才答完')
+          console.log('对手已答完然后我才答完');
           that.send("n");      //发送n到后台，可进行下一道题
         },800)
         clearInterval(this.data.time)//销毁计时器

@@ -22,6 +22,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.closeSocket();
+    wx.onSocketClose(function (res) {
+      console.log('WebSocket已关闭!')
+    })
     var myChooseItem=JSON.parse(options.myChooseItem);
     var rivalChooseItem=JSON.parse(options.rivalChooseItem);
     var pkwords=JSON.parse(options.pkwords);
