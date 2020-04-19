@@ -25,6 +25,14 @@ Page({
       console.log('WebSocket已关闭!')
     })
   },
+  updRecord:function(){
+    common.getData('updRoomStatus.do', {
+      id: this.data.id,
+      status: 2
+    }).then((res) => {
+      console.log(res.data)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -49,6 +57,7 @@ Page({
       rivalscore:rivalscore,
       id:id
     })
+    this.updRecord();
   },
   setPageData:function(){
     if (this.data.myscore < this.data.rivalscore) {
