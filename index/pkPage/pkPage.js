@@ -221,15 +221,14 @@ Page({
         })
         that.autoplay()
       } else if(res.data=="next"){//进行下一个单词
-        console.log(that.data.index)
+        console.log("next")
+        //clearInterval(that.data.time)
+        console.log(that.data.index+1+":"+that.data.pkwords.length)
         if (that.data.index+1 == that.data.pkwords.length) {
-          clearInterval(that.data.time)
           wx.closeSocket();
           wx.onSocketClose(function (res) {
             console.log('WebSocket已关闭!')
           })
-          console.log(that.data.myChooseItem);
-          console.log(that.data.rivalChooseItem)
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore,
           })
@@ -253,8 +252,7 @@ Page({
             rivaltemp:'correct',
             [chooseItem]:true
           })
-        }
-        
+        }       
         that.setData({
           ridx:idx,
           rchoosed: true,                        //设置对手已经选择了的标记
@@ -381,6 +379,7 @@ Page({
           })
         }
         setTimeout(function(){
+          console.log('对手已答完然后我才答完')
           that.send("n");      //发送n到后台，可进行下一道题
         },800)
         clearInterval(this.data.time)//销毁计时器

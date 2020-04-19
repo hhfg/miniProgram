@@ -6,8 +6,8 @@
     <view style="color:white;font-weight:bold;font-size:25px;margin-top:10px">{{myscore}}</view>
   </view>
   <view class="outcome">
-    <image src="../../icons/pk/win.png" style="width:50px;height:50px;"></image>
-    <view style="color:white;font-weight:bold">YOU WIN</view>
+    <image src="{{resultUrl}}" style="width:50px;height:50px;"></image>
+    <view style="color:white;font-weight:bold">{{result}}</view>
   </view>
   <view class="player2">
     <image src="{{rival.avatarUrl}}" class="img1"></image>
@@ -24,3 +24,4 @@
     </view>
   </view>
 </view>
+<button bindtap="bindReturn" style="margin-top:20px;background-color:white;color:#87CEEB">返回</button>
