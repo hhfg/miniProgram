@@ -71,6 +71,7 @@ Page({
       uid:app.globalData.userData.uid,
       bank: e.currentTarget.dataset.bank
     }).then((res)=>{
+      console.log(res)
       if(res==1){
         wx.redirectTo({
           url: '../wordPK/wordPK',

@@ -16,14 +16,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this;
-    common.sendRequest('getPlayerData.do',{
-      uid:app.globalData.userData.uid
-    }).then((res)=>{
-      that.setData({
-        mybank:res.bank
-      })
-    })
+    // var that=this;
+    // common.sendRequest('getPlayerData.do',{
+    //   uid:app.globalData.userData.uid
+    // }).then((res)=>{
+    //   that.setData({
+    //     mybank:res.bank
+    //   })
+    // })
+
   },
 
   /**
@@ -36,6 +37,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this
+    common.sendRequest("selPersonalData.do", {
+      nickName: app.globalData.userInfo.nickName
+    }).then((res) => {
+      //将数据存储在userData中 
+      app.globalData.userData = res
+      that.setData({
+        userData: res
+      })
+      this.setData({
+        mybank: app.globalData.userData.bank
+      })
+    })
     if(this.data.id!=0){
       if(this.data.count==0){
         wx.navigateTo({
