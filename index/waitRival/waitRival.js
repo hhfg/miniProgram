@@ -20,7 +20,7 @@ Page({
     var that=this;
     // 创建webSocket连接
     wx.connectSocket({
-      url: 'ws://192.168.1.106:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
+      url: 'ws://192.168.1.104:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
       header:{
         'content-type':'Application/json'
       },

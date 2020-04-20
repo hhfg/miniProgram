@@ -15,8 +15,9 @@ Page({
     myscore:0,            //我的成绩
     rivalscore:0,         //对手的成绩
     resultUrl:'',         //结果图片地址
-    result:'',             //结果
-    id:''                 //记录在数据库表中的id
+    result:'',            //结果
+    id:'',                //记录在数据库表中的id
+    myError:[],           //记录用户做错的单词
   },
   //关闭websocket连接
   closeConn:function(){
@@ -32,6 +33,7 @@ Page({
     }).then((res) => {
       console.log(res.data)
     })
+    this.insError();
   },
   /**
    * 生命周期函数--监听页面加载
@@ -46,7 +48,7 @@ Page({
     var myscore=options.myscore;
     var rivalscore=options.rivalscore
     var id=options.id
-    console.log(id)
+    console.log(pkwords)
     this.setData({
       myChooseItem:myChooseItem,
       rivalChooseItem:rivalChooseItem,
@@ -57,8 +59,23 @@ Page({
       rivalscore:rivalscore,
       id:id
     })
+    for(var i=0;i<this.data.pkwords.length;i++){
+      if(this.data.myChooseItem[i]==false){
+        this.data.myError.push(this.data.pkwords[i])
+      }
+    }
     this.updRecord();
     this.setPageData();
+  },
+  insError:function(){
+    var that=this;
+    console.log("myerror:"+this.data.myError)
+    common.getData('insErrorWords.do',{
+      nickName: app.globalData.userInfo.nickName,
+      pkwords:JSON.stringify(that.data.myError)
+    }).then((res)=>{
+      console.log(res)
+    })
   },
   setPageData:function(){
     if (this.data.myscore < this.data.rivalscore) {

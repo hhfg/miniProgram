@@ -215,6 +215,7 @@ Page({
     }
     wx.onSocketMessage(function (res) {
       if (res.data.length > 10) {
+        console.log('pkpkpkpkp')
         that.countdown();
         that.setData({
           pkwords: JSON.parse(res.data),
