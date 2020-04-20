@@ -1,12 +1,12 @@
 <!--index//errorBook/errorBook.wxml-->
-<view style="margin-top:10px;margin-bottom:10px;">
-  <view class="date">4月18日</view>
-  <view class="wordPart">
+<view style="margin-top:10px;margin-bottom:10px;" wx:for="{{errorWords}}" wx:for-index="key" wx:key="*this">
+  <view class="date">{{key}}</view>
+  <view class="wordPart" wx:for="{{item}}" wx:key="*this">
     <view class="word">
-      <view><text style="font-weight:bold">stop</text> 美 [stɑp] </view>
-      <view style="margin-top:5px;">n.停止,阻止,车站,停留;</view>
+      <view><text style="font-weight:bold">{{item.word}}</text> {{item.us_pron}}</view>
+      <view style="margin-top:5px;">{{item.explanation}}</view>
     </view>
-    <view class="pron">
+    <view class="pron" bindtap="bindPlay" data-pron="{{item.us_mp3}}">
       <image src="../../icons/learning/pron.png" style="width:25px;height:25px;"></image>
     </view>
   </view>

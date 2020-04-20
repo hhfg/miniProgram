@@ -7,20 +7,41 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    errorWords:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
     common.getData('selErrorWords.do',{
       nickName:app.globalData.userInfo.nickName
     }).then((res)=>{
-      console.log(res.data)
+      that.setData({
+        errorWords:res.data
+      })
+      console.log(that.data.errorWords)
+    }) 
+  }, 
+  //播放音频
+  bindPlay:function(e){
+    let url = e.currentTarget.dataset.pron;
+    url = url.substring(1, url.length - 1);
+    this.play(url);
+  },
+  //播放音频
+  play: function (url) {
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = url
+    innerAudioContext.onPlay(() => {
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
