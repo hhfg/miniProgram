@@ -102,5 +102,10 @@ Page({
     wx.navigateTo({
       url: '../questionBank/questionBank',
     })
+  },
+  bindErrorBook:function(){
+    wx.navigateTo({
+      url: '../errorBook/errorBook',
+    })
   }
 })
