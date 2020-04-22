@@ -80,13 +80,13 @@ Page({
   setPageData:function(){
     if (this.data.myscore < this.data.rivalscore) {
       this.setData({
-        resultUrl: '../../icons/pk/win.png',
-        result: 'YOU WIN'
+        resultUrl: '../../icons/pk/lose.png',
+        result: 'YOU LOSE'
       })
     } else {
       this.setData({
-        resultUrl: '../../icons/pk/lose.png',
-        result: 'YOU LOSE'
+        resultUrl: '../../icons/pk/win.png',
+        result: 'YOU WIN'
       })
     }
   },

@@ -12,7 +12,6 @@ Page({
     learningSet:{}
   },
   bindModeChange: function (e) {
-    console.log(e.detail.value)
     this.setData({
       index: e.detail.value
     })
@@ -25,7 +24,6 @@ Page({
     this.setData({
       learningSet:learningSet
     })
-    console.log(this.data.learningSet)
   },
 
   /**
