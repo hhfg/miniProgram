@@ -14,7 +14,8 @@ Page({
     playA:[],
     playB:[],
     roomid:0,
-    flag:''
+    flag:'',
+    pos:0
   },
   createConn:function(roomid){
     var that=this;
@@ -57,6 +58,9 @@ Page({
     });
     wx.onSocketMessage(function (res) {
       console.log(res.data)
+      if(res.data=="0"){
+        console.log("房间已满");
+      }
       if(res.data=="1"){
         common.getData("insRecord.do", {
           roomid: roomid,
@@ -170,7 +174,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(this.data.pos==0){
+      this.setData({
+        pos:1
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '你已离开战斗',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../wordPK/wordPK',
+            })
+          }
+        }
+      })
+    }
   },
 
   /**

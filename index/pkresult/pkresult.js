@@ -25,6 +25,11 @@ Page({
     wx.onSocketClose(function (res) {
       console.log('WebSocket已关闭!')
     })
+    wx.onSocketMessage(function(res){
+      if(res.data=="left"){
+        console.log("left")
+      }
+    })
   },
   updRecord:function(){
     common.getData('updRoomStatus.do', {

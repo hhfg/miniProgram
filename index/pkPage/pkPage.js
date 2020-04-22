@@ -229,11 +229,30 @@ Page({
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore+'&id='+that.data.id,
           })
-        }else{
+        }
+        else{
           that.nextWord();
         }
-      }        
-      else {//否则是对方的成绩加选项
+      }else if(res.data=="left"){
+        console.log("对手已离开");
+        clearInterval(that.data.time);
+        // wx.closeSocket();
+        // wx.onSocketClose(function (res) {
+        //   console.log('WebSocket已关闭!')
+        // })
+        wx.showModal({
+          title: '提示',
+          content: '对手已离开',
+          showCancel:false,
+          success:function(res){
+            if(res.confirm){
+              wx.redirectTo({
+                url: '../wordPK/wordPK',
+              })
+            }
+          }
+        })
+      }else {//否则是对方的成绩加选项
         var score=res.data.split(";")[0]          //获取对手的成绩
         var idx = parseInt(res.data.split(";")[1])//获取对手的选项
         var chooseItem='rivalChooseItem['+that.data.index+']'
@@ -306,6 +325,14 @@ Page({
    */
   onShow: function () {
 
+  },
+  onUnload:function(){
+    console.log("卸载");
+    clearInterval(this.data.time)
+    wx.closeSocket();
+    wx.onSocketClose(function (res) {
+      console.log('WebSocket已关闭!')
+    })
   },
   bindChoose:function(e){
     if(this.data.mchoosed==false){
