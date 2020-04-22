@@ -138,6 +138,7 @@ Page({
       nickName: app.globalData.userInfo.nickName
     }).then((res) => {
       //将数据存储在userData中 
+      console.log(res)
       app.globalData.userData = res
       that.setData({
         userData: res

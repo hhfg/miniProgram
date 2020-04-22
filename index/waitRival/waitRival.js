@@ -146,6 +146,7 @@ Page({
    */
   onLoad: function (options) {
     //发起者携带参数名为id进来，在后台创建记录
+    console.log(options)
     var that=this;
     if(options.id!=null){
       this.setData({
