@@ -18,6 +18,7 @@ Page({
     result:'',            //结果
     id:'',                //记录在数据库表中的id
     myError:[],           //记录用户做错的单词
+    playA:[]
   },
   //关闭websocket连接
   closeConn:function(){
@@ -27,8 +28,10 @@ Page({
     })
   },
   updRecord:function(){
-    common.getData('updRoomStatus.do', {
+    common.getData('updateRecord.do', {
       id: this.data.id,
+      ascore:this.data.myscore,
+      bscore:this.data.rivalscore,
       status: 2
     }).then((res) => {
       console.log(res.data)
@@ -48,7 +51,8 @@ Page({
     var myscore=options.myscore;
     var rivalscore=options.rivalscore
     var id=options.id
-    console.log(pkwords)
+    var playA=JSON.parse(options.playA)
+    console.log(playA)
     this.setData({
       myChooseItem:myChooseItem,
       rivalChooseItem:rivalChooseItem,
@@ -57,14 +61,18 @@ Page({
       rival:rival,
       myscore:myscore,
       rivalscore:rivalscore,
-      id:id
+      id:id,
+      playA:playA
     })
     for(var i=0;i<this.data.pkwords.length;i++){
       if(this.data.myChooseItem[i]==false){
         this.data.myError.push(this.data.pkwords[i])
       }
     }
-    this.updRecord();
+    if(app.globalData.userData.uid==this.data.playA.id){
+      console.log('更新')
+      this.updRecord();
+    }
     this.setPageData();
   },
   insError:function(){

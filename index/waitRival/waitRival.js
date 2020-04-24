@@ -85,26 +85,26 @@ Page({
         })
       }
       else if (res.data == "true") {
-        // common.getData('getUserMess.do', {
-        //   id: that.data.id
-        // }).then((res) => {
-        //   that.setData({
-        //     playA: res.data[0],
-        //     playB: res.data[1]
-        //   })
-        //   if (that.playA.avatarUrl == null) {
-        //     var pic = 'playA.avatarUrl'
-        //     that.setData({
-        //       [pic]: '../../icons/head/headPic.png'
-        //     })
-        //   }
-        //   if (that.playB.avatarUrl == null) {
-        //     var pic = 'playB.avatarUrl'
-        //     that.setData({
-        //       [pic]: '../../icons/head/headPic.png'
-        //     })
-        //   }
-        // })
+        common.getData('getUserMess.do', {
+          id: that.data.id
+        }).then((res) => {
+          that.setData({
+            playA: res.data[0],
+            playB: res.data[1]
+          })
+          if (that.playA.avatarUrl == null) {
+            var pic = 'playA.avatarUrl'
+            that.setData({
+              [pic]: '../../icons/head/headPic.png'
+            })
+          }
+          if (that.playB.avatarUrl == null) {
+            var pic = 'playB.avatarUrl'
+            that.setData({
+              [pic]: '../../icons/head/headPic.png'
+            })
+          }
+        })
         that.setData({
           waiting: false,
           canStart: true

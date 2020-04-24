@@ -89,7 +89,7 @@ Page({
           //   console.log('WebSocket已关闭!')
           // })
           wx.redirectTo({
-            url: '../pkresult/pkresult?myChooseItem=' + JSON.stringify(that.data.myChooseItem) + "&rivalChooseItem=" + JSON.stringify(that.data.rivalChooseItem) + '&pkwords=' + JSON.stringify(that.data.pkwords) + '&my=' + JSON.stringify(that.data.me) + '&rival=' + JSON.stringify(that.data.rival) + '&myscore=' + that.data.myscore + '&rivalscore=' + that.data.rivalscore,
+            url: '../pkresult/pkresult?myChooseItem=' + JSON.stringify(that.data.myChooseItem) + "&rivalChooseItem=" + JSON.stringify(that.data.rivalChooseItem) + '&pkwords=' + JSON.stringify(that.data.pkwords) + '&my=' + JSON.stringify(that.data.me) + '&rival=' + JSON.stringify(that.data.rival) + '&myscore=' + that.data.myscore + '&rivalscore=' + that.data.rivalscore + '&id=' + that.data.id + '&playA=' + JSON.stringify(that.data.playA),
           })
         }else{
           step = 1;
@@ -236,7 +236,7 @@ Page({
           })
           console.log(that.data.endFlag)
           wx.redirectTo({
-            url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore+'&id='+that.data.id,
+            url: '../pkresult/pkresult?myChooseItem=' + JSON.stringify(that.data.myChooseItem) + "&rivalChooseItem=" + JSON.stringify(that.data.rivalChooseItem) + '&pkwords=' + JSON.stringify(that.data.pkwords) + '&my=' + JSON.stringify(that.data.me) + '&rival=' + JSON.stringify(that.data.rival) + '&myscore=' + that.data.myscore + '&rivalscore=' + that.data.rivalscore + '&id=' + that.data.id + '&playA=' + JSON.stringify(that.data.playA),
           })
         }
         else{
@@ -342,7 +342,6 @@ Page({
   onUnload:function(){
     console.log(this.data.endFlag)
     if(this.data.endFlag==false){
-      console.log("qaz");
       clearInterval(this.data.time)
       this.send('l')
       wx.closeSocket();
