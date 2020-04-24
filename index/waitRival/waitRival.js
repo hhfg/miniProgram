@@ -88,6 +88,7 @@ Page({
         common.getData('getUserMess.do', {
           id: that.data.id
         }).then((res) => {
+          console.log(res.data)
           that.setData({
             playA: res.data[0],
             playB: res.data[1]
