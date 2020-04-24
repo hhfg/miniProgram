@@ -23,7 +23,7 @@ page{
   color: #ffffff;
   margin-left: 20px;
 }
-.game,.errorBook{
+.game,.errorBook,.battleRecord{
   margin:20px;
   height: 100px;
   background-color: rgb(95, 190, 228);

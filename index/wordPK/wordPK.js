@@ -107,5 +107,10 @@ Page({
     wx.navigateTo({
       url: '../errorBook/errorBook',
     })
+  },
+  bindBattleRecord:function(){
+    wx.navigateTo({
+      url: '../battleRecord/battleRecord',
+    })
   }
 })

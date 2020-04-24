@@ -23,7 +23,8 @@
         "pkPage/pkPage",
         "questionBank/questionBank",
         "pkresult/pkresult",
-        "errorBook/errorBook"
+        "errorBook/errorBook",
+        "battleRecord/battleRecord"
       ]
     },{
       "root":"wordBooks/",

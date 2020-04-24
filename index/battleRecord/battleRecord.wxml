@@ -1,3 +1,4 @@
+<!--index//battleRecord/battleRecord.wxml-->
 <view>
   <view class="amountBg">
     <open-data type="userAvatarUrl"  class="img"></open-data>
