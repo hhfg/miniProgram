@@ -25,11 +25,6 @@ Page({
     wx.onSocketClose(function (res) {
       console.log('WebSocket已关闭!')
     })
-    wx.onSocketMessage(function(res){
-      if(res.data=="left"){
-        console.log("left")
-      }
-    })
   },
   updRecord:function(){
     common.getData('updRoomStatus.do', {
@@ -74,7 +69,6 @@ Page({
   },
   insError:function(){
     var that=this;
-    console.log("myerror:"+this.data.myError)
     common.getData('insErrorWords.do',{
       nickName: app.globalData.userInfo.nickName,
       pkwords:JSON.stringify(that.data.myError)

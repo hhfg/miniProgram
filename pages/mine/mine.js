@@ -34,11 +34,17 @@ Page({
   },
   //设置每日学习提醒时间
   bindTimeChange: function (e) {
-    console.log(e.detail.value)
-    wx.showToast({
-      title: '修改成功',
-      icon: 'success',
-      duration: 2000
+    // console.log(e.detail.value)
+    // wx.showToast({
+    //   title: '修改成功',
+    //   icon: 'success',
+    //   duration: 2000
+    // })
+    wx.requestSubscribeMessage({
+      tmplIds: ['8eJZmVnkDe7gLPkXCk5hTFFq8AQrurCWKgjuRPDZ2WM'],
+      success:function(res){
+        console.log("已授权接受订阅消息")
+      }
     })
   },
   //学习记录

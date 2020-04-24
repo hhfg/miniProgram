@@ -37,7 +37,8 @@
   <view class="item" hover-class="click">
     <view class="icon"><image src="../../icons/mine/time.png" style="width:25px;height:25px;"></image></view>
     <view class="itemName">
-      <view><picker mode="time" start="00:00" end="24:00" bindchange="bindTimeChange">每日学习打卡提醒时间</picker></view>
+      <!-- <view><picker mode="time" start="00:00" end="24:00" bindchange="bindTimeChange">每日学习打卡提醒时间</picker></view> -->
+      <view bindtap="bindTimeChange">每日学习打卡提醒时间 </view>
     </view>
     <view class="right"><text class="opr">></text></view>
   </view>

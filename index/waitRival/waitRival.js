@@ -8,27 +8,27 @@ Page({
    */
   data: {
     waiting: true,
-    canStart:false,
-    socketOpen:false,
-    id:0,             //记录在数据库的id
-    playA:[],
-    playB:[],
-    roomid:0,
-    flag:'',
-    pos:0
+    canStart: false,
+    socketOpen: false,
+    id: 0,             //记录在数据库的id
+    playA: [],
+    playB: [],
+    roomid: 0,
+    flag: '',
+    pos: 0
   },
-  createConn:function(roomid){
-    var that=this;
+  createConn: function (roomid) {
+    var that = this;
     // 创建webSocket连接
     wx.connectSocket({
-      url: 'ws://192.168.1.104:8080/MiniProgram/getServer/'+roomid+"/" + app.globalData.userData.uid,
-      header:{
-        'content-type':'Application/json'
+      url: 'ws://192.168.1.104:8080/MiniProgram/getServer/' + roomid + "/" + app.globalData.userData.uid,
+      header: {
+        'content-type': 'Application/json'
       },
-      method:'GET',
+      method: 'GET',
     });
     // 监听webSocket打开事件
-    wx.onSocketOpen(function(res){
+    wx.onSocketOpen(function (res) {
       //flag为false说明是发起者进来，在建立连接后在后端创建对战记录
       // if(that.data.flag=="1"){
       //   common.getData("insRecord.do", {
@@ -58,10 +58,10 @@ Page({
     });
     wx.onSocketMessage(function (res) {
       console.log(res.data)
-      if(res.data=="0"){
+      if (res.data == "0") {
         console.log("房间已满");
       }
-      if(res.data=="1"){
+      if (res.data == "1") {
         common.getData("insRecord.do", {
           roomid: roomid,
           playA: app.globalData.userData.uid,
@@ -72,7 +72,7 @@ Page({
             id: res.data
           })
         })
-      }else if(res.data=="2"){
+      } else if (res.data == "2") {
         common.getData("updRecord.do", {
           roomid: roomid,
           playB: app.globalData.userData.uid,
@@ -85,20 +85,20 @@ Page({
         })
       }
       else if (res.data == "true") {
-        common.getData('getUserMess.do',{
-          id:that.data.id
-        }).then((res)=>{
+        common.getData('getUserMess.do', {
+          id: that.data.id
+        }).then((res) => {
           that.setData({
-            playA:res.data[0],
-            playB:res.data[1]
+            playA: res.data[0],
+            playB: res.data[1]
           })
-          if(that.playA.avatarUrl==null){
-            var pic='playA.avatarUrl'
+          if (that.playA.avatarUrl == null) {
+            var pic = 'playA.avatarUrl'
             that.setData({
-              [pic]:'../../icons/head/headPic.png'
+              [pic]: '../../icons/head/headPic.png'
             })
           }
-          if(that.playB.avatarUrl==null){
+          if (that.playB.avatarUrl == null) {
             var pic = 'playB.avatarUrl'
             that.setData({
               [pic]: '../../icons/head/headPic.png'
@@ -109,35 +109,35 @@ Page({
           waiting: false,
           canStart: true
         })
-      }else if(res.data="start"){
+      } else if (res.data = "start") {
         wx.navigateTo({
-          url: '../pkPage/pkPage?playA=' + JSON.stringify(that.data.playA) + '&playB=' + JSON.stringify(that.data.playB)+'&roomid='+that.data.roomid+'&id='+that.data.id,
+          url: '../pkPage/pkPage?playA=' + JSON.stringify(that.data.playA) + '&playB=' + JSON.stringify(that.data.playB) + '&roomid=' + that.data.roomid + '&id=' + that.data.id,
         })
-      }else if(res.data=="0"){
+      } else if (res.data == "0") {
         console.log("房间已满");
       }
     })
-    wx.onSocketError(function(res){
+    wx.onSocketError(function (res) {
       console.log("WebSocket连接打开失败，请检查")
     })
   },
-  send:function(){
+  send: function () {
     //如果可以开始，则发送1给后端
-    if(this.data.canStart==true){
+    if (this.data.canStart == true) {
       wx.sendSocketMessage({
         data: "s",
       });
     }
     //否则发送0给后端，表示可以切换界面用户已进来
-    else{
+    else {
       wx.sendSocketMessage({
         data: "t",
       });
     }
   },
-  closeConn:function(e){
+  closeConn: function (e) {
     wx.closeSocket();
-    wx.onSocketClose(function(res){
+    wx.onSocketClose(function (res) {
       console.log('WebSocket已关闭!')
     })
   },
@@ -147,18 +147,18 @@ Page({
   onLoad: function (options) {
     //发起者携带参数名为id进来，在后台创建记录
     console.log(options)
-    var that=this;
-    if(options.id!=null){
+    var that = this;
+    if (options.id != null) {
       this.setData({
-        roomid:options.id
+        roomid: options.id
       })
       this.createConn(options.id)
     }
     //好友携带参数roomid进来
-    if(options.roomid!=null){
+    if (options.roomid != null) {
       this.setData({
-        flag:true,
-        roomid:options.roomid
+        flag: true,
+        roomid: options.roomid
       })
       this.createConn(options.roomid);
     }
@@ -175,11 +175,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(this.data.pos==0){
+    if (this.data.pos == 0) {
       this.setData({
-        pos:1
+        pos: 1
       })
-    }else{
+    } else {
       wx.showModal({
         title: '提示',
         content: '你已离开战斗',
@@ -229,19 +229,19 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindAbandon:function(){
+  bindAbandon: function () {
     this.closeConn();
     wx.switchTab({
       url: '../../pages/index/index',
     })
   },
-  startGame:function(){
-    var that=this;
-    common.getData('updRoomStatus.do',{
-      id:this.data.id,
-      status:1
-    }).then((res)=>{
-      if(res.data!=0){
+  startGame: function () {
+    var that = this;
+    common.getData('updRoomStatus.do', {
+      id: this.data.id,
+      status: 1
+    }).then((res) => {
+      if (res.data != 0) {
         that.send()
       }
     })

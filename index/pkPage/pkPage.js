@@ -35,7 +35,8 @@ Page({
     ridx:null,
     myChooseItem:[false,false,false,false,false,false,false],
     rivalChooseItem:[false,false,false,false,false,false,false],
-    id:0
+    id:0,
+    endFlag:false
   },
   getParam:function(){
     try {
@@ -79,10 +80,14 @@ Page({
         //销毁计时器
         clearInterval(that.data.time);
         if(that.data.index+1==that.data.pkwords.length){
-          wx.closeSocket();
-          wx.onSocketClose(function (res) {
-            console.log('WebSocket已关闭!')
+          that.setData({
+            endFlag: true
           })
+          console.log(that.data.endFlag)
+          // wx.closeSocket();
+          // wx.onSocketClose(function (res) {
+          //   console.log('WebSocket已关闭!')
+          // })
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem=' + JSON.stringify(that.data.myChooseItem) + "&rivalChooseItem=" + JSON.stringify(that.data.rivalChooseItem) + '&pkwords=' + JSON.stringify(that.data.pkwords) + '&my=' + JSON.stringify(that.data.me) + '&rival=' + JSON.stringify(that.data.rival) + '&myscore=' + that.data.myscore + '&rivalscore=' + that.data.rivalscore,
           })
@@ -226,6 +231,10 @@ Page({
         console.log("next"+(that.data.index+1))
         //clearInterval(that.data.time)
         if (that.data.index+1 == that.data.pkwords.length) {
+          that.setData({
+            endFlag:true
+          })
+          console.log(that.data.endFlag)
           wx.redirectTo({
             url: '../pkresult/pkresult?myChooseItem='+JSON.stringify(that.data.myChooseItem)+"&rivalChooseItem="+JSON.stringify(that.data.rivalChooseItem)+'&pkwords='+JSON.stringify(that.data.pkwords)+'&my='+JSON.stringify(that.data.me)+'&rival='+JSON.stringify(that.data.rival)+'&myscore='+that.data.myscore+'&rivalscore='+that.data.rivalscore+'&id='+that.data.id,
           })
@@ -236,10 +245,10 @@ Page({
       }else if(res.data=="left"){
         console.log("对手已离开");
         clearInterval(that.data.time);
-        // wx.closeSocket();
-        // wx.onSocketClose(function (res) {
-        //   console.log('WebSocket已关闭!')
-        // })
+        wx.closeSocket();
+        wx.onSocketClose(function (res) {
+          console.log('WebSocket已关闭!')
+        })
         wx.showModal({
           title: '提示',
           content: '对手已离开',
@@ -251,6 +260,10 @@ Page({
               })
             }
           }
+        })
+        wx.closeSocket();
+        wx.onSocketClose(function (res) {
+          console.log('WebSocket已关闭!')
         })
       }else {//否则是对方的成绩加选项
         var score=res.data.split(";")[0]          //获取对手的成绩
@@ -327,12 +340,18 @@ Page({
 
   },
   onUnload:function(){
-    console.log("卸载");
-    clearInterval(this.data.time)
-    wx.closeSocket();
-    wx.onSocketClose(function (res) {
-      console.log('WebSocket已关闭!')
-    })
+    console.log(this.data.endFlag)
+    if(this.data.endFlag==false){
+      console.log("qaz");
+      clearInterval(this.data.time)
+      this.send('l')
+      wx.closeSocket();
+      wx.onSocketClose(function (res) {
+        console.log('WebSocket已关闭!')
+      })
+    }else{
+      console.log("比赛介绍")
+    }
   },
   bindChoose:function(e){
     if(this.data.mchoosed==false){
