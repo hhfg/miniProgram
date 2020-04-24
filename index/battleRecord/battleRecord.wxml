@@ -4,22 +4,23 @@
     <open-data type="userAvatarUrl"  class="img"></open-data>
     <view class="account">
       <open-data type="userNickName" lang="zh_CN"></open-data>
-      <view style="padding-top:10px;color:white;font-weight:bold">比赛场次 12  胜率 25%</view>
+      <view style="padding-top:10px;color:white;font-weight:bold">比赛场次 {{count}}  胜率 {{winPercent}}%</view>
     </view>
   </view>
   <view class="battleRecord">
     <view>
     <text style="margin-right:70px;">pk双方</text><text style="margin-left:70px;">结果</text>
     </view>
-    <view class="record">
+    <view class="record" wx:for="{{battleRecord}}" wx:key="*this">
       <view style="display:flex;flex-direction:row;">
-        <open-data type="userAvatarUrl" class="img1"></open-data>
-        <view style="margin:5px;">920</view>
+        <!-- <open-data type="userAvatarUrl" class="img1"></open-data> -->
+        <image src="{{item.apic}}" class="img1"></image>
+        <view style="margin:5px;">{{item.ascore}}</view>
         <view style="margin:5px;">VS</view>
-        <view style="margin:5px;">1220</view>
-        <open-data type="userAvatarUrl" class="img1"></open-data>
+        <view style="margin:5px;">{{item.bscore}}</view>
+        <image src="{{item.bpic}}" class="img1"></image>
       </view>
-      <view style="padding-left:100rpx;margin:5px;">胜利</view>
+      <view style="padding-left:80rpx;margin:5px;">{{item.result}}</view>
     </view>    
   </view>
 </view>
