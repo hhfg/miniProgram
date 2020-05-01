@@ -4,11 +4,14 @@
 <view wx:for="{{type}}" wx:key="typename">
   <view class="item" bindtap="bindClick"  data-index="{{index}}">
     <view class="icon"><image src="../../icons/books/book.png" style="width:25px;height:25px;"></image></view>
+    <!-- 显示类型名 -->
     <view class="itemName">
       <view>{{item.typename}}</view>
     </view>
   </view>
+  <!-- 如果current=index时，显示该view，否则隐藏 -->
   <view class="detailed" wx:if="{{current==index}}" hover-class="click" bindtap="bindChangeIt" wx:for="{{item.wordBooks}}" wx:for-index="idx" wx:for-item="itemName" wx:key="name" data-id="{{itemName.id}}"  data-num="{{itemName.wordNum}}" data-bookname="{{itemName.bookName}}" data-typeid="{{item.id}}">
+    <!-- 单词书名和单词量 -->
     <view class="bookName">{{itemName.bookName}}</view>
     <view class="wordsNum">{{itemName.wordNum}}</view>
   </view> 

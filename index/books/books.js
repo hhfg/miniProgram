@@ -99,6 +99,7 @@ Page({
     var that = this;
     return new Promise(function(resolve,reject){
       common.sendRequest("selAllType.do", {}).then((res) => {
+        console.log(res)
         that.setData({
           type: res
         })
