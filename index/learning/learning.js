@@ -483,9 +483,24 @@ Page({
       date: sign_date,
       learned_num: app.globalData.userData.dayNum
     }).then((res)=>{
-      wx.navigateTo({
-        url: '../clockIn/clockIn',
-      })
+      if(res==10){
+        wx.showModal({
+          title: '恭喜你',
+          content: '本单词书已全部学习完成',
+          showCancel:false,
+          success:function(res){
+            if(res.confirm){
+              wx.navigateTo({
+                url: '../clockIn/clockIn',
+              })
+            }
+          }
+        })
+      }else{
+        wx.navigateTo({
+          url: '../clockIn/clockIn',
+        })
+      }
     })
   },
   //收藏单词
