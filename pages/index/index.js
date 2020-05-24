@@ -54,7 +54,21 @@ Page({
             console.log(res);
           }
         })
-      }else{
+      }else if(app.globalData.userData.dayNum==-1){
+        wx.showModal({
+          title: '已学习完本单词书',
+          content: '请更换单词书',
+          showCancel:false,
+          success:function(res){
+            if(res.confirm){
+              wx.navigateTo({
+                url: '../../index/books/books',
+              })
+            }
+          }
+        })
+      }
+      else{
         //如果haveToLearn和haveToReview都为0说明今日已学习完成
         if(app.globalData.userData.haveToLearn==0&&app.globalData.userData.haveToReview==0){
           wx.showModal({
